@@ -1,21 +1,37 @@
 services:
   php:
+    env_file:
+      - .env
     container_name: darty-php
     build:
       context: .docker/php
+      args:
+        uid: "${USER_ID:?}"
     image: darty2/php:latest
+    user: "${USER_ID:?}"
     volumes:
       - ./symfony:/var/www/html/
     networks:
       - darty2
 
   web:
+    env_file:
+      - .env
     container_name: darty-web
     build:
       context: .docker/web
     image: darty2/web:latest
+    user: "${USER_ID:?}"
     volumes:
       - ./symfony:/var/www/html/
+      - ./.docker/web/nginx.conf:/etc/nginx/nginx.conf
+      - ./.docker/web/darty2.conf:/etc/nginx/conf.d/default.conf
+      - ./.docker/web/upstream.conf:/etc/nginx/conf.d/upstream.conf
+      - ./.docker/web/proxy_temp:/var/cache/nginx/proxy_temp
+      - ./.docker/web/fastcgi_temp:/var/cache/nginx/fastcgi_temp
+      - ./.docker/web/uwsgi_temp:/var/cache/nginx/uwsgi_temp
+      - ./.docker/web/scgi_temp:/var/cache/nginx/scgi_temp
+      - ./.docker/web/run/run.pid:/run/nginx.pid
     ports:
       - "8081:80"
     networks:
