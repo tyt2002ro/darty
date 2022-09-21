@@ -1,0 +1,28 @@
+services:
+  php:
+    container_name: darty-php
+    build:
+      context: .docker/php
+    image: darty2/php:latest
+    volumes:
+      - ./symfony:/var/www/html/
+    networks:
+      - darty2
+
+  web:
+    container_name: darty-web
+    build:
+      context: .docker/web
+    image: darty2/web:latest
+    volumes:
+      - ./symfony:/var/www/html/
+    ports:
+      - "8081:80"
+    networks:
+      - darty2
+
+networks:
+  darty2:
+    ipam:
+      config:
+        - subnet: 10.255.255.80/28
