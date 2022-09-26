@@ -1,0 +1,41 @@
+version: '3.4'
+services:
+  php:
+    image: "darty2/php:latest"
+    build:
+      context: ./.docker/php
+      args:
+        docker_registry: ${DOCKER_REGISTRY:-docker-repository.intern.neusta.de}
+    container_name: ${DOCKER_CONTAINER_TAG}-php
+    volumes:
+      - ./symfony/:/var/www/html/
+    networks:
+      - darty2
+    environment:
+      XDEBUG_MODE: debug,coverage
+    expose:
+      - 9003 # xdebug 3 port!
+
+  web:
+    env_file:
+      - .env
+    image: "darty2/web:latest"
+    build:
+      context: ./.docker/web
+      args:
+        docker_registry: ${DOCKER_REGISTRY:-docker-repository.intern.neusta.de}
+    container_name: ${DOCKER_CONTAINER_TAG}-web
+    depends_on:
+      - php
+    volumes:
+      - ./symfony/:/var/www/html/
+    ports:
+      - "8081:80"
+    networks:
+      - darty2
+
+networks:
+  darty2:
+    ipam:
+      config:
+        - subnet: 10.255.255.80/28
