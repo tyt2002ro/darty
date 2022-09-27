@@ -10,10 +10,6 @@ final class FirstTest extends KernelTestCase
 {
     private Environment $twig;
 
-    protected function setUp(): void
-    {
-        $this->twig = self::getContainer()->get(Environment::class);
-    }
     /**
      * @test
      */
@@ -22,19 +18,10 @@ final class FirstTest extends KernelTestCase
         self::assertTrue('Never trust a test you didn\'t see failing');
     }
 
-
     /**
      * @test
      */
-    public function start(): void
-    {
-        self::assertTrue('Never trust a test you didn\'t see failing');
-    }
-
-    /**
-     * @test
-     */
-    public function testTwigRender(): void
+    public function twigRender(): void
     {
         $expected = '<!DOCTYPE html>
 <html>
