@@ -18,6 +18,8 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "phpspec/prophecy": "^1.15",
+        "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.5",
         "symfony/phpunit-bridge": "^6.1"
     },

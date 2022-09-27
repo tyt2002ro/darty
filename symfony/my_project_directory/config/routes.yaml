@@ -2,6 +2,3 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
-darty_homepage:
-    path: /
-    controller: App\Controller\HomepageDartyController::number

@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HomepageDartyController extends AbstractController
 {
-    public function number(): Response
+    #[Route('/', name: 'homepage')]
+    public function homepageAction(): Response
     {
         $players = [
             ['name' => 'John Doe'],
