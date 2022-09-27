@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>
+            <h1>Game Type</h1>
+            {% if games|length > 0 %}
+                <ul>
+                    {% for game in games %}
+                        <input type="radio" id="{{ game.type|e }}" name="games"
+                               value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}>
+                        <label for="huey">{{ game.type|e }}</label><br>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </td>
+        <td>
+            <h1>Players</h1>
+            {% if players|length > 0 %}
+                <ul>
+                    {% for player in players %}
+                        <input type="checkbox" id="{{ player.name|e }}" name="{{ player.name|e }}"
+                               value="{{ player.name|e }}">
+                        <label for="{{ player.name|e }}"> {{ player.name|e }}</label><br>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </td>
+        <td>
+            <h1>Game-End-Option</h1>
+            {% if gameEnds|length > 0 %}
+                <ul>
+                    {% for game in gameEnds %}
+                        <input type="radio" id="{{ game.type|e }}" name="gameEnds"
+                               value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}>
+                        <label for="huey">{{ game.type|e }}</label><br>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button type="button" , id="new_game">Start new game</button>
+        </td>
+        <td>
+            <button type="button" , id="new_player">Add player to database</button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
