@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Player management screen</title>
+</head>
+<body>
+<table> <!-- Player Management Screen -->
+    <h1>Player Management Screen</h1>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Nick-Name</th>
+            <th>Edit a player</th>
+            <th>Delete a player</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if players|length > 0 %}
+                {% for player in players %}
+                    <tr>
+                        <td>{{ player.firstname }}</td>
+                        <td>{{ player.lastname }}</td>
+                        <td>{{ player.nickname }}</td>
+                        <td><button type="button">Edit</button></td>
+                        <td><button type="button">Delete</button></td>
+                    </tr>
+                {% endfor %}
+        {% endif %}
+    </tbody>
+</table>
+<h1><button type="button">Add new player</button></h1>
+</body>
+</html>
