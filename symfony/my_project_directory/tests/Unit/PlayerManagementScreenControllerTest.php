@@ -11,6 +11,7 @@ use Twig\Environment;
 
 class PlayerManagementScreenControllerTest extends TestCase
 {
+    use ProphecyTrait;
     /**
      * @test
      */
