@@ -6,6 +6,9 @@ composer:
   image: docker-repository.intern.neusta.de/composer:2
   script:
     - ls -la
+    - cd symfony/my_project_directory/
+    - composer install --no-interaction --no-scripts --ignore-platform-reqs
+    - ls -la
   only:
     - feature/NSDDARTY-55-Pipeline
 
