@@ -6,6 +6,7 @@ use App\Controller\HomepageDartyController;
 use PHPUnit\Framework\TestCase;
 use App\Controller\PlayerManagementScreenController;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Environment;
 
