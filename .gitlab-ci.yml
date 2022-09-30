@@ -15,6 +15,9 @@ composer:
     - cd symfony/my_project_directory/
     - composer install --no-interaction --no-scripts --ignore-platform-reqs
     - ls -la
+  artifacts:
+    paths:
+      - symfony/my_project_directory/vendor
   only:
     - feature/NSDDARTY-55-Pipeline
 
