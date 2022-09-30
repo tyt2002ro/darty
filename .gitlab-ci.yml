@@ -6,7 +6,6 @@ stages:
   - echo $DOCKERREPOPASSWD | docker login -u docker-repo-user --password-stdin docker-repository.intern.neusta.de
   - echo $DOCKERREPOPASSWD | docker login -u docker-repo-user --password-stdin docker-repository.intern.neusta.de:18443
 
-
 composer:
   stage: preparation
   image: docker-repository.intern.neusta.de/composer:2
@@ -18,8 +17,6 @@ composer:
   artifacts:
     paths:
       - symfony/my_project_directory/vendor
-  only:
-    - feature/NSDDARTY-55-Pipeline
 
 build-php-image:
   stage: preparation
@@ -35,7 +32,4 @@ php-unit:
  script:
    - cd symfony/my_project_directory/
    - vendor/phpunit/phpunit/phpunit
-
-# - container
-# - php
 
