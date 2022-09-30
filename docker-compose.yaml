@@ -12,7 +12,12 @@ services:
     networks:
       - darty2
     environment:
-      XDEBUG_MODE: debug,coverage
+      XDEBUG_MAX_NESTING_LEVEL: 400
+      XDEBUG_DISCOVER_CLIENT_HOST: true
+      XDEBUG_MODE: debug,trace,coverage
+      XDEBUG_START_WITH_REQUEST: trigger
+      XDEBUG_CLIENT_HOST: host.docker.internal
+      XDEBUG_IDEKEY: PHPSTORM
     expose:
       - 9003 # xdebug 3 port!
 

@@ -10,7 +10,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Environment;
 
-final class HomepageDartyTest extends TestCase
+final class AddPlayerTest extends TestCase
 {
     use ProphecyTrait;
 
