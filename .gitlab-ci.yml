@@ -1,0 +1,35 @@
+stages:
+  - preparation
+  - unittests
+
+.docker-repo-login: &docker-repo-login
+  - echo $DOCKERREPOPASSWD | docker login -u docker-repo-user --password-stdin docker-repository.intern.neusta.de
+  - echo $DOCKERREPOPASSWD | docker login -u docker-repo-user --password-stdin docker-repository.intern.neusta.de:18443
+
+composer:
+  stage: preparation
+  image: docker-repository.intern.neusta.de/composer:2
+  script:
+    - ls -la
+    - cd symfony/my_project_directory/
+    - composer install --no-interaction --no-scripts --ignore-platform-reqs
+    - ls -la
+  artifacts:
+    paths:
+      - symfony/my_project_directory/vendor
+
+build-php-image:
+  stage: preparation
+  before_script:
+    - *docker-repo-login
+  script:
+    - docker build -t docker-repository.intern.neusta.de/darty2/php:latest -t docker-repository.intern.neusta.de:18443/darty2/php:latest ./.docker/php
+    - docker push docker-repository.intern.neusta.de:18443/darty2/php:latest
+
+php-unit:
+ stage: unittests
+ image: docker-repository.intern.neusta.de/darty2/php:latest
+ script:
+   - cd symfony/my_project_directory/
+   - vendor/phpunit/phpunit/phpunit
+
