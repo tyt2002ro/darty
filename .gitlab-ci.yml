@@ -1,7 +1,16 @@
 stages:
-  - test
+  - preparation
 
-first-job:
-  stage: test
+composer:
+  stage: preparation
+  image: docker-repository.intern.neusta.de/composer:2
   script:
-    - echo "hello World"
+    - ls -la
+  only:
+    - feature/NSDDARTY-55-Pipeline
+
+
+# - container
+# - composer
+# - php
+# - code / tests
