@@ -7,28 +7,43 @@
 <table> <!-- Player Management Screen -->
     <h1>Player Management Screen</h1>
     <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Nick-Name</th>
-            <th>Edit a player</th>
-            <th>Delete a player</th>
-        </tr>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Nick-Name</th>
+        <th>Edit a player</th>
+        <th>Delete a player</th>
+    </tr>
     </thead>
     <tbody>
-        {% if players|length > 0 %}
-                {% for player in players %}
-                    <tr>
-                        <td>{{ player.firstname }}</td>
-                        <td>{{ player.lastname }}</td>
-                        <td>{{ player.nickname }}</td>
-                        <td><button type="button">Edit</button></td>
-                        <td><button type="button">Delete</button></td>
-                    </tr>
-                {% endfor %}
-        {% endif %}
+    {% if players|length > 0 %}
+        {% for player in players %}
+            <tr>
+                <td>{{ player.firstname }}</td>
+                <td>{{ player.lastname }}</td>
+                <td>{{ player.nickname }}</td>
+                <td>
+                    <button type="button">Edit</button>
+                </td>
+                <td>
+                    <button type="button">Delete</button>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    <tr>
+        <td>
+            <form>
+                <button type="submit" id="new_player" formaction="/addPlayerForm">Add new player</button>
+            </form>
+        </td>
+        <td>
+            <form>
+                <button type="submit" id="new_game" formaction="/">New game</button>
+            </form>
+        </td>
+    </tr>
     </tbody>
 </table>
-<h1><button type="button">Add new player</button></h1>
 </body>
 </html>

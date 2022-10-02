@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Player;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
 class AddPlayerController extends AbstractController
 {
@@ -24,17 +26,20 @@ class AddPlayerController extends AbstractController
     }
 
     #[Route('/buildPlayer', name: 'buildPlayerAction', methods: ['post'])]
-    public function buildPlayerAction() : Response
+    public function buildPlayerAction(PersistenceManagerRegistry $doctrine) : Response
     {
+        $entityManager = $doctrine->getManager();
 
-        return $this->redirect('/', 301);
-        die(print_r($_POST));
-//        print_r($_POST);
-        $theree = 3;
-        $this->addFlash(
-            'notice',
-            'Your changes were saved!'
-        );
+        $player = new Player();
+        $player->setFirstname($_POST['firstname']);
+        $player->setLastname($_POST['lastname']);
+        $player->setNickname($_POST['nickname']);
+
+        // tell Doctrine you want to (eventually) save the Product (no queries yet)
+        $entityManager->persist($player);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
 
         return $this->redirect('/', 301);
     }

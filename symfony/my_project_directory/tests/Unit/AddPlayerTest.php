@@ -21,15 +21,27 @@ final class AddPlayerTest extends TestCase
     {
         $content = 'some content';
 
-        $homepageDartyController = new AddPlayerController();
+        $addPlayerController = new AddPlayerController();
         $twig = $this->prophesize(Environment::class);
         $container = $this->prophesize(ContainerInterface::class);
         $container->has('twig')->shouldBeCalled()->willReturn(true);
         $container->get('twig')->shouldBeCalled()->willReturn($twig->reveal());
-        $homepageDartyController->setContainer($container->reveal());
+        $addPlayerController->setContainer($container->reveal());
         $twig->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
-        self::assertSame($content, $homepageDartyController->addPlayerFormAction()->getContent());
+        self::assertSame($content, $addPlayerController->addPlayerFormAction()->getContent());
     }
 
+    /**
+     * @test
+     */
+    public function buildPlayerReturnTemplate(): void
+    {
+        /**
+         * TO DO
+         * how PhpUnit tests a db insert function
+         */
+
+        self::assertSame(1, 1);
+    }
 }
