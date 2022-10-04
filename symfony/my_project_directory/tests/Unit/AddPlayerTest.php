@@ -4,6 +4,7 @@ namespace App\tests\Unit;
 
 use App\Controller\AddPlayerController;
 use App\Controller\HomepageDartyController;
+use App\Entity\Player;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -43,5 +44,38 @@ final class AddPlayerTest extends TestCase
          */
 
         self::assertSame(1, 1);
+    }
+
+    /**
+     * @test
+     */
+    public function checkPlayerFirstName(): void
+    {
+        $player = new Player();
+        $player->setFirstname("John");
+
+        $this->assertEquals("John",  $player->getFirstname());
+    }
+
+    /**
+     * @test
+     */
+    public function checkPlayerLastName(): void
+    {
+        $player = new Player();
+        $player->setLastname("Doe");
+
+        $this->assertEquals("Doe",  $player->getLastname());
+    }
+
+    /**
+     * @test
+     */
+    public function checkPlayerNickName(): void
+    {
+        $player = new Player();
+        $player->setNickname("Dev");
+
+        $this->assertEquals("Dev",  $player->getNickname());
     }
 }
