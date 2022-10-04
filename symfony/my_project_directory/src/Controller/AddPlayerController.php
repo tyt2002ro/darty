@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Player;
+use App\Factory\PlayerFactory;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,15 +29,16 @@ class AddPlayerController extends AbstractController
     }
 
     #[Route('/buildPlayer', name: 'buildPlayerAction', methods: ['post'])]
-    public function buildPlayerAction(PersistenceManagerRegistry $doctrine) : Response
+    public function buildPlayerAction(PersistenceManagerRegistry $doctrine, Request $request): RedirectResponse
     {
         $entityManager = $doctrine->getManager();
 
-        $player = new Player();
-        $player->setFirstname($_POST['firstname']);
-        $player->setLastname($_POST['lastname']);
-        $player->setNickname($_POST['nickname']);
+        $playerFactory = new PlayerFactory();
 
+        $firstname = $request->get('firstname');
+        $lastname = $request->get('lastname');
+        $nickname = $request->get('nickname');
+        $player = $playerFactory->createPlayer($firstname,$lastname,$nickname);
         // tell Doctrine you want to (eventually) save the Product (no queries yet)
         $entityManager->persist($player);
 
