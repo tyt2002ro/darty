@@ -13,7 +13,6 @@ class HomepageDartyController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function homepageAction(ManagerRegistry $doctrine): Response
     {
-
         $playerList = $doctrine->getRepository(Player::class)->findAll();
 
         if (!$playerList) {
@@ -25,9 +24,8 @@ class HomepageDartyController extends AbstractController
                 ['name' => 'Erika Mustermann'],
             ];
         } else {
-
-            foreach ($playerList as $player){
-                $players[] = ['name' => $player->getFirstName().' '.$player->getLastName()];
+            foreach ($playerList as $player) {
+                $players[] = ['name' => $player->getFirstName() . ' ' . $player->getLastName()];
             }
         }
 
