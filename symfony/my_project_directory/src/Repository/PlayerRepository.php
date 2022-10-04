@@ -14,6 +14,10 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Player[]    findAll()
  * @method Player[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+
+/**
+ * @codeCoverageIgnore
+ */
 class PlayerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
