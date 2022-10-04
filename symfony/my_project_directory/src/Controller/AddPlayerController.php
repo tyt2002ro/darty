@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Player;
 use App\Factory\PlayerFactory;
+use App\Form\PlayerType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,36 +17,30 @@ class AddPlayerController extends AbstractController
     #[Route('/addPlayerForm', name: 'addPlayerForm', methods: ['GET'])]
     public function addPlayerFormAction(): Response
     {
+        $player = new Player();
+        $form = $this->createForm(PlayerType::class, $player);
 
-        $player = [
-            'firstname' => '',
-            'lastname' => '',
-            'nickname' => ''
-        ];
-
-        return $this->render('darty/addPlayer.html.twig', [
-            'player' => $player
+        return $this->renderForm('darty/addPlayer.html.twig', [
+            'form' => $form,
         ]);
     }
 
-    #[Route('/buildPlayer', name: 'buildPlayerAction', methods: ['post'])]
+    #[Route('/addPlayerForm', name: 'buildPlayerAction', methods: ['post'])]
     public function buildPlayerAction(PersistenceManagerRegistry $doctrine, Request $request): RedirectResponse
     {
-        $entityManager = $doctrine->getManager();
+        $player = new Player();
+        $form = $this->createForm(PlayerType::class, $player);
+        $form->handleRequest($request);
 
-        $playerFactory = new PlayerFactory();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        $firstname = $request->get('firstname');
-        $lastname = $request->get('lastname');
-        $nickname = $request->get('nickname');
-        $player = $playerFactory->createPlayer($firstname,$lastname,$nickname);
-        // tell Doctrine you want to (eventually) save the Product (no queries yet)
-        $entityManager->persist($player);
+            $player = $form->getData();
 
-        // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($player);
+            $entityManager->flush();
+        }
 
         return $this->redirect('/', 301);
     }
-
 }

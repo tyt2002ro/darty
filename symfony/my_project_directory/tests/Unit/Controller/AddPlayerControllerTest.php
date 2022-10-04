@@ -6,6 +6,7 @@ use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Prophecy\Argument;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 final class AddPlayerControllerTest extends TestCase
@@ -25,6 +26,10 @@ final class AddPlayerControllerTest extends TestCase
         $persistenceManagerRegistry->getManager()->shouldBeCalled()->willReturn($objectManager->reveal());
         $objectManager->persist(Argument::any())->shouldBeCalled();
         $objectManager->flush()->shouldBeCalled();
+
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('form.factory')->shouldBeCalled();
+
         $result = $addPlayerController->buildPlayerAction($persistenceManagerRegistry->reveal(), $request);
         self::assertSame('/', $result->getTargetUrl());
 

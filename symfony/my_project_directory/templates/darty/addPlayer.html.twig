@@ -1,17 +1,2 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add player</title>
-</head>
-<body>
-<form action="/buildPlayer"  method="post">
-    <label for="firstname">First name:</label>
-    <input type="text" id="firstname" name="firstname" value="{{ player.firstname|e }}"><br><br>
-    <label for="lastname">Last name:</label>
-    <input type="text" id="lastname" name="lastname" value="{{ player.lastname|e }}"><br><br>
-    <label for="nickname">Nick name:</label>
-    <input type="text" id="nickname" name="nickname" value="{{ player.nickname|e }}"><br><br>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>
+{# templates/player/new.html.twig #}
+{{ form(form) }}
