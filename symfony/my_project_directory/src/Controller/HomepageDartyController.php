@@ -29,10 +29,14 @@ class HomepageDartyController extends AbstractController
             ['type' => 'Double-Out', 'checked' => true]
         ];
 
+        $number = new DoubleOutSuggestionClass();
+$values=$number->returnEndOptions(132);
+//die(print_r($values));
         return $this->render('darty/startPage.html.twig', [
             'players' => $players,
             'games' => $gameTypes,
             'gameEnds' => $gameEnds,
+            'number' => $values,
         ]);
     }
 }
