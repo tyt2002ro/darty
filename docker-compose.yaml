@@ -9,6 +9,7 @@ services:
     container_name: ${DOCKER_CONTAINER_TAG}-php
     volumes:
       - ./symfony/:/var/www/html/
+    working_dir: /var/www/html/my_project_directory
     networks:
       - darty2
     environment:
