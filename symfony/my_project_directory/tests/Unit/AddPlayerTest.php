@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Twig\Environment;
 
 final class AddPlayerTest extends TestCase
@@ -29,6 +32,16 @@ final class AddPlayerTest extends TestCase
         $container->get('twig')->shouldBeCalled()->willReturn($twig->reveal());
         $addPlayerController->setContainer($container->reveal());
         $twig->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
+
+        $formFactory = $this->prophesize(FormFactoryInterface::class);
+        $form = $this->prophesize(FormInterface::class);
+        $formView = $this->prophesize(FormView::class);
+
+        $container->get('form.factory')->shouldBeCalled()->willReturn($formFactory->reveal());
+        $formFactory->create(Argument::cetera())->shouldBeCalled()->willReturn($form->reveal());
+
+        $form->createView()->shouldBeCalled()->willReturn($formView->reveal());
+        $form->isSubmitted()->shouldBeCalled()->willReturn(false);
 
         self::assertSame($content, $addPlayerController->addPlayerFormAction()->getContent());
     }
