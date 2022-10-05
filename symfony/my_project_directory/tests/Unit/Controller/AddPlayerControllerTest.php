@@ -7,15 +7,19 @@ use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Player;
 
 final class AddPlayerControllerTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @test
      */
@@ -32,7 +36,7 @@ final class AddPlayerControllerTest extends TestCase
         $objectManager = $this->prophesize(ObjectManager::class);
 
         $container = $this->prophesize(ContainerInterface::class);
-        $formFactory = $this->prophesize(FormFactoryInterface::class);
+        $formFactory = $this->prophesize(FormFactory::class);
         $form = $this->prophesize(FormInterface::class);
         $player = $this->prophesize(Player::class);
 

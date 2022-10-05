@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Twig\Environment;
+use Symfony\Component\Form\FormFactory;
 
 final class AddPlayerTest extends TestCase
 {
@@ -33,7 +34,7 @@ final class AddPlayerTest extends TestCase
         $addPlayerController->setContainer($container->reveal());
         $twig->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
-        $formFactory = $this->prophesize(FormFactoryInterface::class);
+        $formFactory = $this->prophesize(FormFactory::class);
         $form = $this->prophesize(FormInterface::class);
         $formView = $this->prophesize(FormView::class);
 
