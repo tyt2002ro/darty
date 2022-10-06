@@ -45,10 +45,17 @@
     </tr>
     <tr>
         <td>
-            <button type="button" , id="new_game">Start new game</button>
+            <button type="button" id="new_game">Start new game</button>
         </td>
         <td>
-            <button type="button" , id="new_player">Add player to database</button>
+            <form>
+                <button type="submit" id="new_player" formaction="/addPlayerForm">Add player to database</button>
+            </form>
+        </td>
+        <td>
+            <form>
+                <button type="submit" id="edit_players" formaction="/player-management">Edit Players</button>
+            </form>
         </td>
     </tr>
 </table>
