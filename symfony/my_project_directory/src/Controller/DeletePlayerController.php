@@ -16,11 +16,11 @@ class DeletePlayerController extends AbstractController
         $entityManager = $doctrine->getManager();
         $player = $entityManager->getRepository(Player::class)->find($id);
 
-        if (!$player) {
-            throw $this->createNotFoundException(
-                'No player found for id '.$id
-            );
-        }
+//        if (!$player) {
+//            throw $this->createNotFoundException(
+//                'No player found for id '.$id
+//            );
+//        }
 
         $entityManager->remove($player);
         $entityManager->flush();
