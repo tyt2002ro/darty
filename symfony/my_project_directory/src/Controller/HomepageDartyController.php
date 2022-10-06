@@ -35,8 +35,8 @@ class HomepageDartyController extends AbstractController
         ];
 
         $gameEnds = [
-            ['type' => 'Single-Out', 'checked' => true],
-            ['type' => 'Double-Out', 'checked' => false]
+            ['type' => 'Single-Out', 'checked' => false],
+            ['type' => 'Double-Out', 'checked' => true]
         ];
 
         return $this->render('darty/startPage.html.twig', [
