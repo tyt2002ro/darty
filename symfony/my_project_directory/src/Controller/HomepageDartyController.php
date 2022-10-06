@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Player;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,15 +11,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageDartyController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
-    public function homepageAction(): Response
+    public function homepageAction(ManagerRegistry $doctrine): Response
     {
-        $players = [
-            ['name' => 'John Doe'],
-            ['name' => 'Same Name'],
-            ['name' => 'Max Mustermann'],
-            ['name' => 'Tudor Eu'],
-            ['name' => 'Erika Mustermann'],
-        ];
+        $playerList = $doctrine->getRepository(Player::class)->findAll();
+
+        if (!$playerList) {
+            $players = [
+                ['name' => 'John Doe'],
+                ['name' => 'Same Name'],
+                ['name' => 'Max Mustermann'],
+                ['name' => 'Tudor Eu'],
+                ['name' => 'Erika Mustermann'],
+            ];
+        } else {
+            foreach ($playerList as $player) {
+                $players[] = ['name' => $player->getFirstName() . ' ' . $player->getLastName()];
+            }
+        }
 
         $gameTypes = [
             ['type' => '301', 'checked' => true],
