@@ -23,10 +23,10 @@
                 <td>{{ player.lastname }}</td>
                 <td>{{ player.nickname }}</td>
                 <td>
-                    <button type="button">Edit</button>
+                    <a href="/edit/player/{{ player.id }}">Edit</a>
                 </td>
                 <td>
-                    <button type="button">Delete</button>
+                    <button type="submit">Delete</button>
                 </td>
             </tr>
         {% endfor %}
