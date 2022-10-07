@@ -42,23 +42,6 @@
                 </ul>
             {% endif %}
         </td>
-
-
-        <td>
-            <h1>Players</h1>
-            {% if number|length > 0 %}
-                <ul>
-                    {{number|json_encode(constant('JSON_PRETTY_PRINT'))|raw}}
-{#                    {{ number | values | join('; ') }}#}
-{#                    {% for num in number %}#}
-{#                        #}
-{#                        #}
-{#                        {{ num }}#}
-{#                    {% endfor %}#}
-                </ul>
-            {% endif %}
-        </td>
-
     </tr>
     <tr>
         <td>
