@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class DoubleOutSuggestionController extends AbstractController
 {
     #[Route('/doubleOutOptions', name: 'doubleOutPost', methods: ['POST'])]
-    public function buildPlayerAction(Request $request): Response
+    public function getDoubleOutOptionsAction(Request $request): Response
     {
         $points = $request->request->get('points');
 
