@@ -14,13 +14,11 @@ final class DoubleOutCalculationTest extends TestCase
      */
     public function firstArraySum(): void
     {
-        $request = new Request();
         $randomEndNumber = rand(2, 120);
-        $request->attributes->set('points', $randomEndNumber);
 
         $doubleOutCalculation = new DoubleOutCalculation();
         $returns = $doubleOutCalculation->returnEndOptions($randomEndNumber);
 
-        self::assertEquals($randomEndNumber, array_sum(explode(",",$returns[0],3)));
+        self::assertSame($randomEndNumber, array_sum(explode(",",$returns[0],3)));
     }
 }

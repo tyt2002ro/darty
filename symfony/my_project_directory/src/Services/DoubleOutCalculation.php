@@ -1,36 +1,32 @@
 <?php
+
 namespace App\Services;
 
 class DoubleOutCalculation
 {
-    private array $singleNumbers = [1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20, 25, 50];
-    private array $doubleNumbers = [2, 36, 8, 26, 12, 20, 30, 4, 34, 6, 38, 14, 32, 16, 22, 28, 18, 24, 10, 40];
-    private array $tripleNumbers = [3, 52, 12, 39, 18, 30, 45, 6, 54, 9, 57, 21, 48, 24, 33, 42, 27, 36, 15, 60];
+    /**
+     * @var array
+     */
+    private array $singleNumbers;
+    private array $doubleNumbers;
+    private array $tripleNumbers;
     private array $suggestionResult = [];
 
-    private function combinations($arr, $data, $start, $end, $index, $combinations, $points): array
+    public function __construct()
     {
-        if ($index == $combinations) {
-            if (in_array($data[2], $this->doubleNumbers)) {
-                $array = '';
-                $sum = [];
-                for ($j = 0; $j < 3; $j++) {
-                    $array .= $data[$j] . ', ';
-                    $sum[] = $data[$j];
-                }
-                if (!in_array($array, $this->suggestionResult, true)) {
-                    if (array_sum($sum) == $points)
-                        $this->suggestionResult[] = $array;
-                }
-            }
-            return [];
-        }
+        //single numbers: 1->20 + single bull (25) and double bull (50)
+        $this->singleNumbers = array_merge(range(1, 20), [20, 25]);
 
-        for ($i = $start; $i <= $end && $end - $i + 1 >= $combinations - $index; $i++) {
-            $data[$index] = $arr[$i];
-            $this->combinations($arr, $data, $i + 1, $end, $index + 1, $combinations, $points);
-        }
-        return $this->suggestionResult;
+        //duplicate single numbers
+        $this->doubleNumbers = array_map(static function ($item): float|int {
+            return $item * 2;
+        }, $this->singleNumbers);
+
+        //triples single numbers and remove triple of single bull (there is no triple bull)
+        $this->tripleNumbers = array_diff(array_map(static function ($item): float|int {
+            return $item * 3;
+        }, $this->singleNumbers), [75]);
+
     }
 
     public function returnEndOptions(int $points): array
@@ -38,6 +34,34 @@ class DoubleOutCalculation
         $combinations = 3;
         $numberOfAvailablePointsOnTable = count(array_merge($this->singleNumbers, $this->doubleNumbers, $this->tripleNumbers));
         $pointOptions = array_merge($this->singleNumbers, $this->doubleNumbers, $this->tripleNumbers);
-        return $this->combinations($pointOptions, [], 0, $numberOfAvailablePointsOnTable - 1, 0, $combinations, $points);
+        return $this->combinations($pointOptions, [], 0, $numberOfAvailablePointsOnTable - 1,
+            0, $combinations, $points);
+    }
+
+    private function combinations(array $pointOptions, array $data, int $start, int $numberOfAvailablePointsOnTable,
+                                 int $index, int $combinations, int $points): array
+    {
+        $this->buildCombinationSuggestion($data, $points, $index, $combinations);
+
+        for ($i = $start; $i <= $numberOfAvailablePointsOnTable && $numberOfAvailablePointsOnTable - $i + 1 >= $combinations - $index; $i++) {
+            $data[$index] = $pointOptions[$i];
+            $this->combinations($pointOptions, $data, $i + 1, $numberOfAvailablePointsOnTable, $index + 1, $combinations, $points);
+        }
+        return $this->suggestionResult;
+    }
+
+    private function buildCombinationSuggestion($data, $points, $index, $combinations): void
+    {
+        if ($index === $combinations && in_array($data[2], $this->doubleNumbers, true)) {
+            $array = '';
+            $sum = [];
+            for ($j = 0; $j < 3; $j++) {
+                $array .= $data[$j] . ', ';
+                $sum[] = $data[$j];
+            }
+            if (!in_array($array, $this->suggestionResult, true)) {
+                if (array_sum($sum) == $points) $this->suggestionResult[] = $array;
+            }
+        }
     }
 }
