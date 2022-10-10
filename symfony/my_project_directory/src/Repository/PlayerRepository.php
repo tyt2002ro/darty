@@ -43,6 +43,16 @@ class PlayerRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOneById($id): ?Player
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return Player[] Returns an array of Player objects
 //     */
