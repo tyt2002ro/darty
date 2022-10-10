@@ -38,30 +38,32 @@ class DoubleOutCalculation
             0, $combinations, $points);
     }
 
-    private function combinations(array $pointOptions, array $data, int $start, int $numberOfAvailablePointsOnTable,
-                                 int $index, int $combinations, int $points): array
+    private function combinations(array $pointOptions, array $data, int $start, int $end, int $index, int $combinations, int $points): array
     {
-        $this->buildCombinationSuggestion($data, $points, $index, $combinations);
+        if ($index === $combinations) {
+            $this->buildCombinationSuggestion($data, $points);
+            return [];
+        }
 
-        for ($i = $start; $i <= $numberOfAvailablePointsOnTable && $numberOfAvailablePointsOnTable - $i + 1 >= $combinations - $index; $i++) {
+        for ($i = $start; $i <= $end && $end - $i + 1 >= $combinations - $index; $i++) {
             $data[$index] = $pointOptions[$i];
-            $this->combinations($pointOptions, $data, $i + 1, $numberOfAvailablePointsOnTable, $index + 1, $combinations, $points);
+            $this->combinations($pointOptions, $data, $i + 1, $end, $index + 1, $combinations, $points);
         }
         return $this->suggestionResult;
     }
 
-    private function buildCombinationSuggestion($data, $points, $index, $combinations): void
+    private function buildCombinationSuggestion(array $data, int $points): void
     {
-        if ($index === $combinations && in_array($data[2], $this->doubleNumbers, true)) {
-            $array = '';
-            $sum = [];
-            for ($j = 0; $j < 3; $j++) {
-                $array .= $data[$j] . ', ';
-                $sum[] = $data[$j];
+            if (in_array($data[2], $this->doubleNumbers, true)) {
+                $array = '';
+                $sum = [];
+                for ($j = 0; $j < 3; $j++) {
+                    $array .= $data[$j] . ', ';
+                    $sum[] = $data[$j];
+                }
+                if (!in_array($array, $this->suggestionResult, true)) {
+                    if (array_sum($sum) === $points) $this->suggestionResult[] = $array;
+                }
             }
-            if (!in_array($array, $this->suggestionResult, true)) {
-                if (array_sum($sum) == $points) $this->suggestionResult[] = $array;
-            }
-        }
     }
 }

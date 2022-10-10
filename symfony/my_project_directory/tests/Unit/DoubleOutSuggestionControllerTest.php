@@ -20,31 +20,33 @@ final class DoubleOutSuggestionControllerTest extends TestCase
     public function doubleOutActionReturnsTemplate(): void
     {
         $content = 'some content';
-        $playerManagementScreenController = new DoubleOutSuggestionController();
+        $doubleOutSuggestionController = new DoubleOutSuggestionController();
         $twigTemplate = $this->prophesize(Environment::class);
         $container = $this->prophesize(ContainerInterface::class);
         $container->has('twig')->shouldBeCalled()->willReturn(true);
         $container->get('twig')->shouldBeCalled()->willReturn($twigTemplate->reveal());
-        $playerManagementScreenController->setContainer($container->reveal());
+        $doubleOutSuggestionController->setContainer($container->reveal());
         $twigTemplate->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
-        self::assertSame($content, $playerManagementScreenController->doubleOutAction()->getContent());
+        self::assertSame($content, $doubleOutSuggestionController->doubleOutAction()->getContent());
     }
 
     /**
      * @test
      */
-    public function doubleOutPostReturnsTempalte(): void
+    public function doubleOutPostReturnsTemplate(): void
     {
-        $content = 'some content';
-        $playerManagementScreenController = new DoubleOutSuggestionController();
+        $content = 'some content2';
+        $requestData = new Request();
+        $requestData->request->set('points', rand(2, 120));
+        $doubleOutSuggestionController = new DoubleOutSuggestionController();
         $twigTemplate = $this->prophesize(Environment::class);
         $container = $this->prophesize(ContainerInterface::class);
         $container->has('twig')->shouldBeCalled()->willReturn(true);
         $container->get('twig')->shouldBeCalled()->willReturn($twigTemplate->reveal());
-        $playerManagementScreenController->setContainer($container->reveal());
+        $doubleOutSuggestionController->setContainer($container->reveal());
         $twigTemplate->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
-        self::assertSame($content, $playerManagementScreenController->getDoubleOutOptionsAction(new Request())->getContent());
+        self::assertSame($content, $doubleOutSuggestionController->getDoubleOutOptionsAction($requestData)->getContent());
     }
 }
