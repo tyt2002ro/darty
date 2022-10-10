@@ -3,9 +3,6 @@
 namespace App\tests\Unit;
 
 use App\Controller\DoubleOutSuggestionController;
-
-
-use App\Services\DoubleOutCalculation;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -13,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
-final class DoubleOutSuggestionTest extends TestCase
+final class DoubleOutSuggestionControllerTest extends TestCase
 {
     use ProphecyTrait;
 
@@ -49,20 +46,5 @@ final class DoubleOutSuggestionTest extends TestCase
         $twigTemplate->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
         self::assertSame($content, $playerManagementScreenController->getDoubleOutOptionsAction(new Request())->getContent());
-    }
-
-    /**
-     * @test
-     */
-    public function firstArraySum(): void
-    {
-        $request = new Request();
-        $randomEndNumber = rand(2, 120);
-        $request->attributes->set('points', $randomEndNumber);
-
-        $doubleOutCalculation = new DoubleOutCalculation();
-        $returns = $doubleOutCalculation->returnEndOptions($randomEndNumber);
-
-        self::assertEquals($randomEndNumber, array_sum(explode(",",$returns[0],3)));
     }
 }
