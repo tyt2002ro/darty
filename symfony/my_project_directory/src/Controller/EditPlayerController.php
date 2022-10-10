@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Player;
 use App\Exceptions\PlayerNotExistException;
 use App\Form\PlayerType;
 use App\Service\EditPlayerService;
@@ -22,7 +21,7 @@ class EditPlayerController extends AbstractController
     public function editPlayerFormAction(ManagerRegistry $managerRegistry, int $playerId): Response
     {
         $playerService = new EditPlayerService();
-        $player = $playerService->getPlayerFromDb($managerRegistry,$playerId);
+        $player = $playerService->getPlayerFromDb($managerRegistry, $playerId);
         $form = $this->createForm(PlayerType::class, $player);
 
         return $this->renderForm('darty/editPlayer.html.twig', [
@@ -34,22 +33,13 @@ class EditPlayerController extends AbstractController
      * @throws PlayerNotExistException
      */
     #[Route('/edit/player/{playerId}', name: 'editPlayerAction', methods: ['post'])]
-    public function editPlayerAction(ManagerRegistry $managerRegistry, Request $request,$playerId): RedirectResponse
+    public function editPlayerAction(ManagerRegistry $managerRegistry, Request $request, $playerId): RedirectResponse
     {
-        $editPlayerService =  new EditPlayerService();
+        $editPlayerService = new EditPlayerService();
         $player = $editPlayerService->getPlayerFromDb($managerRegistry, $playerId);
 
         $form = $this->createForm(PlayerType::class, $player);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $player = $form->getData();
-
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->persist($player);
-            $entityManager->flush();
-        }
+        $editPlayerService->editAnExistentPlayer($form, $request, $managerRegistry);
 
         return $this->redirect('/player-management', 301);
 

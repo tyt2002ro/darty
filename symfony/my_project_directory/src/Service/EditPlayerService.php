@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Entity\Player;
 use App\Exceptions\PlayerNotExistException;
-use App\Form\PlayerType;
 
 class EditPlayerService
 {
@@ -19,6 +18,20 @@ class EditPlayerService
             return $player;
         } else {
             throw new PlayerNotExistException("This player does not exist");
+        }
+    }
+
+    public function editAnExistentPlayer($form, $request, $managerRegistry): void
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $player = $form->getData();
+
+            $entityManager = $managerRegistry->getManager();
+            $entityManager->persist($player);
+            $entityManager->flush();
         }
     }
 }
