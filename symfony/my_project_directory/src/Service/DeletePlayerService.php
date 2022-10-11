@@ -7,18 +7,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeletePlayerService
 {
-    protected $playerRepository;
+    protected PlayerRepository $playerRepository;
 
     public function __construct(PlayerRepository $playerRepository)
     {
         $this->playerRepository = $playerRepository;
     }
 
-    public function deleteById($id)
+    public function deleteById(int $id): void
     {
         $player = $this->playerRepository->findOneById($id);
-        if(empty($player))
-        {
+        if (empty($player)) {
             throw new NotFoundHttpException('No player found for id ' . $id, null);
         }
 

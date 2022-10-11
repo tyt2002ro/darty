@@ -11,15 +11,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DeletePlayerServiceTest extends TestCase
 {
     use PropertyTrait;
+
     /**
      * @test
      */
-    public function checkDeleteExistentPlayer()
+    public function checkDeleteExistentPlayer(): void
     {
         $id = 1;
         $playerRepository = $this->prophesize(PlayerRepository::class);
-        $player = $this->prophesize(Player::class);
-
         $playerRepository->findOneById($id)->shouldBeCalled()->willReturn(new Player());
         $playerRepository->remove(new Player(), true);
 
@@ -31,12 +30,10 @@ class DeletePlayerServiceTest extends TestCase
     /**
      * @test
      */
-    public function checkDeleteNonExistentPlayer()
+    public function checkDeleteNonExistentPlayer(): void
     {
         $id = 1;
         $playerRepository = $this->prophesize(PlayerRepository::class);
-        $player = $this->prophesize(Player::class);
-
         $playerRepository->findOneById($id)->shouldBeCalled()->willReturn(null);
 
         $deletePlayerService = new DeletePlayerService($playerRepository->reveal());
