@@ -86,6 +86,8 @@ class DoubleOutCalculation
             $option .= self::D.$secondNumber/2;
         } elseif(in_array($secondNumber, $this->tripleNumbers, true)){
             $option .= self::T.$secondNumber/3;
+        } else {
+            $option .= $secondNumber;
         }
         $option .= ", ";
 
