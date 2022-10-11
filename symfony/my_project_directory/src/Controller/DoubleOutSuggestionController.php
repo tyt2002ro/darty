@@ -17,15 +17,15 @@ final class DoubleOutSuggestionController extends AbstractController
         $points = $request->request->get('points');
 
         $options = new DoubleOutCalculation();
-        $endOptions = $options->returnEndOptions((int)$points);
+        $endOption = $options->returnEndOptions((int)$points);
 
         return $this->render('darty/doubleEndOptions.html.twig',
-            parameters: ['options' => $endOptions]);
+            parameters: ['option' => $endOption]);
     }
 
     #[Route('/doubleOutOptions', name: 'doubleOut', methods: ['GET'])]
     public function doubleOutAction(): Response
     {
-        return $this->render('darty/doubleEndOptions.html.twig', parameters: ['options' => []]);
+        return $this->render('darty/doubleEndOptions.html.twig', parameters: ['option' => []]);
     }
 }

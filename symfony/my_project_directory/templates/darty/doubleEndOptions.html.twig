@@ -19,12 +19,10 @@
             </td>
         </tr>
         </form>
-            {% if options|length > 0 %}
-            {% for option in options %}
+        {% if option|length > 0 %}
         <tr>
             <td>{{ option }}</td>
         </tr>
-        {% endfor %}
         {% endif %}
     </table>
 

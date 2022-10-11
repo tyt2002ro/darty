@@ -19,6 +19,6 @@ final class DoubleOutCalculationTest extends TestCase
         $doubleOutCalculation = new DoubleOutCalculation();
         $returns = $doubleOutCalculation->returnEndOptions($randomEndNumber);
 
-        self::assertSame($randomEndNumber, array_sum(explode(",",$returns[0],3)));
+        self::assertSame($randomEndNumber, $doubleOutCalculation->returnValueOfFormattedOption($returns));
     }
 }
