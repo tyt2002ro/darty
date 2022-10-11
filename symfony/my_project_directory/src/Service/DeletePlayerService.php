@@ -24,3 +24,4 @@ class DeletePlayerService
         $this->playerRepository->remove($player, true);
     }
 }
+
