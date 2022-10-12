@@ -10,8 +10,8 @@ class DoubleOutCalculation
     private array $singleNumbers;
     private array $doubleNumbers;
     private array $tripleNumbers;
-    public const D = "D";
-    public const T = "T";
+    public const DOUBLE_NUMBER = "D";
+    public const TRIPLE_NUMBER = "T";
     public DoubleOutSuggestion $suggestionResult;
 
     public function __construct()
@@ -73,9 +73,9 @@ class DoubleOutCalculation
         $option = '';
         $firstNumber = $endOption->getFirstNumber();
         if(in_array($firstNumber, $this->doubleNumbers, true)){
-            $option .= self::D.$firstNumber/2;
+            $option .= self::DOUBLE_NUMBER.$firstNumber/2;
         } elseif(in_array($firstNumber, $this->tripleNumbers, true)){
-            $option .= self::T.$firstNumber/3;
+            $option .= self::TRIPLE_NUMBER.$firstNumber/3;
         }else{
             $option .= $firstNumber;
         }
@@ -83,16 +83,16 @@ class DoubleOutCalculation
 
         $secondNumber = $endOption->getSecondNumber();
         if(in_array($secondNumber, $this->doubleNumbers, true)){
-            $option .= self::D.$secondNumber/2;
+            $option .= self::DOUBLE_NUMBER.$secondNumber/2;
         } elseif(in_array($secondNumber, $this->tripleNumbers, true)){
-            $option .= self::T.$secondNumber/3;
+            $option .= self::TRIPLE_NUMBER.$secondNumber/3;
         } else {
             $option .= $secondNumber;
         }
         $option .= ", ";
 
         $doubleOut = $endOption->getDoubleOut();
-        $option .= self::D.$doubleOut/2;
+        $option .= self::DOUBLE_NUMBER.$doubleOut/2;
 
         return $option;
     }
@@ -102,10 +102,10 @@ class DoubleOutCalculation
         $optionNumbers = explode(",", $option);
         $sum = 0;
         foreach ($optionNumbers as $number){
-            if(str_starts_with(trim($number), self::D)){
-                $sum += (int)str_replace(self::D,"",trim($number))*2;
-            } elseif(str_starts_with(trim($number), self::T)){
-                $sum += (int)str_replace(self::T,"",trim($number))*3;
+            if(str_starts_with(trim($number), self::DOUBLE_NUMBER)){
+                $sum += (int)str_replace(self::DOUBLE_NUMBER,"",trim($number))*2;
+            } elseif(str_starts_with(trim($number), self::TRIPLE_NUMBER)){
+                $sum += (int)str_replace(self::TRIPLE_NUMBER,"",trim($number))*3;
             } else {
                 $sum += (int)$number;
             }
