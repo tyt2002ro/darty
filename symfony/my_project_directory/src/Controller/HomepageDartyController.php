@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Player;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
