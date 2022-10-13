@@ -25,7 +25,10 @@ class HomepageDartyController extends AbstractController
             ];
         } else {
             foreach ($playerList as $player) {
-                $players[] = ['name' => $player->getFirstName() . ' ' . $player->getLastName()];
+                $players[] = [
+                    'id' => $player->getId(),
+                    'name' => $player->getFirstName() . ' ' . $player->getLastName()
+                ];
             }
         }
 
