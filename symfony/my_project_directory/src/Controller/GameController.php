@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\Player;
+use App\Repository\GameRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,19 @@ class GameController extends AbstractController
         $entityManager->persist($game);
         $entityManager->flush();
 
-        return $this->redirect('/', 301);
+        return $this->redirect('/game/'.$game->getId(), 301);
     }
+
+    #[Route('/game/{id}', name: 'app_game')]
+    public function index(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $game = $doctrine->getRepository(Game::class)->find($id);
+        $players = $game->getPlayerId();
+
+        return $this->render('game/index.html.twig', [
+            'mainPlayer' => $players[0],
+            'controller_name' => 'GameController',
+        ]);
+    }
+
 }

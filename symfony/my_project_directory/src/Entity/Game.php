@@ -25,9 +25,13 @@ class Game
     #[ORM\ManyToMany(targetEntity: Player::class)]
     private Collection $player_id;
 
+    #[ORM\OneToMany(mappedBy: 'game_id', targetEntity: GameThrow::class, orphanRemoval: true)]
+    private Collection $gameThrows;
+
     public function __construct()
     {
         $this->player_id = new ArrayCollection();
+        $this->gameThrows = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,6 +83,36 @@ class Game
     public function removePlayerId(Player $playerId): self
     {
         $this->player_id->removeElement($playerId);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, GameThrow>
+     */
+    public function getGameThrows(): Collection
+    {
+        return $this->gameThrows;
+    }
+
+    public function addGameThrow(GameThrow $gameThrow): self
+    {
+        if (!$this->gameThrows->contains($gameThrow)) {
+            $this->gameThrows->add($gameThrow);
+            $gameThrow->setGameId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGameThrow(GameThrow $gameThrow): self
+    {
+        if ($this->gameThrows->removeElement($gameThrow)) {
+            // set the owning side to null (unless already changed)
+            if ($gameThrow->getGameId() === $this) {
+                $gameThrow->setGameId(null);
+            }
+        }
 
         return $this;
     }
