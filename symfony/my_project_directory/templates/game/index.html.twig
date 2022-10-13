@@ -3,18 +3,205 @@
 <title>Hello GameController!</title>
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        .left-container {
+            width: 70%;
+            float: left;
+            margin-bottom: 20px;
+        }
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/my_project_directory/src/Controller/GameController.php'|file_link(0) }}">src/Controller/GameController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/my_project_directory/templates/game/index.html.twig'|file_link(0) }}">templates/game/index.html.twig</a></code></li>
-    </ul>
-</div>
+        .left-container .title {
+            width: 50%;
+            text-align: center;
+            margin-bottom: 10px;
+            float: left;
+        }
+
+        .right-container {
+            width: 25%;
+            float: left;
+            padding: 10px;
+            border-left: 1px solid black;
+        }
+
+        .button {
+            text-align: center;
+            margin-bottom: 5px;
+            float: left;
+            background: gray;
+            color: white;
+            border-radius: 5px;
+            padding: 7px 0px;
+            margin-right: 1%;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: lightgray;
+            color: black;
+        }
+
+        .button-small {
+            width: 31%;
+        }
+
+        .button-large {
+            width: 47%;
+        }
+
+        .buttons-container {
+            width: 50%;
+            margin: auto;
+        }
+
+        .row {
+            width: 100%;
+            clear: both;
+        }
+
+        .cell {
+            text-align: center;
+            margin-bottom: 10px;
+            float: left;
+        }
+
+        .cell-4 {
+            width: 25%;
+        }
+
+        .cell-2 {
+            width: 50%;
+        }
+
+        .cell-1 {
+            width: 100%;
+        }
+
+        .cell-title {
+            font-size: 21px;
+        }
+
+        .cell-text-green {
+            color: green;
+        }
+
+        .cell-fixed-height {
+            height: 35px;
+        }
+
+        .cell-big-font {
+            font-size: 30px;
+        }
+
+        .cell-padding-top {
+            padding-top: 10px;
+        }
+
+        .image {
+            width: 16px;
+        }
+    </style>
+
+    <div class="wrapper">
+        <div class="row">
+            <div class="left-container">
+                {% if mainPlayer|length > 0 %}
+                    <div class="row">
+                        <div class="title">Set 1/1</div>
+                        <div class="title">Leg 2/3</div>
+                    </div>
+                    <div class="row">
+                        <div class="cell cell-4">{{ mainPlayer.nickname }}</div>
+                        <div class="cell cell-4">20</div>
+                        <div class="cell cell-4">-</div>
+                    </div>
+                    <div class="row">
+                        <div class="cell cell-4 cell-text-green cell-fixed-height cell-big-font">213</div>
+                        <div class="cell cell-4 cell-fixed-height cell-padding-top">0 S
+                        </div>
+                        <div class="cell cell-4 cell-fixed-height cell-padding-top">1 L<img
+                                    src="{{ asset('images/darts_arrow.png') }}" alt="darts arrow" class="image"/>
+                        </div>
+                        <div class="cell cell-4 cell-fixed-height cell-padding-top">5
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="cell cell-4">52.8</div>
+                        <div class="cell cell-4">-</div>
+                        <div class="cell cell-4">-</div>
+                        <div class="cell cell-4">-</div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="right-container">
+                <div class="cell cell-1 cell-title">Emma</div>
+                <div class="cell cell-2">244</div>
+                <div class="cell cell-2">28.5</div>
+
+                <div class="cell cell-1 cell-title">Noah</div>
+                <div class="cell cell-2">208</div>
+                <div class="cell cell-2">46.5</div>
+            </div>
+        </div>
+        <div class="buttons-container">
+            <div class="row">
+                <div class="button button-large">
+                    Double
+                </div>
+                <div class="button button-large">
+                    Triple
+                </div>
+            </div>
+            <div class="row">
+                <div class="button button-small"><a href="create/game_throw/game/{{game.id}}/player/{{ mainPlayer.id }}/value/1"1</div>
+                <div class="button button-small">2</div>
+                <div class="button button-small">3</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">4</div>
+                <div class="button button-small">5</div>
+                <div class="button button-small">6</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">7</div>
+                <div class="button button-small">8</div>
+                <div class="button button-small">9</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">10</div>
+                <div class="button button-small">11</div>
+                <div class="button button-small">12</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">13</div>
+                <div class="button button-small">14</div>
+                <div class="button button-small">15</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">16</div>
+                <div class="button button-small">17</div>
+                <div class="button button-small">18</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">19</div>
+                <div class="button button-small">20</div>
+                <div class="button button-small">25</div>
+            </div>
+            <div class="row">
+                <div class="button button-large">
+                    Daneben
+                </div>
+                <div class="button button-large">
+                    Undo
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
