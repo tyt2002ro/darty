@@ -2,6 +2,7 @@
 
 use App\Controller\EditPlayerController;
 use App\Entity\Player;
+use App\Service\EditPlayerService;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
@@ -19,6 +20,7 @@ final class EditPlayerControllerTest extends TestCase
     /**
      * @test
      */
+
     public function editPlayerPageActionsReturnsTemplate(): void
     {
         $content = 'content';
@@ -29,7 +31,6 @@ final class EditPlayerControllerTest extends TestCase
         $player->setFirstname("tudor");
         $player->setFirstname("vtudor");
 
-        $editPlayerController = new EditPlayerController();
 
         $containerMock = $this->prophesize(ContainerInterface::class);
         $managerRegistryMock = $this->prophesize(ManagerRegistry::class);
@@ -38,6 +39,8 @@ final class EditPlayerControllerTest extends TestCase
         $formInterfaceMock = $this->prophesize(FormInterface::class);
         $formViewMock = $this->prophesize(FormView::class);
         $twig = $this->prophesize(Environment::class);
+
+        $editPlayerController = new EditPlayerController(new EditPlayerService($managerRegistryMock->reveal()));
 
         $managerRegistryMock->getRepository(Player::class)->shouldBeCalled()->willReturn($objectRepository->reveal());
         $objectRepository->find($player->getId())->shouldBeCalled()->willReturn($player);
@@ -55,7 +58,7 @@ final class EditPlayerControllerTest extends TestCase
 
         $twig->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
-        $result = $editPlayerController->editPlayerFormAction($managerRegistryMock->reveal(), $player->getId());
+        $result = $editPlayerController->editPlayerFormAction($player->getId());
         self::assertSame($content, $result->getContent());
     }
 
@@ -70,7 +73,6 @@ final class EditPlayerControllerTest extends TestCase
         $player = new Player();
         $player->setId($playerId);
 
-        $editPlayerController = new EditPlayerController();
         $request = new Request();
 
         $managerRegistry = $this->prophesize(ManagerRegistry::class);
@@ -80,6 +82,8 @@ final class EditPlayerControllerTest extends TestCase
         $formInterface = $this->prophesize(FormInterface::class);
         $objectManager = $this->prophesize(ObjectManager::class);
         $playerMock = $this->prophesize(Player::class);
+
+        $editPlayerController = new EditPlayerController(new EditPlayerService($managerRegistry->reveal()));
 
         $managerRegistry->getRepository(Player::class)->shouldBeCalled()->willReturn($objectRepository->reveal());
         $objectRepository->find($player->getId())->shouldBeCalled()->willReturn($player);
@@ -97,7 +101,7 @@ final class EditPlayerControllerTest extends TestCase
         $objectManager->persist($playerMock->reveal())->shouldBeCalled();
         $objectManager->flush()->shouldBeCalled();
 
-        $result = $editPlayerController->editPlayerAction($managerRegistry->reveal(), $request, $playerId);
+        $result = $editPlayerController->editPlayerAction($request, $playerId);
         self::assertSame($expectedUrl, $result->getTargetUrl());
     }
 }

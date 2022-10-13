@@ -4,24 +4,31 @@ namespace App\Service;
 
 use App\Entity\Player;
 use App\Exceptions\PlayerNotExistException;
+use Doctrine\Persistence\ManagerRegistry;
 
 class EditPlayerService
 {
+    private ManagerRegistry $managerRegistry;
+
+    public function __construct(ManagerRegistry $managerRegistry)
+    {
+        $this->managerRegistry = $managerRegistry;
+
+    }
 
     /**
      * @throws PlayerNotExistException
      */
-    public function getPlayerFromDb($managerRegistry, $playerId): Player
+    public function getPlayerFromDb($playerId): Player
     {
-        $player = $managerRegistry->getRepository(Player::class)->find($playerId);
-        if ($player !== null) {
-            return $player;
-        } else {
+        $player = $this->managerRegistry->getRepository(Player::class)->find($playerId);
+        if ($player === null) {
             throw new PlayerNotExistException("This player does not exist");
         }
+        return $player;
     }
 
-    public function editAnExistentPlayer($form, $request, $managerRegistry): void
+    public function editAnExistentPlayer($form, $request): void
     {
         $form->handleRequest($request);
 
@@ -29,7 +36,7 @@ class EditPlayerService
 
             $player = $form->getData();
 
-            $entityManager = $managerRegistry->getManager();
+            $entityManager = $this->managerRegistry->getManager();
             $entityManager->persist($player);
             $entityManager->flush();
         }
