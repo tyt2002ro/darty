@@ -1,19 +1,13 @@
 <?php
 
-
 use App\Controller\DeletePlayerController;
 use App\Entity\Player;
 use App\Service\DeletePlayerService;
-use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Router;
 
 class DeletePlayerControllerTest extends TestCase
 {
@@ -22,22 +16,22 @@ class DeletePlayerControllerTest extends TestCase
     /**
      * @test
      */
-    public function checkDeleteController(): void
+    public function verifyDeletePlayer(): void
     {
-        $id = 12;
-
         $deletePlayerService = $this->prophesize(DeletePlayerService::class);
         $container = $this->prophesize(ContainerInterface::class);
         $router = $this->prophesize(Router::class);
+        $player = $this->prophesize(Player::class);
+
+        $deleteController = new DeletePlayerController();
+        $deleteController->setContainer($container->reveal());
 
         $container->get('router')->shouldBeCalled()->willReturn($router->reveal());
         $router->generate(Argument::cetera())->shouldBeCalled()->willReturn('playerManagement');
 
-        $deletePlayerController = new DeletePlayerController();
-        $deletePlayerController->setContainer($container->reveal());
-
-        $result = $deletePlayerController->delete($deletePlayerService->reveal(),$id);
+        $result = $deleteController->delete($deletePlayerService->reveal(), $player->reveal());
 
         self::assertSame('playerManagement', $result->getTargetUrl());
+
     }
 }

@@ -1,45 +1,28 @@
 <?php
 
-
-use App\Entity\Player;
 use App\Repository\PlayerRepository;
 use App\Service\DeletePlayerService;
+use App\Entity\Player;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\Loader\Configurator\Traits\PropertyTrait;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class DeletePlayerServiceTest extends TestCase
 {
-    use PropertyTrait;
+    use ProphecyTrait;
 
     /**
      * @test
      */
-    public function checkDeleteExistentPlayer(): void
+    public function checkDeletePlayer(): void
     {
-        $id = 1;
+        $player = $this->prophesize(Player::class);
         $playerRepository = $this->prophesize(PlayerRepository::class);
-        $playerRepository->findOneById($id)->shouldBeCalled()->willReturn(new Player());
-        $playerRepository->remove(new Player(), true);
 
         $deletePlayerService = new DeletePlayerService($playerRepository->reveal());
 
-        $deletePlayerService->deleteById($id);
+        $deletePlayerService->delete($player->reveal());
+
+        self::assertTrue(true);
     }
 
-    /**
-     * @test
-     */
-    public function checkDeleteNonExistentPlayer(): void
-    {
-        $id = 1;
-        $playerRepository = $this->prophesize(PlayerRepository::class);
-        $playerRepository->findOneById($id)->shouldBeCalled()->willReturn(null);
-
-        $deletePlayerService = new DeletePlayerService($playerRepository->reveal());
-
-        $this->expectException(NotFoundHttpException::class);
-
-        $deletePlayerService->deleteById($id);
-    }
 }

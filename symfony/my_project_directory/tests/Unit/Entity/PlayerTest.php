@@ -3,14 +3,14 @@
 namespace App\Tests;
 
 use PHPUnit\Framework\TestCase;
-use \App\Entity\Player;
+use App\Entity\Player;
 
 class PlayerTest extends TestCase
 {
     /**
      * @test
      */
-    public function ckeckFirstName(): void
+    public function checkFirstName(): void
     {
         $expectedFirstname = 'John';
 
@@ -23,7 +23,7 @@ class PlayerTest extends TestCase
     /**
      * @test
      */
-    public function ckeckLastName(): void
+    public function checkLastName(): void
     {
         $expectedLastname = 'Doe';
 
@@ -36,7 +36,7 @@ class PlayerTest extends TestCase
     /**
      * @test
      */
-    public function ckeckNickName(): void
+    public function checkNickName(): void
     {
         $expectedNickname = 'Test';
 

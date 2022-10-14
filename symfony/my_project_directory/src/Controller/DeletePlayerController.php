@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Player;
 use App\Service\DeletePlayerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,10 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DeletePlayerController extends AbstractController
 {
-    #[Route('/delete/player/{id}', name: 'delete_player')]
-    public function delete(DeletePlayerService $deletePlayerService, int $id): Response
+    #[Route('/player/delete/{id}', name: 'delete_player')]
+    public function delete(DeletePlayerService $deletePlayerService, Player $player): Response
     {
-        $deletePlayerService->deleteById($id);
+        $deletePlayerService->delete($player);
 
         return $this->redirectToRoute('playerManagement');
     }

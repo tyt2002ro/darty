@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Player;
 use App\Repository\PlayerRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -14,11 +15,10 @@ class DeletePlayerService
         $this->playerRepository = $playerRepository;
     }
 
-    public function deleteById(int $id): void
+    public function delete(Player $player): void
     {
-        $player = $this->playerRepository->findOneById($id);
-        if (empty($player)) {
-            throw new NotFoundHttpException('No player found for id ' . $id, null);
+        if ($player === null) {
+            throw new NotFoundHttpException('No player found.', null);
         }
 
         $this->playerRepository->remove($player, true);
