@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlayerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
@@ -21,6 +23,14 @@ class Player
 
     #[ORM\Column(length: 255)]
     private ?string $nickname = null;
+
+    #[ORM\OneToMany(mappedBy: 'player_id', targetEntity: GameThrow::class, orphanRemoval: true)]
+    private Collection $gameThrows;
+
+    public function __construct()
+    {
+        $this->gameThrows = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -67,6 +77,36 @@ class Player
     public function setNickname(string $nickname): self
     {
         $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, GameThrow>
+     */
+    public function getGameThrows(): Collection
+    {
+        return $this->gameThrows;
+    }
+
+    public function addGameThrow(GameThrow $gameThrow): self
+    {
+        if (!$this->gameThrows->contains($gameThrow)) {
+            $this->gameThrows->add($gameThrow);
+            $gameThrow->setPlayerId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGameThrow(GameThrow $gameThrow): self
+    {
+        if ($this->gameThrows->removeElement($gameThrow)) {
+            // set the owning side to null (unless already changed)
+            if ($gameThrow->getPlayerId() === $this) {
+                $gameThrow->setPlayerId(null);
+            }
+        }
 
         return $this;
     }

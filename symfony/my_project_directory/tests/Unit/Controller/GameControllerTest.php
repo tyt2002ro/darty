@@ -46,6 +46,6 @@ final class GameControllerTest extends TestCase
         $objectManager->flush()->shouldBeCalled();
 
         $result = $gameController->create($persistenceManagerRegistry->reveal(), $request);
-        self::assertSame('/', $result->getTargetUrl());
+        self::assertSame('/game/', $result->getTargetUrl());
     }
 }

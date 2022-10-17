@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Player;
-use App\Factory\PlayerFactory;
 use App\Form\PlayerType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
 class AddPlayerController extends AbstractController
 {
+
     #[Route('/addPlayerForm', name: 'addPlayerForm', methods: ['GET'])]
     public function addPlayerFormAction(): Response
     {

@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\GameThrow;
 use App\Entity\Player;
-use App\Repository\GameRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,9 +40,18 @@ class GameController extends AbstractController
         $game = $doctrine->getRepository(Game::class)->find($id);
         $players = $game->getPlayerId();
 
+        $mainPlayerData = $doctrine->getRepository(GameThrow::class)->findPlayerDataForThrow(
+            $game->getId(), $players[0]->getId());
+
+        $mainPlayerDataName = $players[0]->getFirstname().' '.$players[0]->getLastname();
+
+
         return $this->render('game/index.html.twig', [
-            'mainPlayer' => $players[0],
-            'controller_name' => 'GameController',
+            'player_id' => $players[0]->getId(),
+            'mainPlayerData' => $mainPlayerData,
+            'mainPlayerDataName' => $mainPlayerDataName,
+            'game_id' => $id,
+            'controller_name' => 'GameController'
         ]);
     }
 
