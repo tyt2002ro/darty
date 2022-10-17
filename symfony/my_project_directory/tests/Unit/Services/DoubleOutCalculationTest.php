@@ -30,6 +30,7 @@ final class DoubleOutCalculationTest extends TestCase
     {
         yield 'score 160' => [new DoubleOutSuggestion('T20', 'T20', 'D20'), 160];
         yield 'score 2' => [new DoubleOutSuggestion('', '', 'D1'), 2];
+        yield 'score 1' => [new DoubleOutSuggestion('', '', ''), 0];
         yield 'score 121' => [new DoubleOutSuggestion('T20', 'T7', 'D20'), 121];
         yield 'score 104' => [new DoubleOutSuggestion('T20', 'D2', 'D20'), 104];
     }

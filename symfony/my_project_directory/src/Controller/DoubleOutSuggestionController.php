@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 final class DoubleOutSuggestionController extends AbstractController
 {
     #[Route('/doubleOutOptions', name: 'doubleOutPost', methods: ['POST'])]
@@ -17,7 +16,7 @@ final class DoubleOutSuggestionController extends AbstractController
         $points = $request->request->get('points');
 
         $options = new DoubleOutCalculation();
-        $endOption = $options->returnEndOptions((int)$points);
+        $endOption = $options->calculate((int)$points);
 
         return $this->render('darty/doubleEndOptions.html.twig',
             parameters: ['option' => $endOption]);
