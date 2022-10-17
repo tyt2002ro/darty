@@ -301,9 +301,12 @@
                 </form>
             </div>
             <div class="row">
-                <div class="button button-large">
-                    Daneben
-                </div>
+                <form method="POST" action="/add/throw">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="0">
+                    <button type="submit" class="button  button-large" id="0">Daneben</button>
+                </form>
                 <div class="button button-large">
                     Undo
                 </div>
