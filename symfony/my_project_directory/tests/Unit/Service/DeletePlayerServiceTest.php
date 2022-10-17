@@ -5,6 +5,7 @@ use App\Service\DeletePlayerService;
 use App\Entity\Player;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeletePlayerServiceTest extends TestCase
 {
@@ -23,6 +24,20 @@ class DeletePlayerServiceTest extends TestCase
         $deletePlayerService->delete($player->reveal());
 
         self::assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
+    public function checkDeleteInvalidPlayer(): void
+    {
+        $playerRepository = $this->prophesize(PlayerRepository::class);
+
+        $deletePlayerService = new DeletePlayerService($playerRepository->reveal());
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $deletePlayerService->delete(null);
     }
 
 }

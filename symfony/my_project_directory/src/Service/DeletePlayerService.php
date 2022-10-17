@@ -15,7 +15,7 @@ class DeletePlayerService
         $this->playerRepository = $playerRepository;
     }
 
-    public function delete(Player $player): void
+    public function delete(Player|null $player): void
     {
         if ($player === null) {
             throw new NotFoundHttpException('No player found.', null);
