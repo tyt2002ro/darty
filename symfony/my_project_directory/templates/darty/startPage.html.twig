@@ -49,14 +49,10 @@
                 <button type="submit" form="form1" value="Submit">Start new game</button>
             </td>
             <td>
-                <form>
-                    <button type="submit" id="new_player" formaction="/addPlayerForm">Add player to database</button>
-                </form>
+                <button type="button" id="new_player" onclick="location.href='/addPlayerForm'">Add player to database</button>
             </td>
             <td>
-                <form>
-                    <button type="submit" id="edit_players" formaction="/player-management">Edit Players</button>
-                </form>
+                <button type="button" id="edit_players" onclick="location.href ='/player-management'">Edit Players</button>
             </td>
         </tr>
     </table>
