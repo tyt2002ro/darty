@@ -47,3 +47,5 @@ sonar:
         "
   dependencies:
     - php-unit
+  only:
+    - develop
