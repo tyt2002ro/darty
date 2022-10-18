@@ -38,6 +38,7 @@ sonar:
   stage: quality-check
   image: docker-repository.intern.neusta.de/sonarsource/sonar-scanner-cli:neusta
   script:
+#    - sed -i 's|/builds/.*/sbock/darty2|'$CI_PROJECT_DIR'|g' Source/reports/clover-coverage.xml
     - "sonar-scanner -Dsonar.projectBaseDir=$CI_PROJECT_DIR
         -Dsonar.projectVersion=$CI_PIPELINE_ID
         "
