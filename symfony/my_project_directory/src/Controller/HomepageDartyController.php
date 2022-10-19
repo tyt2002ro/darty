@@ -5,8 +5,8 @@ namespace App\Controller;
 
 use App\Entity\Player;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomepageDartyController extends AbstractController
@@ -16,15 +16,8 @@ class HomepageDartyController extends AbstractController
     {
         $playerList = $doctrine->getRepository(Player::class)->findAll();
 
-        if (!$playerList) {
-            $players = [
-                ['name' => 'John Doe'],
-                ['name' => 'Same Name'],
-                ['name' => 'Max Mustermann'],
-                ['name' => 'Tudor Eu'],
-                ['name' => 'Erika Mustermann'],
-            ];
-        } else {
+        $players = [];
+        if($playerList) {
             foreach ($playerList as $player) {
                 $players[] = ['name' => $player->getFirstName() . ' ' . $player->getLastName()];
             }
