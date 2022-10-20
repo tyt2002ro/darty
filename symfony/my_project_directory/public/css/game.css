@@ -1,0 +1,106 @@
+.wrapper {
+    margin: 1em auto;
+    max-width: 800px;
+    width: 95%;
+    font: 18px/1.5 sans-serif;
+}
+
+.left-container {
+    width: 70%;
+    float: left;
+    margin-bottom: 20px;
+}
+
+.left-container .title {
+    width: 50%;
+    text-align: center;
+    margin-bottom: 10px;
+    float: left;
+}
+
+.right-container
+{
+    width: 25%;
+    float: left;
+    padding: 10px;
+    border-left: 1px solid black;
+}
+
+.button {
+    text-align: center;
+    margin-bottom: 5px;
+    float: left;
+    background: gray;
+    color: white;
+    border-radius: 5px;
+    padding: 7px 0px;
+    margin-right: 1%;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: lightgray;
+    color: black;
+}
+
+.button-small {
+    width: 31%;
+}
+
+.button-large {
+    width: 47%;
+}
+
+.buttons-container {
+    width: 50%;
+    margin: auto;
+}
+
+.row {
+    width: 100%;
+    clear: both;
+}
+
+.cell {
+    text-align: center;
+    margin-bottom: 10px;
+    float: left;
+}
+
+.cell-4 {
+    width: 25%;
+}
+
+.cell-2 {
+    width: 50%;
+}
+
+.cell-1 {
+    width: 100%;
+}
+
+.cell-title {
+    font-size: 21px;
+}
+
+.cell-text-green {
+    color: green;
+}
+
+.cell-fixed-height {
+    height: 35px;
+}
+
+.cell-big-font {
+    font-size: 30px;
+}
+
+.cell-padding-top
+{
+    padding-top: 10px;
+}
+
+.image
+{
+    width: 16px;
+}
