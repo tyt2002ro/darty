@@ -2,19 +2,16 @@
 
 
 use App\Controller\AddPlayerController;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Player;
+use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
-use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Player;
 
 final class AddPlayerControllerTest extends TestCase
 {
@@ -22,13 +19,11 @@ final class AddPlayerControllerTest extends TestCase
 
     /**
      * @test
+     * @dataProvider postDataProvider
      */
-    public function buildPlayerActionFromRequest(): void
+    public function buildPlayerActionFromRequest($data): void
     {
-        $request = new Request();
-        $request->attributes->set('firstname', 'Alex');
-        $request->attributes->set('lastname', 'Alex1');
-        $request->attributes->set('nickname', 'Alex12');
+        $request = new Request([], [], $data);
 
         $addPlayerController = new AddPlayerController();
 
@@ -57,5 +52,16 @@ final class AddPlayerControllerTest extends TestCase
         $result = $addPlayerController->buildPlayerAction($persistenceManagerRegistry->reveal(), $request);
         self::assertSame('/', $result->getTargetUrl());
 
+    }
+
+    public function postDataProvider()
+    {
+        return [
+            [
+                ['firstName' => 'Alex',
+                    'lastname' => 'Alex1',
+                    'nickname' => 'Alex12'],
+            ]
+        ];
     }
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Double End Suggestions</title>
+</head>
+<body>
+
+    <table>
+        <form formaction="/doubleOutOptions" method="POST">
+        <tr>
+            <td>
+                <label for="points">Remaining points:</label>
+                <input type="text" id="points" name="points"><br><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Generate ending options">
+            </td>
+        </tr>
+        </form>
+        {% if option|length > 0 %}
+        <tr>
+            <td>{{ option.firstThrow }}, {{ option.secondThrow }}, {{ option.thirdThrow }}</td>
+        </tr>
+        {% endif %}
+    </table>
+
+</body>
+</html>

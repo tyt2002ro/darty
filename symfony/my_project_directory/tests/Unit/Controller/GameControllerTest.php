@@ -2,7 +2,6 @@
 
 
 use App\Controller\GameController;
-use App\Entity\Game;
 use App\Entity\Player;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
@@ -32,7 +31,6 @@ final class GameControllerTest extends TestCase
         $persistenceManagerRegistry = $this->prophesize(PersistenceManagerRegistry::class);
         $objectRepository = $this->prophesize(ObjectRepository::class);
         $objectManager = $this->prophesize(ObjectManager::class);
-        $gameMock = $this->prophesize(Game::class);
 
         $persistenceManagerRegistry->getRepository(Player::class)->shouldBeCalled()->willReturn($objectRepository->reveal());
         foreach($players as $player)

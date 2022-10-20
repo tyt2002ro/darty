@@ -2,9 +2,9 @@
 
 use App\Controller\EditPlayerController;
 use App\Entity\Player;
+use App\Service\EditPlayerService;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactory;
@@ -24,23 +24,20 @@ final class EditPlayerControllerTest extends TestCase
         $content = 'content';
 
         $player = new Player();
-        $player->setId(2);
         $player->setFirstname("vadim");
         $player->setFirstname("tudor");
         $player->setFirstname("vtudor");
 
-        $editPlayerController = new EditPlayerController();
 
         $containerMock = $this->prophesize(ContainerInterface::class);
         $managerRegistryMock = $this->prophesize(ManagerRegistry::class);
-        $objectRepository = $this->prophesize(ObjectRepository::class);
         $formFactoryMock = $this->prophesize(FormFactory::class);
         $formInterfaceMock = $this->prophesize(FormInterface::class);
         $formViewMock = $this->prophesize(FormView::class);
         $twig = $this->prophesize(Environment::class);
 
-        $managerRegistryMock->getRepository(Player::class)->shouldBeCalled()->willReturn($objectRepository->reveal());
-        $objectRepository->find($player->getId())->shouldBeCalled()->willReturn($player);
+        $editPlayerController = new EditPlayerController(new EditPlayerService($managerRegistryMock->reveal()));
+
         $editPlayerController->setContainer($containerMock->reveal());
         $containerMock->get('form.factory')->shouldBeCalled()->willReturn($formFactoryMock->reveal());
 
@@ -55,34 +52,29 @@ final class EditPlayerControllerTest extends TestCase
 
         $twig->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
-        $result = $editPlayerController->editPlayerFormAction($managerRegistryMock->reveal(), $player->getId());
+        $result = $editPlayerController->editPlayerFormAction($player);
         self::assertSame($content, $result->getContent());
     }
 
     /**
      * @test
-     * @throws \App\Exceptions\PlayerNotExistException
      */
     public function editPlayerActionFromRequest(): void
     {
         $expectedUrl = '/player-management';
-        $playerId = 2;
-        $player = new Player();
-        $player->setId($playerId);
 
-        $editPlayerController = new EditPlayerController();
+        $player = new Player();
         $request = new Request();
 
         $managerRegistry = $this->prophesize(ManagerRegistry::class);
-        $objectRepository = $this->prophesize(ObjectRepository::class);
         $container = $this->prophesize(ContainerInterface::class);
         $formFactory = $this->prophesize(FormFactory::class);
         $formInterface = $this->prophesize(FormInterface::class);
         $objectManager = $this->prophesize(ObjectManager::class);
         $playerMock = $this->prophesize(Player::class);
 
-        $managerRegistry->getRepository(Player::class)->shouldBeCalled()->willReturn($objectRepository->reveal());
-        $objectRepository->find($player->getId())->shouldBeCalled()->willReturn($player);
+        $editPlayerController = new EditPlayerController(new EditPlayerService($managerRegistry->reveal()));
+
         $editPlayerController->setContainer($container->reveal());
         $container->get('form.factory')->shouldBeCalled()->willReturn($formFactory->reveal());
         $formFactory->create(Argument::cetera())->shouldBeCalled()->willReturn($formInterface->reveal());
@@ -97,7 +89,7 @@ final class EditPlayerControllerTest extends TestCase
         $objectManager->persist($playerMock->reveal())->shouldBeCalled();
         $objectManager->flush()->shouldBeCalled();
 
-        $result = $editPlayerController->editPlayerAction($managerRegistry->reveal(), $request, $playerId);
+        $result = $editPlayerController->editPlayerAction($request, $player);
         self::assertSame($expectedUrl, $result->getTargetUrl());
     }
 }
