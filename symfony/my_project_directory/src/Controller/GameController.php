@@ -49,7 +49,7 @@ class GameController extends AbstractController
 
         $mainPlayerData = null;
         foreach ($playersData as $playerData){
-            if($playerData['leftThrow'] !== 3){
+            if($playerData['legThrow'] !== 3){
                 $mainPlayerData = $playerData;
             }
         }
