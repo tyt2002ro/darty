@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Player;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,35 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 class PlayerManagementScreenController extends AbstractController
 {
     #[Route('/player-management', name: 'playerManagement')]
-    public function playerManagementScreenAction(): Response
+    public function playerManagementScreenAction(ManagerRegistry $managerRegistry): Response
     {
-        $players = [
-            [
-                'firstname' => 'John',
-                'lastname' => 'Doe',
-                'nickname' => 'jdoe'
-            ],
-            [
-                'firstname' => 'Same',
-                'lastname' => 'Name',
-                'nickname' => 'sname'
-            ],
-            [
-                'firstname' => 'Max',
-                'lastname' => 'Mustermann',
-                'nickname' => 'mmustermann'
-            ],
-            [
-                'firstname' => 'Tudor',
-                'lastname' => 'Eu',
-                'nickname' => 'teu'
-            ],
-            [
-                'firstname' => 'Erika',
-                'lastname' => 'Mustermann',
-                'nickname' => 'emustermann'
-            ],
-        ];
+        $players = $managerRegistry->getRepository(Player::class)->findAll();
+
         return $this->render('darty/playerManagementScreen.html.twig', [
             'players' => $players
         ]);
