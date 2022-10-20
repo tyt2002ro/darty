@@ -116,4 +116,15 @@ class Game
 
         return $this;
     }
+
+    public function getSortedById(): array
+    {
+        $arr = $this->player_id->toArray();
+        usort($arr, function($a, $b) {
+            if ($a->getId() > $b->getId()) {
+                return -1;
+            }
+        });
+        return $arr;
+    }
 }

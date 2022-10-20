@@ -42,10 +42,6 @@ class GameThrowRepository extends ServiceEntityRepository
 
     public function findPlayerDataForThrow($gameId, $playerId): array
     {
-
-
-
-
         $entityManager = $this->getEntityManager();
 
         $sql = 'SELECT sum(GameThrow.points) as sum, avg(GameThrow.points) as average, mod(count(GameThrow.points),3) as throw
@@ -57,31 +53,6 @@ class GameThrowRepository extends ServiceEntityRepository
         if($query){
             return $query[0];
         }
-
-
-//        return $this->getEntityManager()
-//            ->createQuery(
-//                'SELECT p FROM AppBundle:Product p ORDER BY p.name ASC'
-//            )
-//            ->getResult();
-
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return [];
     }
-
-//    public function findOneBySomeField($value): ?GameThrow
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
