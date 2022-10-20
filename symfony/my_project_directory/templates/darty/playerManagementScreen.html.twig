@@ -23,7 +23,7 @@
                 <td>{{ player.lastname }}</td>
                 <td>{{ player.nickname }}</td>
                 <td>
-                    <button type="button">Edit</button>
+                    <a href="/edit/player/{{ player.id }}">Edit</a>
                 </td>
                 <td>
                     <a href="/player/delete/{{ player.id }}" onclick="return confirm('Are you sure you want to delete this player?');">Delete</a>
