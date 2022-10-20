@@ -1,3 +1,4 @@
 /.env
 /database
 /.idea
+/symfony/my_project_directory/reports/
