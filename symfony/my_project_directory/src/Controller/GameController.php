@@ -39,33 +39,32 @@ class GameController extends AbstractController
     {
         $game = $doctrine->getRepository(Game::class)->find($id);
 
-        //get players, sorted by id as order.
         $players = $game->getSortedById();
 
-        //jucator curent
         $playersData = [];
-        foreach ($players as $player){
+        foreach ($players as $order => $player){
             $playersData[] = array_merge($doctrine->getRepository(GameThrow::class)->findPlayerDataForThrow(
-                $game->getId(), $player->getId()), ['player_id' => $player->getId()]);
+                $game->getId(), $player->getId()), ['player_id' => $player->getId(), 'order' => $order]);
         }
 
-        //verificam daca avem un jucator care mai are aruncari /3 = 0
-//        foreach (){
-//
-//        }
+        $mainPlayerData = null;
+        foreach ($playersData as $playerData){
+            if($playerData['leftThrow'] !== 3){
+                $mainPlayerData = $playerData;
+            }
+        }
 
-        //verifcam care are cele mai putine aruncari si id nr minim
-
-        if($players[0])
-
-        //jucatorii in asteptare
-
-        $mainPlayerData = $doctrine->getRepository(GameThrow::class)->findPlayerDataForThrow(
-            $game->getId(), $players[0]->getId());
-        $mainPlayerDataName = $players[0]->getFirstname().' '.$players[0]->getLastname();
+        if(!$mainPlayerData){
+            array_multisort(array_column($playersData, 'totalThrow'), SORT_ASC,
+                array_column($playersData, 'order'),      SORT_ASC,
+                $playersData);
+            $mainPlayerData = $playersData[0];
+        }
+        
+        $mainPlayerDataName = $players[$mainPlayerData['order']]->getFirstname().' '.$players[$mainPlayerData['order']]->getLastname();
 
         return $this->render('game/index.html.twig', [
-            'player_id' => $players[0]->getId(),
+            'player_id' => $mainPlayerData['player_id'],
             'mainPlayerData' => $mainPlayerData,
             'mainPlayerDataName' => $mainPlayerDataName,
             'game_id' => $id,
