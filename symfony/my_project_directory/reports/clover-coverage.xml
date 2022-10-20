@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1666252992">
-  <project timestamp="1666252992">
+<coverage generated="1666278799">
+  <project timestamp="1666278799">
     <file name="/var/www/html/my_project_directory/src/Controller/AddPlayerController.php">
       <class name="App\Controller\AddPlayerController" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
@@ -61,29 +61,62 @@
     </file>
     <file name="/var/www/html/my_project_directory/src/Controller/GameController.php">
       <class name="App\Controller\GameController" namespace="global">
-        <metrics complexity="2" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="12" coveredelements="12"/>
+        <metrics complexity="7" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="11" elements="30" coveredelements="12"/>
       </class>
-      <line num="15" type="method" name="create" visibility="public" complexity="2" crap="2" count="1"/>
-      <line num="18" type="stmt" count="1"/>
+      <line num="16" type="method" name="create" visibility="public" complexity="2" crap="2" count="1"/>
       <line num="19" type="stmt" count="1"/>
       <line num="20" type="stmt" count="1"/>
-      <line num="22" type="stmt" count="1"/>
+      <line num="21" type="stmt" count="1"/>
       <line num="23" type="stmt" count="1"/>
-      <line num="25" type="stmt" count="1"/>
+      <line num="24" type="stmt" count="1"/>
       <line num="26" type="stmt" count="1"/>
-      <line num="29" type="stmt" count="1"/>
+      <line num="27" type="stmt" count="1"/>
       <line num="30" type="stmt" count="1"/>
       <line num="31" type="stmt" count="1"/>
-      <line num="33" type="stmt" count="1"/>
-      <metrics loc="36" ncloc="36" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="12" coveredelements="12"/>
+      <line num="32" type="stmt" count="1"/>
+      <line num="34" type="stmt" count="1"/>
+      <line num="37" type="method" name="index" visibility="public" complexity="5" crap="30" count="0"/>
+      <line num="40" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="45" type="stmt" count="0"/>
+      <line num="46" type="stmt" count="0"/>
+      <line num="47" type="stmt" count="0"/>
+      <line num="50" type="stmt" count="0"/>
+      <line num="51" type="stmt" count="0"/>
+      <line num="52" type="stmt" count="0"/>
+      <line num="53" type="stmt" count="0"/>
+      <line num="57" type="stmt" count="0"/>
+      <line num="58" type="stmt" count="0"/>
+      <line num="59" type="stmt" count="0"/>
+      <line num="61" type="stmt" count="0"/>
+      <line num="64" type="stmt" count="0"/>
+      <line num="66" type="stmt" count="0"/>
+      <line num="67" type="stmt" count="0"/>
+      <metrics loc="76" ncloc="76" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="11" elements="30" coveredelements="12"/>
     </file>
     <file name="/var/www/html/my_project_directory/src/Controller/GameThrowController.php">
       <class name="App\Controller\GameThrowController" namespace="global">
-        <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
+        <metrics complexity="3" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="0" elements="17" coveredelements="0"/>
       </class>
-      <line num="11" type="method" name="index" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="14" type="stmt" count="0"/>
-      <metrics loc="19" ncloc="19" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
+      <line num="17" type="method" name="addThrow" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <line num="22" type="stmt" count="0"/>
+      <line num="23" type="stmt" count="0"/>
+      <line num="24" type="stmt" count="0"/>
+      <line num="25" type="stmt" count="0"/>
+      <line num="27" type="stmt" count="0"/>
+      <line num="28" type="stmt" count="0"/>
+      <line num="30" type="stmt" count="0"/>
+      <line num="31" type="stmt" count="0"/>
+      <line num="34" type="stmt" count="0"/>
+      <line num="35" type="stmt" count="0"/>
+      <line num="36" type="stmt" count="0"/>
+      <line num="37" type="stmt" count="0"/>
+      <line num="39" type="stmt" count="0"/>
+      <line num="40" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <metrics loc="45" ncloc="45" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="0" elements="17" coveredelements="0"/>
     </file>
     <file name="/var/www/html/my_project_directory/src/Controller/HomepageDartyController.php">
       <class name="App\Controller\HomepageDartyController" namespace="global">
@@ -126,32 +159,51 @@
     </file>
     <file name="/var/www/html/my_project_directory/src/Entity/Game.php">
       <class name="App\Entity\Game" namespace="global">
-        <metrics complexity="10" methods="9" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="8" elements="23" coveredelements="12"/>
+        <metrics complexity="18" methods="13" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="10" elements="42" coveredelements="15"/>
       </class>
-      <line num="28" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="30" type="stmt" count="1"/>
-      <line num="33" type="method" name="getId" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="35" type="stmt" count="0"/>
-      <line num="38" type="method" name="getType" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="40" type="stmt" count="0"/>
-      <line num="43" type="method" name="setType" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="45" type="stmt" count="1"/>
-      <line num="47" type="stmt" count="1"/>
-      <line num="50" type="method" name="getGameOption" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="52" type="stmt" count="0"/>
-      <line num="55" type="method" name="setGameOption" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="57" type="stmt" count="1"/>
-      <line num="59" type="stmt" count="1"/>
-      <line num="65" type="method" name="getPlayerId" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="67" type="stmt" count="0"/>
-      <line num="70" type="method" name="addPlayerId" visibility="public" complexity="2" crap="2" count="1"/>
-      <line num="72" type="stmt" count="1"/>
-      <line num="73" type="stmt" count="1"/>
+      <line num="31" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="33" type="stmt" count="1"/>
+      <line num="34" type="stmt" count="1"/>
+      <line num="37" type="method" name="getId" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="39" type="stmt" count="1"/>
+      <line num="42" type="method" name="getType" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="47" type="method" name="setType" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="49" type="stmt" count="1"/>
+      <line num="51" type="stmt" count="1"/>
+      <line num="54" type="method" name="getGameOption" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="56" type="stmt" count="0"/>
+      <line num="59" type="method" name="setGameOption" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="61" type="stmt" count="1"/>
+      <line num="63" type="stmt" count="1"/>
+      <line num="69" type="method" name="getPlayerId" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="71" type="stmt" count="0"/>
+      <line num="74" type="method" name="addPlayerId" visibility="public" complexity="2" crap="2" count="1"/>
       <line num="76" type="stmt" count="1"/>
-      <line num="79" type="method" name="removePlayerId" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="81" type="stmt" count="0"/>
-      <line num="83" type="stmt" count="0"/>
-      <metrics loc="86" ncloc="83" classes="1" methods="9" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="8" elements="23" coveredelements="12"/>
+      <line num="77" type="stmt" count="1"/>
+      <line num="80" type="stmt" count="1"/>
+      <line num="83" type="method" name="removePlayerId" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="85" type="stmt" count="0"/>
+      <line num="87" type="stmt" count="0"/>
+      <line num="93" type="method" name="getGameThrows" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="95" type="stmt" count="0"/>
+      <line num="98" type="method" name="addGameThrow" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="100" type="stmt" count="0"/>
+      <line num="101" type="stmt" count="0"/>
+      <line num="102" type="stmt" count="0"/>
+      <line num="105" type="stmt" count="0"/>
+      <line num="108" type="method" name="removeGameThrow" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="110" type="stmt" count="0"/>
+      <line num="112" type="stmt" count="0"/>
+      <line num="113" type="stmt" count="0"/>
+      <line num="117" type="stmt" count="0"/>
+      <line num="120" type="method" name="getSortedById" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="122" type="stmt" count="0"/>
+      <line num="123" type="stmt" count="0"/>
+      <line num="124" type="stmt" count="0"/>
+      <line num="125" type="stmt" count="0"/>
+      <line num="131" type="stmt" count="0"/>
+      <metrics loc="134" ncloc="127" classes="1" methods="13" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="10" elements="42" coveredelements="15"/>
     </file>
     <file name="/var/www/html/my_project_directory/src/Entity/GameThrow.php">
       <class name="App\Entity\GameThrow" namespace="global">
@@ -183,26 +235,40 @@
     </file>
     <file name="/var/www/html/my_project_directory/src/Entity/Player.php">
       <class name="App\Entity\Player" namespace="global">
-        <metrics complexity="7" methods="7" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="9" elements="17" coveredelements="15"/>
+        <metrics complexity="14" methods="11" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="10" elements="31" coveredelements="17"/>
       </class>
-      <line num="25" type="method" name="getId" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="27" type="stmt" count="0"/>
-      <line num="30" type="method" name="getFirstname" visibility="public" complexity="1" crap="1" count="2"/>
-      <line num="32" type="stmt" count="2"/>
-      <line num="35" type="method" name="setFirstname" visibility="public" complexity="1" crap="1" count="3"/>
-      <line num="37" type="stmt" count="3"/>
-      <line num="39" type="stmt" count="3"/>
-      <line num="42" type="method" name="getLastname" visibility="public" complexity="1" crap="1" count="2"/>
-      <line num="44" type="stmt" count="2"/>
-      <line num="47" type="method" name="setLastname" visibility="public" complexity="1" crap="1" count="2"/>
-      <line num="49" type="stmt" count="2"/>
-      <line num="51" type="stmt" count="2"/>
-      <line num="54" type="method" name="getNickname" visibility="public" complexity="1" crap="1" count="2"/>
-      <line num="56" type="stmt" count="2"/>
-      <line num="59" type="method" name="setNickname" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="30" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="11"/>
+      <line num="32" type="stmt" count="11"/>
+      <line num="35" type="method" name="getId" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="37" type="stmt" count="0"/>
+      <line num="40" type="method" name="getFirstname" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="42" type="stmt" count="2"/>
+      <line num="45" type="method" name="setFirstname" visibility="public" complexity="1" crap="1" count="3"/>
+      <line num="47" type="stmt" count="3"/>
+      <line num="49" type="stmt" count="3"/>
+      <line num="52" type="method" name="getLastname" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="54" type="stmt" count="2"/>
+      <line num="57" type="method" name="setLastname" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="59" type="stmt" count="2"/>
       <line num="61" type="stmt" count="2"/>
-      <line num="63" type="stmt" count="2"/>
-      <metrics loc="66" ncloc="66" classes="1" methods="7" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="9" elements="17" coveredelements="15"/>
+      <line num="64" type="method" name="getNickname" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="66" type="stmt" count="2"/>
+      <line num="69" type="method" name="setNickname" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="71" type="stmt" count="2"/>
+      <line num="73" type="stmt" count="2"/>
+      <line num="79" type="method" name="getGameThrows" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="81" type="stmt" count="0"/>
+      <line num="84" type="method" name="addGameThrow" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="86" type="stmt" count="0"/>
+      <line num="87" type="stmt" count="0"/>
+      <line num="88" type="stmt" count="0"/>
+      <line num="91" type="stmt" count="0"/>
+      <line num="94" type="method" name="removeGameThrow" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="96" type="stmt" count="0"/>
+      <line num="98" type="stmt" count="0"/>
+      <line num="99" type="stmt" count="0"/>
+      <line num="103" type="stmt" count="0"/>
+      <metrics loc="106" ncloc="102" classes="1" methods="11" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="10" elements="31" coveredelements="17"/>
     </file>
     <file name="/var/www/html/my_project_directory/src/Exceptions/PlayerNotExistException.php">
       <class name="App\Exceptions\PlayerNotExistException" namespace="global">
@@ -246,7 +312,7 @@
     </file>
     <file name="/var/www/html/my_project_directory/src/Repository/GameRepository.php">
       <class name="App\Repository\GameRepository" namespace="global">
-        <metrics complexity="5" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="0" elements="10" coveredelements="0"/>
+        <metrics complexity="6" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="16" coveredelements="0"/>
       </class>
       <line num="19" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="21" type="stmt" count="0"/>
@@ -258,11 +324,17 @@
       <line num="35" type="stmt" count="0"/>
       <line num="37" type="stmt" count="0"/>
       <line num="38" type="stmt" count="0"/>
-      <metrics loc="67" ncloc="36" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="0" elements="10" coveredelements="0"/>
+      <line num="42" type="method" name="findOneById" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="45" type="stmt" count="0"/>
+      <line num="46" type="stmt" count="0"/>
+      <line num="47" type="stmt" count="0"/>
+      <line num="48" type="stmt" count="0"/>
+      <metrics loc="77" ncloc="46" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="16" coveredelements="0"/>
     </file>
     <file name="/var/www/html/my_project_directory/src/Repository/GameThrowRepository.php">
       <class name="App\Repository\GameThrowRepository" namespace="global">
-        <metrics complexity="5" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="0" elements="10" coveredelements="0"/>
+        <metrics complexity="7" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
       </class>
       <line num="19" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="21" type="stmt" count="0"/>
@@ -274,7 +346,14 @@
       <line num="35" type="stmt" count="0"/>
       <line num="37" type="stmt" count="0"/>
       <line num="38" type="stmt" count="0"/>
-      <metrics loc="67" ncloc="36" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="0" elements="10" coveredelements="0"/>
+      <line num="43" type="method" name="findPlayerDataForThrow" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="45" type="stmt" count="0"/>
+      <line num="47" type="stmt" count="0"/>
+      <line num="52" type="stmt" count="0"/>
+      <line num="54" type="stmt" count="0"/>
+      <line num="55" type="stmt" count="0"/>
+      <line num="57" type="stmt" count="0"/>
+      <metrics loc="60" ncloc="52" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
     </file>
     <file name="/var/www/html/my_project_directory/src/Repository/PlayerRepository.php">
       <class name="App\Repository\PlayerRepository" namespace="global">
@@ -355,6 +434,6 @@
       <line num="83" type="stmt" count="3"/>
       <metrics loc="86" ncloc="80" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="36" elements="40" coveredelements="40"/>
     </file>
-    <metrics files="23" loc="967" ncloc="862" classes="19" methods="58" coveredmethods="32" conditionals="0" coveredconditionals="0" statements="162" coveredstatements="113" elements="220" coveredelements="145"/>
+    <metrics files="23" loc="1124" ncloc="1034" classes="19" methods="69" coveredmethods="34" conditionals="0" coveredconditionals="0" statements="230" coveredstatements="116" elements="299" coveredelements="150"/>
   </project>
 </coverage>
