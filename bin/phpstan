@@ -1,0 +1,9 @@
+#!/bin/bash
+# Call this script from the parent directory of 'bin'. Example: 'bin/composer'
+
+set -euo pipefail
+IFS=$'\n\t'
+# Include the .env file
+. .env
+
+exec docker compose exec "${SERVICE_NAME_PHP:-php}" php phpstan analyse "$@"
