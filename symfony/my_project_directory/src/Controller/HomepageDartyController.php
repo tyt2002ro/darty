@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Player;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomepageDartyController extends AbstractController
@@ -15,15 +16,8 @@ class HomepageDartyController extends AbstractController
     {
         $playerList = $doctrine->getRepository(Player::class)->findAll();
 
-        if (!$playerList) {
-            $players = [
-                ['name' => 'John Doe'],
-                ['name' => 'Same Name'],
-                ['name' => 'Max Mustermann'],
-                ['name' => 'Tudor Eu'],
-                ['name' => 'Erika Mustermann'],
-            ];
-        } else {
+        $players = [];
+        if($playerList) {
             foreach ($playerList as $player) {
                 $players[] = [
                     'id' => $player->getId(),
@@ -33,8 +27,13 @@ class HomepageDartyController extends AbstractController
         }
 
         $gameTypes = [
-            ['type' => '301', 'checked' => true],
-            ['type' => '501', 'checked' => false]
+            ['type' => '301', 'checked' => false],
+            ['type' => '401', 'checked' => false],
+            ['type' => '501', 'checked' => true],
+            ['type' => '601', 'checked' => false],
+            ['type' => '701', 'checked' => false],
+            ['type' => '801', 'checked' => false],
+            ['type' => '901', 'checked' => false],
         ];
 
         $gameEnds = [
