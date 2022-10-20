@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Exceptions\PlayerNotExistException;
+use App\Entity\Player;
 use App\Form\PlayerType;
 use App\Service\EditPlayerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,13 +20,9 @@ class EditPlayerController extends AbstractController
         $this->editPlayerService = $editPlayerService;
     }
 
-    /**
-     * @throws PlayerNotExistException
-     */
-    #[Route('/edit/player/{playerId}', name: 'app_edit_player', methods: ['GET'])]
-    public function editPlayerFormAction(int $playerId): Response
+    #[Route('/edit/player/{id}', name: 'app_edit_player', methods: ['GET'])]
+    public function editPlayerFormAction(Player $player): Response
     {
-        $player = $this->editPlayerService->getPlayerFromDb($playerId);
         $form = $this->createForm(PlayerType::class, $player);
 
         return $this->renderForm('darty/editPlayer.html.twig', [
@@ -34,14 +30,10 @@ class EditPlayerController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws PlayerNotExistException
-     */
-    #[Route('/edit/player/{playerId}', name: 'editPlayerAction', methods: ['post'])]
-    public function editPlayerAction(Request $request, $playerId): RedirectResponse
-    {
-        $player = $this->editPlayerService->getPlayerFromDb($playerId);
 
+    #[Route('/edit/player/{id}', name: 'editPlayerAction', methods: ['post'])]
+    public function editPlayerAction(Request $request, Player $player): RedirectResponse
+    {
         $form = $this->createForm(PlayerType::class, $player);
         $this->editPlayerService->editAnExistentPlayer($form, $request);
 

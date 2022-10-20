@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<title>Hello GameController!</title>
+
+<link href="{{ asset('css/game.css') }}" rel="stylesheet">
+
+{% block body %}
+    <div class="wrapper">
+        <div class="row">
+            <div class="left-container">
+                <div class="row">
+                    <div class="title">Set 1/1</div>
+                    <div class="title">Leg 2/3</div>
+                </div>
+                <div class="row">
+                    <div class="cell cell-4">Ben</div>
+                    <div class="cell cell-4">Bull</div>
+                    <div class="cell cell-4">20</div>
+                    <div class="cell cell-4">-</div>
+                </div>
+                <div class="row">
+                    <div class="cell cell-4 cell-text-green cell-fixed-height cell-big-font">213</div>
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">0 S
+                    </div>
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">1 L<img src="{{ asset('images/darts_arrow.png') }}" alt="darts arrow" class="image"/>
+                    </div>
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">5
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cell cell-4">52.8</div>
+                    <div class="cell cell-4">-</div>
+                    <div class="cell cell-4">-</div>
+                    <div class="cell cell-4">-</div>
+                </div>
+            </div>
+            <div class="right-container">
+                <div class="cell cell-1 cell-title">Emma</div>
+                <div class="cell cell-2">244</div>
+                <div class="cell cell-2">28.5</div>
+
+                <div class="cell cell-1 cell-title">Noah</div>
+                <div class="cell cell-2">208</div>
+                <div class="cell cell-2">46.5</div>
+            </div>
+        </div>
+        <div class="buttons-container">
+            <div class="row">
+                <div class="button button-large">
+                    Double
+                </div>
+                <div class="button button-large">
+                    Triple
+                </div>
+            </div>
+            <div class="row">
+                <div class="button button-small">1</div>
+                <div class="button button-small">2</div>
+                <div class="button button-small">3</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">4</div>
+                <div class="button button-small">5</div>
+                <div class="button button-small">6</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">7</div>
+                <div class="button button-small">8</div>
+                <div class="button button-small">9</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">10</div>
+                <div class="button button-small">11</div>
+                <div class="button button-small">12</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">13</div>
+                <div class="button button-small">14</div>
+                <div class="button button-small">15</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">16</div>
+                <div class="button button-small">17</div>
+                <div class="button button-small">18</div>
+            </div>
+            <div class="row">
+                <div class="button button-small">19</div>
+                <div class="button button-small">20</div>
+                <div class="button button-small">25</div>
+            </div>
+            <div class="row">
+                <div class="button button-large">
+                    Daneben
+                </div>
+                <div class="button button-large">
+                    Undo
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

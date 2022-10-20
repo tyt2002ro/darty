@@ -27,14 +27,6 @@ class Player
         return $this->id;
     }
 
-    /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
     public function getFirstname(): ?string
     {
         return $this->firstname;

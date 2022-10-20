@@ -16,18 +16,6 @@ class EditPlayerService
 
     }
 
-    /**
-     * @throws PlayerNotExistException
-     */
-    public function getPlayerFromDb($playerId): Player
-    {
-        $player = $this->managerRegistry->getRepository(Player::class)->find($playerId);
-        if ($player === null) {
-            throw new PlayerNotExistException("This player does not exist");
-        }
-        return $player;
-    }
-
     public function editAnExistentPlayer($form, $request): void
     {
         $form->handleRequest($request);

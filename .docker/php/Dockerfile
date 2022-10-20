@@ -19,5 +19,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git
 
 USER www-data
-
+COPY xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 EXPOSE 9000

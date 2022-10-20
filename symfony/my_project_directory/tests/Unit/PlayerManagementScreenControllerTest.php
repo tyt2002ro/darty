@@ -2,12 +2,11 @@
 
 namespace App\tests\Unit;
 
-use App\Controller\HomepageDartyController;
+use App\Controller\PlayerManagementScreenController;
 use App\Entity\Player;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;
-use App\Controller\PlayerManagementScreenController;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -38,6 +37,7 @@ class PlayerManagementScreenControllerTest extends TestCase
         $playerManagementScreenController->setContainer($container->reveal());
         $twigTemplate->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
-        self::assertSame($content, $playerManagementScreenController->playerManagementScreenAction($managerRegistry->reveal())->getContent());
+        $pageContent = $playerManagementScreenController->playerManagementScreenAction($managerRegistry->reveal())->getContent();
+        self::assertSame($content, $pageContent);
     }
 }
