@@ -2,17 +2,34 @@
 
 namespace App\Controller;
 
+use App\Entity\Game;
+use App\Entity\Player;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GameController extends AbstractController
 {
-    #[Route('/game', name: 'app_game')]
-    public function index(): Response
+    #[Route('/createGame', name: 'create_game')]
+    public function create(ManagerRegistry $doctrine, Request $request): Response
     {
-        return $this->render('game/index.html.twig', [
-            'controller_name' => 'GameController',
-        ]);
+        $game = new Game();
+        $game->setType($request->request->get('games'));
+        $game->setGameOption($request->request->get('gameEnds'));
+
+        $playerIds = $request->request->all()['player'];
+        foreach($playerIds as $playerId)
+        {
+            $player = $doctrine->getRepository(Player::class)->findOneBy(array('id' => $playerId));
+            $game->addPlayerId($player);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($game);
+        $entityManager->flush();
+
+        return $this->redirect('/', 301);
     }
 }
