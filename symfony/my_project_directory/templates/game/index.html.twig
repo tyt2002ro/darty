@@ -114,7 +114,7 @@
             <div class="left-container">
                 <div class="row">
                     <div class="title">Set 1/1</div>
-                    <div class="title">Leg {% if mainPlayerData.throw|length > 0 %}{{ mainPlayerData.throw }}{% endif %}
+                    <div class="title">Leg {% if mainPlayerData.leftThrow|length > 0 %}{{ mainPlayerData.leftThrow }}{% endif %}
                         /3
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                     <div class="cell cell-4 cell-text-green cell-fixed-height cell-big-font">{% if mainPlayerData.sum|length > 0 %}{{ mainPlayerData.sum }}{% endif %}</div>
                     <div class="cell cell-4 cell-fixed-height cell-padding-top">0 S
                     </div>
-                    <div class="cell cell-4 cell-fixed-height cell-padding-top">{% if mainPlayerData.throw|length > 0 %}{{ 3-mainPlayerData.throw }}{% endif %}
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">{% if mainPlayerData.leftThrow|length > 0 %}{{ 3-mainPlayerData.leftThrow }}{% endif %}
                         <img src="{{ asset('images/darts_arrow.png') }}" alt="darts arrow" class="image"/>
                     </div>
                     <div class="cell cell-4 cell-fixed-height cell-padding-top">5

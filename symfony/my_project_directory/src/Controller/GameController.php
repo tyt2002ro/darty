@@ -43,7 +43,20 @@ class GameController extends AbstractController
         $players = $game->getSortedById();
 
         //jucator curent
+        $playersData = [];
+        foreach ($players as $player){
+            $playersData[] = array_merge($doctrine->getRepository(GameThrow::class)->findPlayerDataForThrow(
+                $game->getId(), $player->getId()), ['player_id' => $player->getId()]);
+        }
 
+        //verificam daca avem un jucator care mai are aruncari /3 = 0
+//        foreach (){
+//
+//        }
+
+        //verifcam care are cele mai putine aruncari si id nr minim
+
+        if($players[0])
 
         //jucatorii in asteptare
 

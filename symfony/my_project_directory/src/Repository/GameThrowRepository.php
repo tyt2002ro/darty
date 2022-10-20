@@ -44,7 +44,8 @@ class GameThrowRepository extends ServiceEntityRepository
     {
         $entityManager = $this->getEntityManager();
 
-        $sql = 'SELECT sum(GameThrow.points) as sum, avg(GameThrow.points) as average, mod(count(GameThrow.points),3) as throw
+        $sql = 'SELECT sum(GameThrow.points) as sum, avg(GameThrow.points) as average, 
+        mod(count(GameThrow.points),3) as leftThrow, count(GameThrow.points) as totalThrow
          FROM App\Entity\GameThrow GameThrow
             WHERE GameThrow.game_id = ' . $gameId . '
             AND GameThrow.player_id = ' . $playerId;
