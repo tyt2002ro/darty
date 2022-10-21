@@ -18,8 +18,8 @@ class GameThrowController extends AbstractController
     {
     }
 
-    #[Route('/add/throw/{game_id}/{player_id}', name: 'app_game_throw', methods: ['POST'])]
-    public function addThrow(Request $request, ManagerRegistry $doctrine, Game $game_id, Player $player_id): Response
+    #[Route('/add/throw/{game}/{player}', name: 'app_game_throw', methods: ['POST'])]
+    public function addThrow(Request $request, ManagerRegistry $doctrine, Game $game, Player $player): Response
     {
         $entityManager = $doctrine->getManager();
 
@@ -35,14 +35,14 @@ class GameThrowController extends AbstractController
            $points *=3;
         }
 
-        $gameThrow->setPlayerId($player_id);
-        $gameThrow->setGameId($game_id);
+        $gameThrow->setPlayerId($player);
+        $gameThrow->setGameId($game);
         $gameThrow->setPoints($points);
         $gameThrow->setThrowOrder(1);
 
         $entityManager->persist($gameThrow);
         $entityManager->flush();
 
-        return $this->redirect('/game/'.$game_id->getId(), 301);
+        return $this->redirect('/game/'.$game->getId(), 301);
     }
 }
