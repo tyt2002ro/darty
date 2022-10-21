@@ -1,11 +1,8 @@
 <?php
 
-
 use App\Controller\GameController;
 use App\Entity\Player;
-use App\Repository\GameThrowRepository;
 use App\Service\NextPlayerToThrowService;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;

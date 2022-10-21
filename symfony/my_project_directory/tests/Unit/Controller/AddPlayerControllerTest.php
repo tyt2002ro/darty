@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Controller\AddPlayerController;
 use App\Entity\Player;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;

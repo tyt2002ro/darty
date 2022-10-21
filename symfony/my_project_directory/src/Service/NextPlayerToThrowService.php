@@ -16,15 +16,7 @@ class NextPlayerToThrowService
 
     public function returnNextPlayerToThrow(int $game_id, array $players, array &$playersData): array
     {
-        foreach ($players as $order => $player) {
-            $playersData[] = array_merge($this->gameThrowRepository->findPlayerDataForThrow(
-                $game_id, $player->getId()),
-                [
-                    'player_id' => $player->getId(),
-                    'order' => $order,
-                    'name' => $player->getFirstname().' '.$player->getLastname()
-                ]);
-        }
+        $this->updatePlayesData($game_id, $players, $playersData);
 
         $mainPlayerData = null;
         foreach ($playersData as $playerData) {
@@ -51,6 +43,19 @@ class NextPlayerToThrowService
             }
         }
         return $playersData;
+    }
+
+    private function updatePlayesData(int $game_id, array $players, array &$playersData): void
+    {
+        foreach ($players as $order => $player) {
+            $playersData[] = array_merge($this->gameThrowRepository->findPlayerDataForThrow(
+                $game_id, $player->getId()),
+                [
+                    'player_id' => $player->getId(),
+                    'order' => $order,
+                    'name' => $player->getFirstname().' '.$player->getLastname()
+                ]);
+        }
     }
 }
 
