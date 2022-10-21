@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1666278799">
-  <project timestamp="1666278799">
+<coverage generated="1666333410">
+  <project timestamp="1666333410">
     <file name="/var/www/html/my_project_directory/src/Controller/AddPlayerController.php">
       <class name="App\Controller\AddPlayerController" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
@@ -61,39 +61,31 @@
     </file>
     <file name="/var/www/html/my_project_directory/src/Controller/GameController.php">
       <class name="App\Controller\GameController" namespace="global">
-        <metrics complexity="7" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="11" elements="30" coveredelements="12"/>
+        <metrics complexity="4" methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="12" elements="22" coveredelements="14"/>
       </class>
-      <line num="16" type="method" name="create" visibility="public" complexity="2" crap="2" count="1"/>
-      <line num="19" type="stmt" count="1"/>
+      <line num="18" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="20" type="stmt" count="1"/>
-      <line num="21" type="stmt" count="1"/>
-      <line num="23" type="stmt" count="1"/>
-      <line num="24" type="stmt" count="1"/>
+      <line num="23" type="method" name="create" visibility="public" complexity="2" crap="2" count="1"/>
       <line num="26" type="stmt" count="1"/>
       <line num="27" type="stmt" count="1"/>
+      <line num="28" type="stmt" count="1"/>
       <line num="30" type="stmt" count="1"/>
       <line num="31" type="stmt" count="1"/>
-      <line num="32" type="stmt" count="1"/>
+      <line num="33" type="stmt" count="1"/>
       <line num="34" type="stmt" count="1"/>
-      <line num="37" type="method" name="index" visibility="public" complexity="5" crap="30" count="0"/>
-      <line num="40" type="stmt" count="0"/>
-      <line num="42" type="stmt" count="0"/>
-      <line num="44" type="stmt" count="0"/>
-      <line num="45" type="stmt" count="0"/>
-      <line num="46" type="stmt" count="0"/>
+      <line num="37" type="stmt" count="1"/>
+      <line num="38" type="stmt" count="1"/>
+      <line num="39" type="stmt" count="1"/>
+      <line num="41" type="stmt" count="1"/>
+      <line num="44" type="method" name="index" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="47" type="stmt" count="0"/>
+      <line num="49" type="stmt" count="0"/>
       <line num="50" type="stmt" count="0"/>
       <line num="51" type="stmt" count="0"/>
-      <line num="52" type="stmt" count="0"/>
       <line num="53" type="stmt" count="0"/>
+      <line num="54" type="stmt" count="0"/>
       <line num="57" type="stmt" count="0"/>
-      <line num="58" type="stmt" count="0"/>
-      <line num="59" type="stmt" count="0"/>
-      <line num="61" type="stmt" count="0"/>
-      <line num="64" type="stmt" count="0"/>
-      <line num="66" type="stmt" count="0"/>
-      <line num="67" type="stmt" count="0"/>
-      <metrics loc="76" ncloc="76" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="11" elements="30" coveredelements="12"/>
+      <metrics loc="63" ncloc="63" classes="1" methods="3" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="12" elements="22" coveredelements="14"/>
     </file>
     <file name="/var/www/html/my_project_directory/src/Controller/GameThrowController.php">
       <class name="App\Controller\GameThrowController" namespace="global">
@@ -346,14 +338,14 @@
       <line num="35" type="stmt" count="0"/>
       <line num="37" type="stmt" count="0"/>
       <line num="38" type="stmt" count="0"/>
-      <line num="43" type="method" name="findPlayerDataForThrow" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="45" type="stmt" count="0"/>
-      <line num="47" type="stmt" count="0"/>
-      <line num="52" type="stmt" count="0"/>
-      <line num="54" type="stmt" count="0"/>
+      <line num="42" type="method" name="findPlayerDataForThrow" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="46" type="stmt" count="0"/>
+      <line num="53" type="stmt" count="0"/>
       <line num="55" type="stmt" count="0"/>
-      <line num="57" type="stmt" count="0"/>
-      <metrics loc="60" ncloc="52" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
+      <line num="56" type="stmt" count="0"/>
+      <line num="58" type="stmt" count="0"/>
+      <metrics loc="61" ncloc="53" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
     </file>
     <file name="/var/www/html/my_project_directory/src/Repository/PlayerRepository.php">
       <class name="App\Repository\PlayerRepository" namespace="global">
@@ -379,14 +371,41 @@
       </class>
       <line num="13" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="2"/>
       <line num="15" type="stmt" count="2"/>
-      <line num="19" type="method" name="editAnExistentPlayer" visibility="public" complexity="3" crap="3" count="1"/>
-      <line num="21" type="stmt" count="1"/>
-      <line num="23" type="stmt" count="1"/>
-      <line num="25" type="stmt" count="1"/>
+      <line num="18" type="method" name="editAnExistentPlayer" visibility="public" complexity="3" crap="3" count="1"/>
+      <line num="20" type="stmt" count="1"/>
+      <line num="22" type="stmt" count="1"/>
+      <line num="24" type="stmt" count="1"/>
+      <line num="26" type="stmt" count="1"/>
       <line num="27" type="stmt" count="1"/>
       <line num="28" type="stmt" count="1"/>
-      <line num="29" type="stmt" count="1"/>
-      <metrics loc="32" ncloc="32" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="9" coveredelements="9"/>
+      <metrics loc="31" ncloc="31" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="9" coveredelements="9"/>
+    </file>
+    <file name="/var/www/html/my_project_directory/src/Service/NextPlayerToThrowService.php">
+      <class name="App\Service\NextPlayerToThrowService" namespace="global">
+        <metrics complexity="9" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="21" coveredelements="0"/>
+      </class>
+      <line num="12" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="14" type="stmt" count="0"/>
+      <line num="17" type="method" name="returnNextPlayerToThrow" visibility="public" complexity="5" crap="30" count="0"/>
+      <line num="19" type="stmt" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <line num="21" type="stmt" count="0"/>
+      <line num="23" type="stmt" count="0"/>
+      <line num="25" type="stmt" count="0"/>
+      <line num="29" type="stmt" count="0"/>
+      <line num="30" type="stmt" count="0"/>
+      <line num="32" type="stmt" count="0"/>
+      <line num="33" type="stmt" count="0"/>
+      <line num="37" type="stmt" count="0"/>
+      <line num="39" type="stmt" count="0"/>
+      <line num="40" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="46" type="method" name="returnOtherPlayerData" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="48" type="stmt" count="0"/>
+      <line num="49" type="stmt" count="0"/>
+      <line num="50" type="stmt" count="0"/>
+      <line num="53" type="stmt" count="0"/>
+      <metrics loc="57" ncloc="55" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="21" coveredelements="0"/>
     </file>
     <file name="/var/www/html/my_project_directory/src/Services/DoubleOutCalculation.php">
       <class name="App\Services\DoubleOutCalculation" namespace="global">
@@ -431,9 +450,9 @@
       <line num="77" type="stmt" count="4"/>
       <line num="78" type="stmt" count="4"/>
       <line num="79" type="stmt" count="4"/>
-      <line num="83" type="stmt" count="3"/>
+      <line num="83" type="stmt" count="2"/>
       <metrics loc="86" ncloc="80" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="36" elements="40" coveredelements="40"/>
     </file>
-    <metrics files="23" loc="1124" ncloc="1034" classes="19" methods="69" coveredmethods="34" conditionals="0" coveredconditionals="0" statements="230" coveredstatements="116" elements="299" coveredelements="150"/>
+    <metrics files="24" loc="1168" ncloc="1076" classes="20" methods="73" coveredmethods="35" conditionals="0" coveredconditionals="0" statements="239" coveredstatements="117" elements="312" coveredelements="152"/>
   </project>
 </coverage>

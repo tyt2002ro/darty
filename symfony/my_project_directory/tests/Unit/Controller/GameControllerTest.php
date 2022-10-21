@@ -3,6 +3,9 @@
 
 use App\Controller\GameController;
 use App\Entity\Player;
+use App\Repository\GameThrowRepository;
+use App\Service\NextPlayerToThrowService;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;
@@ -26,7 +29,8 @@ final class GameControllerTest extends TestCase
         $request->request->set('gameEnds', 'test');
         $request->request->set('player', $players);
 
-        $gameController = new GameController();
+        $nextPlayerToThrowService = $this->prophesize(NextPlayerToThrowService::class);
+        $gameController = new GameController($nextPlayerToThrowService->reveal());
 
         $persistenceManagerRegistry = $this->prophesize(PersistenceManagerRegistry::class);
         $objectRepository = $this->prophesize(ObjectRepository::class);

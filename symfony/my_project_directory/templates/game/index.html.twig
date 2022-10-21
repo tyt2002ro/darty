@@ -144,13 +144,13 @@
                 </div>
             </div>
             <div class="right-container">
-                <div class="cell cell-1 cell-title">Emma</div>
-                <div class="cell cell-2">244</div>
-                <div class="cell cell-2">28.5</div>
-
-                <div class="cell cell-1 cell-title">Noah</div>
-                <div class="cell cell-2">208</div>
-                <div class="cell cell-2">46.5</div>
+                {% if otherPlayersData|length > 0 %}
+                    {% for otherPlayerData in otherPlayersData %}
+                            <div class="cell cell-1 cell-title">{{ otherPlayerData.name }}</div>
+                            <div class="cell cell-2">{{ otherPlayerData.pointsTotal }}</div>
+                            <div class="cell cell-2">{{ otherPlayerData.pointsAverage }}</div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         <div class="buttons-container">

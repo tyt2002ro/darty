@@ -39,16 +39,17 @@ class GameThrowRepository extends ServiceEntityRepository
         }
     }
 
-
     public function findPlayerDataForThrow($gameId, $playerId): array
     {
         $entityManager = $this->getEntityManager();
 
-        $sql = 'SELECT sum(GameThrow.points) as pointsTotal, avg(GameThrow.points) as pointsAverage, 
-        3-mod(count(GameThrow.points),3) as legThrows, count(GameThrow.points) as totalThrows
-         FROM App\Entity\GameThrow GameThrow
-            WHERE GameThrow.game_id = ' . $gameId . '
-            AND GameThrow.player_id = ' . $playerId;
+        $sql = 'SELECT coalesce(sum(GameThrow.points), 0) AS pointsTotal,
+                        coalesce(avg(GameThrow.points), 0) AS pointsAverage,
+                        3-mod(count(GameThrow.points), 3) AS legThrows,
+                        count(GameThrow.points) AS totalThrows
+                FROM App\Entity\GameThrow GameThrow
+                WHERE GameThrow.game_id = ' . $gameId . '
+                    AND GameThrow.player_id = ' . $playerId;
         $query = $entityManager->createQuery($sql)->getResult();
 
         if($query){

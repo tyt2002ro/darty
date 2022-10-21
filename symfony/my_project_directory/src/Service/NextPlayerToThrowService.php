@@ -42,5 +42,15 @@ class NextPlayerToThrowService
             return $playersData[0];
         }
     }
+
+    public function returnOtherPlayerData(array $playersData, mixed $order): array
+    {
+        foreach($playersData as $newOrder => $subArray){
+            if($subArray['order'] === $order){
+                unset($playersData[$newOrder]);
+            }
+        }
+        return $playersData;
+    }
 }
 
