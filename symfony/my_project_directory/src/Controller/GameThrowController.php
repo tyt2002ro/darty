@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Game;
-use App\Entity\GameThrow;
 use App\Entity\Player;
+use App\Factory\GameThrowFactory;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +14,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverte;
 
 class GameThrowController extends AbstractController
 {
+    public function __construct(private readonly GameThrowFactory $gameThrowFactory)
+    {
+    }
+
     #[Route('/add/throw/{game_id}/{player_id}', name: 'app_game_throw', methods: ['POST'])]
     public function addThrow(Request $request, ManagerRegistry $doctrine, Game $game_id, Player $player_id): Response
     {
         $entityManager = $doctrine->getManager();
 
-        $gameThrow = new GameThrow();
+        $gameThrow = $this->gameThrowFactory->createFromValues(...);
         $points = $request->get('points');
         $double = $request->get('double');
         $triple = $request->get('triple');

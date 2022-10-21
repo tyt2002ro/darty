@@ -6,17 +6,13 @@ use App\Repository\GameThrowRepository;
 
 class NextPlayerToThrowService
 {
-
-    protected GameThrowRepository $gameThrowRepository;
-
-    public function __construct(GameThrowRepository $gameThrowRepository)
+    public function __construct(private readonly GameThrowRepository $gameThrowRepository)
     {
-        $this->gameThrowRepository = $gameThrowRepository;
     }
 
     public function returnNextPlayerToThrow(int $game_id, array $players, array &$playersData): array
     {
-        $this->updatePlayesData($game_id, $players, $playersData);
+        $this->updatePlayersData($game_id, $players, $playersData);
 
         $mainPlayerData = null;
         foreach ($playersData as $playerData) {
@@ -37,23 +33,23 @@ class NextPlayerToThrowService
 
     public function returnOtherPlayerData(array $playersData, mixed $order): array
     {
-        foreach($playersData as $newOrder => $subArray){
-            if($subArray['order'] === $order){
+        foreach ($playersData as $newOrder => $subArray) {
+            if ($subArray['order'] === $order) {
                 unset($playersData[$newOrder]);
             }
         }
         return $playersData;
     }
 
-    private function updatePlayesData(int $game_id, array $players, array &$playersData): void
+    private function updatePlayersData(int $gameId, array $players, array &$playersData): void
     {
         foreach ($players as $order => $player) {
             $playersData[] = array_merge($this->gameThrowRepository->findPlayerDataForThrow(
-                $game_id, $player->getId()),
+                $gameId, $player->getId()),
                 [
                     'player_id' => $player->getId(),
                     'order' => $order,
-                    'name' => $player->getFirstname().' '.$player->getLastname()
+                    'name' => $player->getFirstname() . ' ' . $player->getLastname()
                 ]);
         }
     }
