@@ -52,7 +52,7 @@ class GameThrowRepository extends ServiceEntityRepository
                     AND GameThrow.player_id = ' . $playerId;
         $query = $entityManager->createQuery($sql)->getResult();
 
-        if($query){
+        if ($query) {
             return $query[0];
         }
         return [];
