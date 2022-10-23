@@ -23,22 +23,11 @@ class GameThrowController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
 
-        $gameThrow = $this->gameThrowFactory->createFromValues(...);
         $points = $request->get('points');
         $double = $request->get('double');
         $triple = $request->get('triple');
 
-        if($double === '1') {
-            $points *=2;
-        }
-        if($triple === '1') {
-           $points *=3;
-        }
-
-        $gameThrow->setPlayerId($player);
-        $gameThrow->setGameId($game);
-        $gameThrow->setPoints($points);
-        $gameThrow->setThrowOrder(1);
+        $gameThrow = $this->gameThrowFactory->createFromValues($points, $double, $triple, $player, $game);
 
         $entityManager->persist($gameThrow);
         $entityManager->flush();

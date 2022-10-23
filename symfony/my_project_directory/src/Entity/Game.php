@@ -99,7 +99,7 @@ class Game
     {
         if (!$this->gameThrows->contains($gameThrow)) {
             $this->gameThrows->add($gameThrow);
-            $gameThrow->setGameId($this);
+            $gameThrow->setGame($this);
         }
 
         return $this;
@@ -110,7 +110,7 @@ class Game
         if ($this->gameThrows->removeElement($gameThrow)) {
             // set the owning side to null (unless already changed)
             if ($gameThrow->getGameId() === $this) {
-                $gameThrow->setGameId(null);
+                $gameThrow->setGame(null);
             }
         }
 

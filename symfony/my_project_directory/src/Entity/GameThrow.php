@@ -50,9 +50,9 @@ class GameThrow
         return $this->game_id;
     }
 
-    public function setGameId(?Game $game_id): self
+    public function setGame(?Game $game): self
     {
-        $this->game_id = $game_id;
+        $this->game_id = $game;
 
         return $this;
     }
@@ -62,9 +62,9 @@ class GameThrow
         return $this->player_id;
     }
 
-    public function setPlayerId(?Player $player_id): self
+    public function setPlayer(?Player $player): self
     {
-        $this->player_id = $player_id;
+        $this->player_id = $player;
 
         return $this;
     }
