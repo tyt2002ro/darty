@@ -40,10 +40,10 @@ class GameController extends AbstractController
             ->returnNextPlayerToThrow($game->getId(), $players, $playersData);
 
         $otherPlayersData = $this->nextPlayerToThrowService
-            ->returnOtherPlayerData($playersData, $mainPlayerData['order']);
+            ->returnOtherPlayerData($playersData, $mainPlayerData->getOrder());
 
         return $this->render('game/index.html.twig', [
-            'player_id' => $mainPlayerData['player_id'],
+            'player_id' => $mainPlayerData->getPlayerId(),
             'mainPlayerData' => $mainPlayerData,
             'otherPlayersData' => $otherPlayersData,
             'game_id' => $game->getId(),

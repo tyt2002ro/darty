@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1666615066">
-  <project timestamp="1666615066">
+<coverage generated="1666615172">
+  <project timestamp="1666615172">
     <file name="/var/www/html/my_project_directory/src/Controller/AddPlayerController.php">
       <class name="App\Controller\AddPlayerController" namespace="global">
         <metrics complexity="4" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
