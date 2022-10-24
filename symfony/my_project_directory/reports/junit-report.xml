@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="/var/www/html/my_project_directory/tests/Unit/Service" tests="1" assertions="2" errors="0" warnings="1" failures="0" skipped="0" time="1.009353">
-    <testsuite name="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" tests="1" assertions="2" errors="0" warnings="1" failures="0" skipped="0" time="1.009353">
-      <testcase name="checkCreateGame" class="GameServiceTest" classname="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" line="16" assertions="2" time="1.009353">
-        <warning type="PHPUnit\Framework\Warning">GameServiceTest::checkCreateGame
-PHPUnit\Framework\TestCase::prophesize() is deprecated and will be removed in PHPUnit 10. Please use the trait provided by phpspec/prophecy-phpunit.</warning>
+  <testsuite name="/var/www/html/my_project_directory/tests/Unit/Factory" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.620187">
+    <testsuite name="App\tests\Factory\GameThrowFactoryTest" file="/var/www/html/my_project_directory/tests/Unit/Factory/GameThrowFactoryTest.php" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.620187">
+      <testcase name="createReturnNewGameThrow" class="App\tests\Factory\GameThrowFactoryTest" classname="App.tests.Factory.GameThrowFactoryTest" file="/var/www/html/my_project_directory/tests/Unit/Factory/GameThrowFactoryTest.php" line="17" assertions="0" time="0.620187">
+        <error type="TypeError">App\tests\Factory\GameThrowFactoryTest::createReturnNewGameThrow
+TypeError: App\Factory\GameThrowFactory::createFromValues(): Argument #4 ($player) must be of type App\Entity\Player, Prophecy\Prophecy\MethodProphecy given, called in /var/www/html/my_project_directory/tests/Unit/Factory/GameThrowFactoryTest.php on line 27
+
+/var/www/html/my_project_directory/src/Factory/GameThrowFactory.php:12
+/var/www/html/my_project_directory/tests/Unit/Factory/GameThrowFactoryTest.php:27</error>
       </testcase>
     </testsuite>
   </testsuite>
