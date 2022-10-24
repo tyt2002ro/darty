@@ -6,7 +6,6 @@ namespace App\Factory;
 use App\Entity\Game;
 use App\Entity\GameThrow;
 use App\Entity\Player;
-//use App\Factory\Player;
 
 class GameThrowFactory
 {

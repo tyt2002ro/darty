@@ -2,6 +2,7 @@
 
 use App\Controller\GameController;
 use App\Entity\Player;
+use App\Factory\GameFactory;
 use App\Service\NextPlayerToThrowService;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
@@ -27,7 +28,8 @@ final class GameControllerTest extends TestCase
         $request->request->set('player', $players);
 
         $nextPlayerToThrowService = $this->prophesize(NextPlayerToThrowService::class);
-        $gameController = new GameController($nextPlayerToThrowService->reveal());
+        $gameFactory = $this->prophesize(GameFactory::class);
+        $gameController = new GameController($nextPlayerToThrowService->reveal(), $gameFactory->reveal());
 
         $persistenceManagerRegistry = $this->prophesize(PersistenceManagerRegistry::class);
         $objectRepository = $this->prophesize(ObjectRepository::class);

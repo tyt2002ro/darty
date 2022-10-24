@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\Player;
+use App\Factory\GameFactory;
 use App\Service\NextPlayerToThrowService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,22 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GameController extends AbstractController
 {
-    public function __construct(private readonly NextPlayerToThrowService $nextPlayerToThrowService)
+    public function __construct(private readonly NextPlayerToThrowService $nextPlayerToThrowService,
+                                private readonly GameFactory $gameFactory)
     {
     }
 
     #[Route('/createGame', name: 'create_game')]
     public function create(ManagerRegistry $doctrine, Request $request): Response
     {
-        $game = new Game();
-        $game->setType($request->request->get('games'));
-        $game->setGameOption($request->request->get('gameEnds'));
-
+        $type = $request->request->get('games');
+        $endOptions = $request->request->get('gameEnds');
         $playerIds = $request->request->all()['player'];
-        foreach ($playerIds as $playerId) {
-            $player = $doctrine->getRepository(Player::class)->findOneBy(array('id' => $playerId));
-            $game->addPlayerId($player);
-        }
+
+        $game = $this->gameFactory->createGame($type, $playerIds, $endOptions);
 
         $entityManager = $doctrine->getManager();
         $entityManager->persist($game);
