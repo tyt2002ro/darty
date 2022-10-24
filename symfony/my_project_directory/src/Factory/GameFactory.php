@@ -6,15 +6,11 @@ use App\Entity\Game;
 use App\Entity\Player;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @property ManagerRegistry $registry
- */
 class GameFactory
 {
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(private readonly ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function createGame(int $type, array $playerIds,  string $endOptions): Game

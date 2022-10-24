@@ -1,77 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="" tests="25" assertions="82" errors="2" warnings="2" failures="0" skipped="0" time="0.315751">
-    <testsuite name="Project Test Suite" tests="25" assertions="82" errors="2" warnings="2" failures="0" skipped="0" time="0.315751">
-      <testsuite name="App\tests\Unit\AddPlayerTest" file="/var/www/html/my_project_directory/tests/Unit/AddPlayerTest.php" tests="5" assertions="12" errors="0" warnings="0" failures="0" skipped="0" time="0.174858">
-        <testcase name="homepageActionsReturnsTemplate" class="App\tests\Unit\AddPlayerTest" classname="App.tests.Unit.AddPlayerTest" file="/var/www/html/my_project_directory/tests/Unit/AddPlayerTest.php" line="23" assertions="8" time="0.172411"/>
-        <testcase name="buildPlayerReturnTemplate" class="App\tests\Unit\AddPlayerTest" classname="App.tests.Unit.AddPlayerTest" file="/var/www/html/my_project_directory/tests/Unit/AddPlayerTest.php" line="51" assertions="1" time="0.000219"/>
-        <testcase name="checkPlayerFirstName" class="App\tests\Unit\AddPlayerTest" classname="App.tests.Unit.AddPlayerTest" file="/var/www/html/my_project_directory/tests/Unit/AddPlayerTest.php" line="64" assertions="1" time="0.001782"/>
-        <testcase name="checkPlayerLastName" class="App\tests\Unit\AddPlayerTest" classname="App.tests.Unit.AddPlayerTest" file="/var/www/html/my_project_directory/tests/Unit/AddPlayerTest.php" line="75" assertions="1" time="0.000210"/>
-        <testcase name="checkPlayerNickName" class="App\tests\Unit\AddPlayerTest" classname="App.tests.Unit.AddPlayerTest" file="/var/www/html/my_project_directory/tests/Unit/AddPlayerTest.php" line="86" assertions="1" time="0.000235"/>
-      </testsuite>
-      <testsuite name="AddPlayerControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/AddPlayerControllerTest.php" tests="1" assertions="10" errors="0" warnings="0" failures="0" skipped="0" time="0.028895">
-        <testsuite name="AddPlayerControllerTest::buildPlayerActionFromRequest" tests="1" assertions="10" errors="0" warnings="0" failures="0" skipped="0" time="0.028895">
-          <testcase name="buildPlayerActionFromRequest with data set #0" class="AddPlayerControllerTest" classname="AddPlayerControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/AddPlayerControllerTest.php" line="23" assertions="10" time="0.028895"/>
-        </testsuite>
-      </testsuite>
-      <testsuite name="DeletePlayerControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/DeletePlayerControllerTest.php" tests="1" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.023075">
-        <testcase name="verifyDeletePlayer" class="DeletePlayerControllerTest" classname="DeletePlayerControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/DeletePlayerControllerTest.php" line="19" assertions="3" time="0.023075"/>
-      </testsuite>
-      <testsuite name="EditPlayerControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/EditPlayerControllerTest.php" tests="2" assertions="19" errors="0" warnings="2" failures="0" skipped="0" time="0.009461">
-        <testcase name="editPlayerPageActionsReturnsTemplate" class="EditPlayerControllerTest" classname="EditPlayerControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/EditPlayerControllerTest.php" line="22" assertions="9" time="0.008090">
-          <warning type="PHPUnit\Framework\Warning">EditPlayerControllerTest::editPlayerPageActionsReturnsTemplate
-PHPUnit\Framework\TestCase::prophesize() is deprecated and will be removed in PHPUnit 10. Please use the trait provided by phpspec/prophecy-phpunit.</warning>
-        </testcase>
-        <testcase name="editPlayerActionFromRequest" class="EditPlayerControllerTest" classname="EditPlayerControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/EditPlayerControllerTest.php" line="62" assertions="10" time="0.001371">
-          <warning type="PHPUnit\Framework\Warning">EditPlayerControllerTest::editPlayerActionFromRequest
-PHPUnit\Framework\TestCase::prophesize() is deprecated and will be removed in PHPUnit 10. Please use the trait provided by phpspec/prophecy-phpunit.</warning>
-        </testcase>
-      </testsuite>
-      <testsuite name="GameControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/GameControllerTest.php" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.025698">
-        <testcase name="checkAddGame" class="GameControllerTest" classname="GameControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/GameControllerTest.php" line="22" assertions="0" time="0.025698">
-          <error type="TypeError">GameControllerTest::checkAddGame
-TypeError: Double\App\Factory\GameFactory\P12::createGame(): Return value must be of type App\Entity\Game, null returned
+  <testsuite name="/var/www/html/my_project_directory/tests/Unit/Service" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.412646">
+    <testsuite name="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.412646">
+      <testcase name="checkCreateGame" class="GameServiceTest" classname="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" line="13" assertions="0" time="0.412646">
+        <error type="Error">GameServiceTest::checkCreateGame
+Error: Class "GameService" not found
 
-/var/www/html/my_project_directory/src/Controller/GameController.php:29
-/var/www/html/my_project_directory/tests/Unit/Controller/GameControllerTest.php:49</error>
-        </testcase>
-      </testsuite>
-      <testsuite name="App\tests\Unit\HomepageDartyControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/HomepageDartyControllerTest.php" tests="1" assertions="5" errors="0" warnings="0" failures="0" skipped="0" time="0.002873">
-        <testcase name="homepageActionsReturnsTemplate" class="App\tests\Unit\HomepageDartyControllerTest" classname="App.tests.Unit.HomepageDartyControllerTest" file="/var/www/html/my_project_directory/tests/Unit/Controller/HomepageDartyControllerTest.php" line="22" assertions="5" time="0.002873"/>
-      </testsuite>
-      <testsuite name="App\tests\Unit\DoubleOutSuggestionControllerTest" file="/var/www/html/my_project_directory/tests/Unit/DoubleOutSuggestionControllerTest.php" tests="2" assertions="8" errors="0" warnings="0" failures="0" skipped="0" time="0.005062">
-        <testcase name="doubleOutActionReturnsTemplate" class="App\tests\Unit\DoubleOutSuggestionControllerTest" classname="App.tests.Unit.DoubleOutSuggestionControllerTest" file="/var/www/html/my_project_directory/tests/Unit/DoubleOutSuggestionControllerTest.php" line="20" assertions="4" time="0.002502"/>
-        <testcase name="doubleOutPostReturnsTemplate" class="App\tests\Unit\DoubleOutSuggestionControllerTest" classname="App.tests.Unit.DoubleOutSuggestionControllerTest" file="/var/www/html/my_project_directory/tests/Unit/DoubleOutSuggestionControllerTest.php" line="37" assertions="4" time="0.002560"/>
-      </testsuite>
-      <testsuite name="App\Tests\PlayerTest" file="/var/www/html/my_project_directory/tests/Unit/Entity/PlayerTest.php" tests="3" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.000791">
-        <testcase name="checkFirstName" class="App\Tests\PlayerTest" classname="App.Tests.PlayerTest" file="/var/www/html/my_project_directory/tests/Unit/Entity/PlayerTest.php" line="13" assertions="1" time="0.000380"/>
-        <testcase name="checkLastName" class="App\Tests\PlayerTest" classname="App.Tests.PlayerTest" file="/var/www/html/my_project_directory/tests/Unit/Entity/PlayerTest.php" line="26" assertions="1" time="0.000206"/>
-        <testcase name="checkNickName" class="App\Tests\PlayerTest" classname="App.Tests.PlayerTest" file="/var/www/html/my_project_directory/tests/Unit/Entity/PlayerTest.php" line="39" assertions="1" time="0.000205"/>
-      </testsuite>
-      <testsuite name="App\tests\Factory\GameThrowFactoryTest" file="/var/www/html/my_project_directory/tests/Unit/Factory/GameThrowFactoryTest.php" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.007320">
-        <testcase name="createReturnNewGameThrow" class="App\tests\Factory\GameThrowFactoryTest" classname="App.tests.Factory.GameThrowFactoryTest" file="/var/www/html/my_project_directory/tests/Unit/Factory/GameThrowFactoryTest.php" line="14" assertions="0" time="0.007320">
-          <error type="Prophecy\Exception\Doubler\MethodNotFoundException">App\tests\Factory\GameThrowFactoryTest::createReturnNewGameThrow
-Prophecy\Exception\Doubler\MethodNotFoundException: Method `Double\stdClass\P14::findOneBy()` is not defined.
-
-/var/www/html/my_project_directory/tests/Unit/Factory/GameThrowFactoryTest.php:20</error>
-        </testcase>
-      </testsuite>
-      <testsuite name="App\tests\Unit\PlayerManagementScreenControllerTest" file="/var/www/html/my_project_directory/tests/Unit/PlayerManagementScreenControllerTest.php" tests="1" assertions="5" errors="0" warnings="0" failures="0" skipped="0" time="0.002883">
-        <testcase name="playerManagementActionsReturnsTemplate" class="App\tests\Unit\PlayerManagementScreenControllerTest" classname="App.tests.Unit.PlayerManagementScreenControllerTest" file="/var/www/html/my_project_directory/tests/Unit/PlayerManagementScreenControllerTest.php" line="21" assertions="5" time="0.002883"/>
-      </testsuite>
-      <testsuite name="DeletePlayerServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/DeletePlayerServiceTest.php" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.032807">
-        <testcase name="checkDeletePlayer" class="DeletePlayerServiceTest" classname="DeletePlayerServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/DeletePlayerServiceTest.php" line="17" assertions="1" time="0.026444"/>
-        <testcase name="checkDeleteInvalidPlayer" class="DeletePlayerServiceTest" classname="DeletePlayerServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/DeletePlayerServiceTest.php" line="32" assertions="1" time="0.006362"/>
-      </testsuite>
-      <testsuite name="App\tests\Unit\DoubleOutCalculationTest" file="/var/www/html/my_project_directory/tests/Unit/Services/DoubleOutCalculationTest.php" tests="5" assertions="15" errors="0" warnings="0" failures="0" skipped="0" time="0.002030">
-        <testsuite name="App\tests\Unit\DoubleOutCalculationTest::checkSuggestions" tests="5" assertions="15" errors="0" warnings="0" failures="0" skipped="0" time="0.002030">
-          <testcase name="checkSuggestions with data set &quot;score 160&quot;" class="App\tests\Unit\DoubleOutCalculationTest" classname="App.tests.Unit.DoubleOutCalculationTest" file="/var/www/html/my_project_directory/tests/Unit/Services/DoubleOutCalculationTest.php" line="16" assertions="3" time="0.000505"/>
-          <testcase name="checkSuggestions with data set &quot;score 2&quot;" class="App\tests\Unit\DoubleOutCalculationTest" classname="App.tests.Unit.DoubleOutCalculationTest" file="/var/www/html/my_project_directory/tests/Unit/Services/DoubleOutCalculationTest.php" line="16" assertions="3" time="0.000325"/>
-          <testcase name="checkSuggestions with data set &quot;score 1&quot;" class="App\tests\Unit\DoubleOutCalculationTest" classname="App.tests.Unit.DoubleOutCalculationTest" file="/var/www/html/my_project_directory/tests/Unit/Services/DoubleOutCalculationTest.php" line="16" assertions="3" time="0.000515"/>
-          <testcase name="checkSuggestions with data set &quot;score 121&quot;" class="App\tests\Unit\DoubleOutCalculationTest" classname="App.tests.Unit.DoubleOutCalculationTest" file="/var/www/html/my_project_directory/tests/Unit/Services/DoubleOutCalculationTest.php" line="16" assertions="3" time="0.000327"/>
-          <testcase name="checkSuggestions with data set &quot;score 104&quot;" class="App\tests\Unit\DoubleOutCalculationTest" classname="App.tests.Unit.DoubleOutCalculationTest" file="/var/www/html/my_project_directory/tests/Unit/Services/DoubleOutCalculationTest.php" line="16" assertions="3" time="0.000357"/>
-        </testsuite>
-      </testsuite>
+/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php:16</error>
+      </testcase>
     </testsuite>
   </testsuite>
 </testsuites>
