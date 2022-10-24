@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/var/www/html/my_project_directory/tests/Unit/Service" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.796612">
+    <testsuite name="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" tests="1" assertions="0" errors="1" warnings="0" failures="0" skipped="0" time="0.796612">
+      <testcase name="checkCreateGame" class="GameServiceTest" classname="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" line="15" assertions="0" time="0.796612">
+        <error type="TypeError">GameServiceTest::checkCreateGame
+TypeError: App\Service\GameService::createGame(): Return value must be of type int, null returned
+
+/var/www/html/my_project_directory/src/Service/GameService.php:21
+/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php:28</error>
+      </testcase>
+    </testsuite>
+  </testsuite>
+</testsuites>
