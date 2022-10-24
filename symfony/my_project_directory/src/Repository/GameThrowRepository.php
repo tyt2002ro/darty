@@ -48,8 +48,8 @@ class GameThrowRepository extends ServiceEntityRepository
                         3-mod(count(GameThrow.points), 3) AS legThrows,
                         count(GameThrow.points) AS totalThrows
                 FROM App\Entity\GameThrow GameThrow
-                WHERE GameThrow.game_id = ' . $gameId . '
-                    AND GameThrow.player_id = ' . $playerId;
+                WHERE GameThrow.game = ' . $gameId . '
+                    AND GameThrow.player = ' . $playerId;
         $query = $entityManager->createQuery($sql)->getResult();
 
         if ($query) {

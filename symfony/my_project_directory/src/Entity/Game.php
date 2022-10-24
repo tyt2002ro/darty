@@ -109,7 +109,7 @@ class Game
     {
         if ($this->gameThrows->removeElement($gameThrow)) {
             // set the owning side to null (unless already changed)
-            if ($gameThrow->getGameId() === $this) {
+            if ($gameThrow->getGame() === $this) {
                 $gameThrow->setGame(null);
             }
         }
