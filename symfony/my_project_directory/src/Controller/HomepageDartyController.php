@@ -12,17 +12,7 @@ class HomepageDartyController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function homepageAction(PlayerRepository $playerRepository): Response
     {
-        $playerList = $playerRepository->findAll();
-
-        $players = [];
-        if ($playerList) {
-            foreach ($playerList as $player) {
-                $players[] = [
-                    'id' => $player->getId(),
-                    'name' => $player->getFirstName() . ' ' . $player->getLastName()
-                ];
-            }
-        }
+        $players = $playerRepository->findAll();
 
         $gameTypes = [
             ['type' => '301', 'checked' => false],
