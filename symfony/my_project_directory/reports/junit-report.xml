@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="/var/www/html/my_project_directory/tests/Unit/Service" tests="1" assertions="2" errors="0" warnings="1" failures="0" skipped="0" time="0.164289">
-    <testsuite name="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" tests="1" assertions="2" errors="0" warnings="1" failures="0" skipped="0" time="0.164289">
-      <testcase name="checkCreateGame" class="GameServiceTest" classname="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" line="16" assertions="2" time="0.164289">
+  <testsuite name="/var/www/html/my_project_directory/tests/Unit/Service" tests="1" assertions="2" errors="0" warnings="1" failures="0" skipped="0" time="1.009353">
+    <testsuite name="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" tests="1" assertions="2" errors="0" warnings="1" failures="0" skipped="0" time="1.009353">
+      <testcase name="checkCreateGame" class="GameServiceTest" classname="GameServiceTest" file="/var/www/html/my_project_directory/tests/Unit/Service/GameServiceTest.php" line="16" assertions="2" time="1.009353">
         <warning type="PHPUnit\Framework\Warning">GameServiceTest::checkCreateGame
 PHPUnit\Framework\TestCase::prophesize() is deprecated and will be removed in PHPUnit 10. Please use the trait provided by phpspec/prophecy-phpunit.</warning>
       </testcase>

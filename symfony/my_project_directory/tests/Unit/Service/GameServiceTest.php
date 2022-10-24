@@ -24,14 +24,19 @@ class GameServiceTest extends TestCase
         $game->setGameOption($endOptions);
         $game->addPlayerId(new Player());
 
+        $expectedGame = new Game();
+        $expectedGame->setType($type);
+        $expectedGame->setGameOption($endOptions);
+        $expectedGame->addPlayerId(new Player());
+
         $gameRepository = $this->prophesize(GameRepository::class);
         $gameFactory = $this->prophesize(GameFactory::class);
         $gameService = new GameService($gameRepository->reveal(), $gameFactory->reveal());
 
         $gameFactory->createGame(Argument::cetera())->shouldBeCalled()->willReturn($game);
 
-        $cratedGame = $gameService->createGame($type, $playerIds, $endOptions);
-
-        self::assertSame($cratedGame, $game);
+        $createdGame = $gameService->createGame($type, $playerIds, $endOptions);
+        
+        self::assertEquals($expectedGame, $createdGame);
     }
 }
