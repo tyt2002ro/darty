@@ -11,21 +11,41 @@ use App\Entity\Game;
 
 final class GameThrowFactoryTest extends TestCase
 {
+
+    protected function setUp(): void
+    {
+        $this->factory = new GameThrowFactory();
+        $this->player = new Player();
+        $this->game = new Game();
+    }
+
     /**
      * @test
      */
-    public function createReturnNewGameThrow(): void
+    public function createReturnNewGameThrowSingleOne(): void
     {
-        $factory = new GameThrowFactory();
-        $playerId = 5;
-        $gameId = 1;
-        $objectRepository = $this->prophesize(ObjectRepository::class);
-        $player = $objectRepository->findOneBy(array('id' => $playerId))->shouldBeCalled()->willReturn(new Player);
-        $game = $objectRepository->findOneBy(array('id' => $gameId))->shouldBeCalled()->willReturn(new Game);
-
-
-        $throw = $factory->createFromValues(1, true, true, $player, 1);
+        $throw = $this->factory->createFromValues(1, false, false, $this->player, $this->game);
 
         self::assertSame(1, $throw->getPoints());
+    }
+
+    /**
+     * @test
+     */
+    public function createReturnNewGameThrowDoubleOne(): void
+    {
+        $throw = $this->factory->createFromValues(1, true, false, $this->player, $this->game);
+
+        self::assertSame(2, $throw->getPoints());
+    }
+
+    /**
+     * @test
+     */
+    public function createReturnNewGameThrowTripleOne(): void
+    {
+        $throw = $this->factory->createFromValues(1, false, true, $this->player, $this->game);
+
+        self::assertSame(3, $throw->getPoints());
     }
 }
