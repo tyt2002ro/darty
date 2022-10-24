@@ -1,11 +1,12 @@
 <?php
 
 use App\Entity\Game;
+use App\Entity\Player;
 use App\Factory\GameFactory;
 use App\Repository\GameRepository;
 use App\Service\GameService;
-use Doctrine\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 
 class GameServiceTest extends TestCase
 {
@@ -18,15 +19,19 @@ class GameServiceTest extends TestCase
         $playerIds = [5, 6];
         $endOptions = 'Single';
 
+        $game = new Game();
+        $game->setType($type);
+        $game->setGameOption($endOptions);
+        $game->addPlayerId(new Player());
+
         $gameRepository = $this->prophesize(GameRepository::class);
         $gameFactory = $this->prophesize(GameFactory::class);
-        $game = $this->prophesize(Game::class);
         $gameService = new GameService($gameRepository->reveal(), $gameFactory->reveal());
 
-        $gameFactory->createGame($type,$playerIds,$endOptions)->shouldBeCalled()->willReturn($game->reveal());
-        $gameRepository->save($game->reveal(),true)->shouldBeCalled();
-        $gameId = $gameService->createGame($type, $playerIds, $endOptions);
+        $gameFactory->createGame(Argument::cetera())->shouldBeCalled()->willReturn($game);
 
-        self::assertSame(1, $gameId);
+        $cratedGame = $gameService->createGame($type, $playerIds, $endOptions);
+
+        self::assertSame($cratedGame, $game);
     }
 }
