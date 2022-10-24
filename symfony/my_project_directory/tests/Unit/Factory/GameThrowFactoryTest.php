@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace App\tests\Factory;
 
 use App\Factory\GameThrowFactory;
-use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;
 use App\Entity\Player;
 use App\Entity\Game;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 final class GameThrowFactoryTest extends TestCase
 {
-
+    use ProphecyTrait;
     protected function setUp(): void
     {
         $this->factory = new GameThrowFactory();

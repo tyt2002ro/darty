@@ -3,9 +3,7 @@
 namespace App\tests\Unit;
 
 use App\Controller\PlayerManagementScreenController;
-use App\Entity\Player;
-use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectRepository;
+use App\Repository\PlayerRepository;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -22,12 +20,7 @@ class PlayerManagementScreenControllerTest extends TestCase
     {
         $content = 'some content';
 
-        $objectRepository = $this->prophesize(ObjectRepository::class);
-        $managerRegistry = $this->prophesize(ManagerRegistry::class);
-        $managerRegistry
-            ->getRepository(Player::class)
-            ->shouldBeCalled()
-            ->willReturn($objectRepository->reveal());
+        $playerRepository = $this->prophesize(PlayerRepository::class);
 
         $playerManagementScreenController = new PlayerManagementScreenController();
         $twigTemplate = $this->prophesize(Environment::class);
@@ -37,7 +30,7 @@ class PlayerManagementScreenControllerTest extends TestCase
         $playerManagementScreenController->setContainer($container->reveal());
         $twigTemplate->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
-        $pageContent = $playerManagementScreenController->playerManagementScreenAction($managerRegistry->reveal())->getContent();
+        $pageContent = $playerManagementScreenController->playerManagementScreenAction($playerRepository->reveal())->getContent();
         self::assertSame($content, $pageContent);
     }
 }

@@ -93,11 +93,9 @@ class Player
 
     public function removeGameThrow(GameThrow $gameThrow): self
     {
-        if ($this->gameThrows->removeElement($gameThrow)) {
-            // set the owning side to null (unless already changed)
-            if ($gameThrow->getPlayer() === $this) {
-                $gameThrow->setPlayer(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->gameThrows->removeElement($gameThrow) && $gameThrow->getPlayer() === $this) {
+            $gameThrow->setPlayer(null);
         }
 
         return $this;

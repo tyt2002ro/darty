@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Player;
 use App\Form\PlayerType;
+use App\Repository\PlayerRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
 class AddPlayerController extends AbstractController
 {
@@ -26,7 +26,7 @@ class AddPlayerController extends AbstractController
     }
 
     #[Route('/addPlayerForm', name: 'buildPlayerAction', methods: ['post'])]
-    public function buildPlayerAction(PersistenceManagerRegistry $doctrine, Request $request): RedirectResponse
+    public function buildPlayerAction(PlayerRepository $playerRepository, Request $request): RedirectResponse
     {
         $player = new Player();
         $form = $this->createForm(PlayerType::class, $player);
@@ -36,9 +36,7 @@ class AddPlayerController extends AbstractController
 
             $player = $form->getData();
 
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($player);
-            $entityManager->flush();
+            $playerRepository->save($player, true);
         }
 
         return $this->redirect('/', 301);
