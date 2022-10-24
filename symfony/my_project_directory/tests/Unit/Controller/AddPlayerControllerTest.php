@@ -2,8 +2,7 @@
 
 use App\Controller\AddPlayerController;
 use App\Entity\Player;
-use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
+use App\Repository\PlayerRepository;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -26,9 +25,7 @@ final class AddPlayerControllerTest extends TestCase
 
         $addPlayerController = new AddPlayerController();
 
-        $persistenceManagerRegistry = $this->prophesize(PersistenceManagerRegistry::class);
-        $objectManager = $this->prophesize(ObjectManager::class);
-
+        $playerRepository = $this->prophesize(PlayerRepository::class);
         $container = $this->prophesize(ContainerInterface::class);
         $formFactory = $this->prophesize(FormFactory::class);
         $form = $this->prophesize(FormInterface::class);
@@ -41,14 +38,9 @@ final class AddPlayerControllerTest extends TestCase
         $form->handleRequest($request)->shouldBeCalled()->willReturn($form->reveal());
         $form->isSubmitted()->shouldBeCalled()->willReturn(true);
         $form->isValid()->shouldBeCalled()->willReturn(true);
-        $persistenceManagerRegistry->getManager()->shouldBeCalled()->willReturn($objectManager->reveal());
-
         $form->getData()->shouldBeCalled()->willReturn($player->reveal());
 
-        $objectManager->persist($player->reveal())->shouldBeCalled();
-        $objectManager->flush()->shouldBeCalled();
-
-        $result = $addPlayerController->buildPlayerAction($persistenceManagerRegistry->reveal(), $request);
+        $result = $addPlayerController->buildPlayerAction($playerRepository->reveal(), $request);
         self::assertSame('/', $result->getTargetUrl());
 
     }
