@@ -43,7 +43,7 @@ class GameController extends AbstractController
             ->returnOtherPlayerData($playersData, $mainPlayerData->getOrder());
 
         return $this->render('darty/game.html.twig', [
-            'player_id' => $mainPlayerData['player_id'],
+            'player_id' => $mainPlayerData->getPlayerId(),
             'mainPlayerData' => $mainPlayerData,
             'otherPlayersData' => $otherPlayersData,
             'game_id' => $game->getId(),
