@@ -3,7 +3,7 @@
 namespace App\tests\Unit;
 
 use App\DataObjects\DoubleOutSuggestion;
-use App\Services\DoubleOutCalculation;
+use App\Service\DoubleOutCalculation;
 use PHPUnit\Framework\TestCase;
 
 final class DoubleOutCalculationTest extends TestCase

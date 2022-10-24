@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Game;
-use App\Entity\Player;
-use App\Factory\GameFactory;
+use App\Service\GameService;
 use App\Service\NextPlayerToThrowService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GameController extends AbstractController
 {
     public function __construct(private readonly NextPlayerToThrowService $nextPlayerToThrowService,
-                                private readonly GameFactory $gameFactory)
+                                private readonly GameService $gameService)
     {
     }
 
@@ -26,11 +25,7 @@ class GameController extends AbstractController
         $endOptions = $request->request->get('gameEnds');
         $playerIds = $request->request->all()['player'];
 
-        $game = $this->gameFactory->createGame($type, $playerIds, $endOptions);
-
-        $entityManager = $doctrine->getManager();
-        $entityManager->persist($game);
-        $entityManager->flush();
+        $game = $this->gameService->createGame($type, $playerIds, $endOptions);
 
         return $this->redirect('/game/' . $game->getId(), 301);
     }
