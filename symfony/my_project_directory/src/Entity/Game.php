@@ -71,18 +71,18 @@ class Game
         return $this->player_id;
     }
 
-    public function addPlayerId(Player $playerId): self
+    public function addPlayerId(Player $player): self
     {
-        if (!$this->player_id->contains($playerId)) {
-            $this->player_id->add($playerId);
+        if (!$this->player_id->contains($player)) {
+            $this->player_id->add($player);
         }
 
         return $this;
     }
 
-    public function removePlayerId(Player $playerId): self
+    public function removePlayerId(Player $player): self
     {
-        $this->player_id->removeElement($playerId);
+        $this->player_id->removeElement($player);
 
         return $this;
     }

@@ -25,9 +25,9 @@ class GameController extends AbstractController
         $endOptions = $request->request->get('gameEnds');
         $playerIds = $request->request->all()['player'];
 
-        $game = $this->gameService->createGame($type, $playerIds, $endOptions);
+        $gameId = $this->gameService->createGame($type, $playerIds, $endOptions);
 
-        return $this->redirect('/game/' . $game->getId(), 301);
+        return $this->redirect('/game/' . $gameId, 301);
     }
 
     #[Route('/game/{id}', name: 'app_game')]
