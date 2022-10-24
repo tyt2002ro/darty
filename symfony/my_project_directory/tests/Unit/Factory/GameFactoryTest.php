@@ -25,6 +25,7 @@ final class GameFactoryTest extends TestCase
         $expectedGame->addPlayerId(new Player());
         $expectedGame->addPlayerId(new Player());
 
+
         $playerRepository = $this->prophesize(PlayerRepository::class);
         $gameFactory = new GameFactory($playerRepository->reveal());
         $playerRepository->find('3')->shouldBeCalled()->willReturn(new Player());
