@@ -42,7 +42,7 @@ class GameController extends AbstractController
         $otherPlayersData = $this->nextPlayerToThrowService
             ->returnOtherPlayerData($playersData, $mainPlayerData['order']);
 
-        return $this->render('game/index.html.twig', [
+        return $this->render('darty/game.html.twig', [
             'player_id' => $mainPlayerData['player_id'],
             'mainPlayerData' => $mainPlayerData,
             'otherPlayersData' => $otherPlayersData,

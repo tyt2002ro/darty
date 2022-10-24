@@ -14,17 +14,7 @@ class HomepageDartyController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function homepageAction(ManagerRegistry $doctrine): Response
     {
-        $playerList = $doctrine->getRepository(Player::class)->findAll();
-
-        $players = [];
-        if($playerList) {
-            foreach ($playerList as $player) {
-                $players[] = [
-                    'id' => $player->getId(),
-                    'name' => $player->getFirstName() . ' ' . $player->getLastName()
-                ];
-            }
-        }
+        $players = $doctrine->getRepository(Player::class)->findAll();
 
         $gameTypes = [
             ['type' => '301', 'checked' => false],

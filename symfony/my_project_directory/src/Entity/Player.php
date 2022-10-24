@@ -24,7 +24,7 @@ class Player
     #[ORM\Column(length: 255)]
     private ?string $nickname = null;
 
-    #[ORM\OneToMany(mappedBy: 'player_id', targetEntity: GameThrow::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'player', targetEntity: GameThrow::class, orphanRemoval: true)]
     private Collection $gameThrows;
 
     public function __construct()
@@ -93,11 +93,9 @@ class Player
 
     public function removeGameThrow(GameThrow $gameThrow): self
     {
-        if ($this->gameThrows->removeElement($gameThrow)) {
-            // set the owning side to null (unless already changed)
-            if ($gameThrow->getPlayer() === $this) {
-                $gameThrow->setPlayer(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->gameThrows->removeElement($gameThrow) && $gameThrow->getPlayer() === $this) {
+            $gameThrow->setPlayer(null);
         }
 
         return $this;

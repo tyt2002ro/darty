@@ -7,9 +7,12 @@ use App\Repository\GameRepository;
 use App\Service\GameService;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class GameServiceTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @test
      */

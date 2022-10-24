@@ -3,11 +3,8 @@
 namespace App\Factory;
 
 use App\Entity\Game;
-use App\Entity\Player;
 use App\Exceptions\PlayerNotExistException;
-use App\Repository\GameRepository;
 use App\Repository\PlayerRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
 class GameFactory
 {
@@ -16,9 +13,6 @@ class GameFactory
     {
     }
 
-    /**
-     * @throws PlayerNotExistException
-     */
     public function createGame(int $type, array $playerIds, string $endOptions): Game
     {
         $game = new Game();
@@ -37,5 +31,4 @@ class GameFactory
 
         return $game;
     }
-
 }

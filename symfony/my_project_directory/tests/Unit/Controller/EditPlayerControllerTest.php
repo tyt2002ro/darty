@@ -6,6 +6,7 @@ use App\Service\EditPlayerService;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -16,6 +17,7 @@ use Twig\Environment;
 
 final class EditPlayerControllerTest extends TestCase
 {
+    use ProphecyTrait;
     /**
      * @test
      */
