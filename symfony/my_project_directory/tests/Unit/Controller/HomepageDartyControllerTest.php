@@ -3,16 +3,14 @@
 namespace App\tests\Unit;
 
 use App\Controller\HomepageDartyController;
-use App\Entity\Player;
-use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectRepository;
+use App\Repository\PlayerRepository;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Environment;
 
-final class HomepageDartyTest extends TestCase
+final class HomepageDartyControllerTest extends TestCase
 {
     use ProphecyTrait;
 
@@ -23,12 +21,7 @@ final class HomepageDartyTest extends TestCase
     {
         $content = 'some content';
 
-        $objectRepositoryMock = $this->prophesize(ObjectRepository::class);
-        $managerRegistryMock = $this->prophesize(ManagerRegistry::class);
-        $managerRegistryMock
-            ->getRepository(Player::class)
-            ->shouldBeCalled()
-            ->willReturn($objectRepositoryMock->reveal());
+        $playerRepository = $this->prophesize(PlayerRepository::class);
 
         $homepageDartyController = new HomepageDartyController();
         $twig = $this->prophesize(Environment::class);
@@ -38,6 +31,6 @@ final class HomepageDartyTest extends TestCase
         $homepageDartyController->setContainer($container->reveal());
         $twig->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
 
-        self::assertSame($content, $homepageDartyController->homepageAction($managerRegistryMock->reveal())->getContent());
+        self::assertSame($content, $homepageDartyController->homepageAction($playerRepository->reveal())->getContent());
     }
 }

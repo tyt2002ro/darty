@@ -3,12 +3,13 @@
 namespace App\tests\Unit;
 
 use App\DataObjects\DoubleOutSuggestion;
-use App\Services\DoubleOutCalculation;
+use App\Service\DoubleOutCalculation;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 final class DoubleOutCalculationTest extends TestCase
 {
-
+    use ProphecyTrait;
     /**
      * @test
      * @dataProvider doubleOutProvider

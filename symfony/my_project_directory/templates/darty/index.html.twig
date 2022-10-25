@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<title>Hello GameController!</title>
+
+<link href="{{ asset('css/game.css') }}" rel="stylesheet">
+
+{% block body %}
+    <style>
+        .wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .left-container {
+            width: 70%;
+            float: left;
+            margin-bottom: 20px;
+        }
+
+        .left-container .title {
+            width: 50%;
+            text-align: center;
+            margin-bottom: 10px;
+            float: left;
+        }
+
+        .right-container {
+            width: 25%;
+            float: left;
+            padding: 10px;
+            border-left: 1px solid black;
+        }
+
+        .button {
+            text-align: center;
+            margin-bottom: 5px;
+            float: left;
+            background: gray;
+            color: white;
+            border-radius: 5px;
+            padding: 7px 0px;
+            margin-right: 1%;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: lightgray;
+            color: black;
+        }
+
+        .button-small {
+            width: 31%;
+        }
+
+        .button-large {
+            width: 47%;
+        }
+
+        .buttons-container {
+            width: 50%;
+            margin: auto;
+        }
+
+        .row {
+            width: 100%;
+            clear: both;
+        }
+
+        .cell {
+            text-align: center;
+            margin-bottom: 10px;
+            float: left;
+        }
+
+        .cell-4 {
+            width: 25%;
+        }
+
+        .cell-2 {
+            width: 50%;
+        }
+
+        .cell-1 {
+            width: 100%;
+        }
+
+        .cell-title {
+            font-size: 21px;
+        }
+
+        .cell-text-green {
+            color: green;
+        }
+
+        .cell-fixed-height {
+            height: 35px;
+        }
+
+        .cell-big-font {
+            font-size: 30px;
+        }
+
+        .cell-padding-top {
+            padding-top: 10px;
+        }
+
+        .image {
+            width: 16px;
+        }
+    </style>
+
+    <div class="wrapper">
+        <div class="row">
+            <div class="left-container">
+                <div class="row">
+                    <div class="title">Set 1/1</div>
+                    <div class="title">Leg {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}
+                        /3
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cell cell-4">{% if mainPlayerData.name|length > 0 %}{{ mainPlayerData.name }}{% endif %}</div>
+                    <div class="cell cell-4">Bull</div>
+                    <div class="cell cell-4">20</div>
+                    <div class="cell cell-4">-</div>
+                </div>
+                <div class="row">
+                    <div class="cell cell-4 cell-text-green cell-fixed-height cell-big-font">{% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</div>
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">0 S
+                    </div>
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">{% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
+                        <img src="{{ asset('images/darts_arrow.png') }}" alt="darts arrow" class="image"/>
+                    </div>
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">5
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cell cell-4">{% if mainPlayerData.pointsAverage|length > 0 %}{{ mainPlayerData.pointsAverage }}{% endif %}</div>
+                    <div class="cell cell-4">-</div>
+                    <div class="cell cell-4">-</div>
+                    <div class="cell cell-4">-</div>
+                </div>
+            </div>
+            <div class="right-container">
+                {% if otherPlayersData|length > 0 %}
+                    {% for otherPlayerData in otherPlayersData %}
+                            <div class="cell cell-1 cell-title">{{ otherPlayerData.name }}</div>
+                            <div class="cell cell-2">{{ otherPlayerData.pointsTotal }}</div>
+                            <div class="cell cell-2">{{ otherPlayerData.pointsAverage }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="buttons-container">
+            <div class="row">
+
+                <label for="single">
+                    <input type="radio" id="single" name="optionPoints"
+                           value="single" checked=true onclick="setMultipleValue(1);">Single
+                </label><br>
+                <label for="double">
+                    <input type="radio" id="double" name="optionPoints"
+                           value="double" onclick="setMultipleValue(2);">Double
+                </label><br>
+                <label for="triple">
+                    <input type="radio" id="triple" name="optionPoints"
+                           value="triple" onclick="setMultipleValue(3);">Triple
+                </label><br>
+            </div>
+
+
+            <div class="row">
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="1">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="1">1</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="2">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="2">2</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="3">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="3">3</button>
+                </form>
+            </div>
+            <div class="row">
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="4">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="4">4</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="5">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="5">5</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="6">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="6">6</button>
+                </form>
+            </div>
+            <div class="row">
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="7">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="7">7</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="8">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="8">8</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="9">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="9">9</button>
+                </form>
+            </div>
+            <div class="row">
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="10">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="10">10</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="11">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="11">11</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="12">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="12">12</button>
+                </form>
+            </div>
+            <div class="row">
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="13">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="13">13</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="14">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="14">14</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="15">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="15">15</button>
+                </form>
+            </div>
+            <div class="row">
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="16">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="16">16</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="17">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="17">17</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="18">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="18">18</button>
+                </form>
+            </div>
+            <div class="row">
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="19">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="19">19</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="20">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
+                    <button type="submit" class="button  button-small" id="20">20</button>
+                </form>
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="25">
+                    <input type="hidden" name="double" class="doubleOption" value="">
+                    <button type="submit" class="button  button-small" id="25">25</button>
+                </form>
+            </div>
+            <div class="row">
+                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <input type="hidden" name="points" value="0">
+                    <button type="submit" class="button  button-large" id="0">Daneben</button>
+                </form>
+                <div class="button button-large">
+                    Undo
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+<script>
+
+    function setMultipleValue(value)
+    {
+        switch (value) {
+            case 1:
+                setMultiplierOfThrow(0,'doubleOption');
+                setMultiplierOfThrow(0,'tripleOption');
+                break;
+            case 2:
+                setMultiplierOfThrow(1,'doubleOption');
+                setMultiplierOfThrow(0,'tripleOption');
+                break;
+            case 3:
+                setMultiplierOfThrow(0,'doubleOption');
+                setMultiplierOfThrow(1,'tripleOption');
+                break;
+        }
+    }
+
+
+    function setMultiplierOfThrow(param, className)
+    {
+        var list = document.getElementsByClassName(className);
+        var n;
+        for (n = 0; n < list.length; ++n) {
+            list[n].value=param;
+        }
+    }
+</script>

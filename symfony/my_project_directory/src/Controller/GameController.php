@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Game;
-use App\Entity\Player;
+use App\Service\GameService;
+use App\Service\NextPlayerToThrowService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,24 +13,40 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GameController extends AbstractController
 {
-    #[Route('/createGame', name: 'create_game')]
-    public function create(ManagerRegistry $doctrine, Request $request): Response
+    public function __construct(private readonly NextPlayerToThrowService $nextPlayerToThrowService,
+                                private readonly GameService              $gameService)
     {
-        $game = new Game();
-        $game->setType($request->request->get('games'));
-        $game->setGameOption($request->request->get('gameEnds'));
-
-        $playerIds = $request->request->all()['player'];
-        foreach($playerIds as $playerId)
-        {
-            $player = $doctrine->getRepository(Player::class)->findOneBy(array('id' => $playerId));
-            $game->addPlayerId($player);
-        }
-
-        $entityManager = $doctrine->getManager();
-        $entityManager->persist($game);
-        $entityManager->flush();
-
-        return $this->redirect('/', 301);
     }
+
+    #[Route('/createGame', name: 'create_game')]
+    public function create(Request $request): Response
+    {
+        $type = $request->request->get('games');
+        $endOptions = $request->request->get('gameEnds');
+        $playerIds = $request->request->all()['player'];
+
+        $game = $this->gameService->createGame($type, $playerIds, $endOptions);
+
+        return $this->redirect('/game/' . $game->getId(), 301);
+    }
+
+    #[Route('/game/{id}', name: 'app_game')]
+    public function index(Game $game): Response
+    {
+        $playersData = [];
+        $mainPlayerData = $this->nextPlayerToThrowService
+            ->returnNextPlayerToThrow($game, $playersData);
+
+        $otherPlayersData = $this->nextPlayerToThrowService
+            ->returnOtherPlayerData($playersData, $mainPlayerData->getOrder());
+
+        return $this->render('darty/game.html.twig', [
+            'player_id' => $mainPlayerData->getPlayerId(),
+            'mainPlayerData' => $mainPlayerData,
+            'otherPlayersData' => $otherPlayersData,
+            'game_id' => $game->getId(),
+            'controller_name' => 'GameController'
+        ]);
+    }
+
 }

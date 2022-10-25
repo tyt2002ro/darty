@@ -39,6 +39,16 @@ class GameRepository extends ServiceEntityRepository
         }
     }
 
+    public function findOneById($id): ?Game
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 //    /**
 //     * @return Game[] Returns an array of Game objects
 //     */

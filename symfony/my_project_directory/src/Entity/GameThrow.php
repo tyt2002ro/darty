@@ -19,11 +19,11 @@ class GameThrow
 
     #[ORM\ManyToOne(inversedBy: 'gameThrows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Game $game_id = null;
+    private ?Game $game = null;
 
     #[ORM\ManyToOne(inversedBy: 'gameThrows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Player $player_id = null;
+    private ?Player $player = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $throw_order = null;
@@ -45,26 +45,26 @@ class GameThrow
         return $this;
     }
 
-    public function getGameId(): ?Game
+    public function getGame(): ?Game
     {
-        return $this->game_id;
+        return $this->game;
     }
 
-    public function setGameId(?Game $game_id): self
+    public function setGame(?Game $game): self
     {
-        $this->game_id = $game_id;
+        $this->game = $game;
 
         return $this;
     }
 
-    public function getPlayerId(): ?Player
+    public function getPlayer(): ?Player
     {
-        return $this->player_id;
+        return $this->player;
     }
 
-    public function setPlayerId(?Player $player_id): self
+    public function setPlayer(?Player $player): self
     {
-        $this->player_id = $player_id;
+        $this->player = $player;
 
         return $this;
     }

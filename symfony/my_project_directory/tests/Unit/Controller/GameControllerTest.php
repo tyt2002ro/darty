@@ -1,15 +1,16 @@
 <?php
 
-
 use App\Controller\GameController;
-use App\Entity\Player;
-use Doctrine\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectRepository;
+use App\DataObjects\PlayerThrowData;
+use App\Entity\Game;
+use App\Service\GameService;
+use App\Service\NextPlayerToThrowService;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
+use Twig\Environment;
 
 final class GameControllerTest extends TestCase
 {
@@ -20,30 +21,58 @@ final class GameControllerTest extends TestCase
      */
     public function checkAddGame(): void
     {
-        $players = [6,7];
+        $players = [6, 7];
         $request = new Request();
         $request->request->set('games', '301');
         $request->request->set('gameEnds', 'test');
         $request->request->set('player', $players);
 
-        $gameController = new GameController();
+        $nextPlayerToThrowService = $this->prophesize(NextPlayerToThrowService::class);
+        $gameService = $this->prophesize(GameService::class);
+        $gameController = new GameController($nextPlayerToThrowService->reveal(), $gameService->reveal());
 
-        $persistenceManagerRegistry = $this->prophesize(PersistenceManagerRegistry::class);
-        $objectRepository = $this->prophesize(ObjectRepository::class);
-        $objectManager = $this->prophesize(ObjectManager::class);
 
-        $persistenceManagerRegistry->getRepository(Player::class)->shouldBeCalled()->willReturn($objectRepository->reveal());
-        foreach($players as $player)
-        {
-            $objectRepository->findOneBy(array('id' => $player))->shouldBeCalled()->willReturn(new Player);
-        }
+        $game = $this->prophesize(Game::class);
+        $gameService->createGame(Argument::cetera())->shouldBeCalled()->willReturn($game->reveal());
 
-        $persistenceManagerRegistry->getManager()->shouldBeCalled()->willReturn($objectManager->reveal());
+        $result = $gameController->create($request);
+        self::assertSame('/game/', $result->getTargetUrl());
+    }
 
-        $objectManager->persist(Argument::any())->shouldBeCalled();
-        $objectManager->flush()->shouldBeCalled();
+    /**
+     * @test
+     */
+    public function checkRenderTemplateGame(): void
+    {
+        $content = 'some content';
 
-        $result = $gameController->create($persistenceManagerRegistry->reveal(), $request);
-        self::assertSame('/', $result->getTargetUrl());
+        $gameService = $this->prophesize(GameService::class);
+        $nextPlayerToThrowService = $this->prophesize(NextPlayerToThrowService::class);
+        $gameController = new GameController($nextPlayerToThrowService->reveal(), $gameService->reveal());
+
+        $game = $this->prophesize(Game::class);
+        $game->getId()->shouldBeCalled()->willReturn(1);
+
+        $playerThrowData = $this->prophesize(PlayerThrowData::class);
+        $playerThrowData->getOrder()->shouldBeCalled()->willReturn(1);
+        $playerThrowData->getPlayerId()->shouldBeCalled()->willReturn(1);
+
+
+        $playerData = [];
+        $nextPlayerToThrowService
+            ->returnNextPlayerToThrow($game,$playerData)
+            ->shouldBeCalled()
+            ->willReturn($playerThrowData->reveal());
+
+        $nextPlayerToThrowService->returnOtherPlayerData([], 1)->shouldBeCalled()->willReturn([]);
+
+        $twig = $this->prophesize(Environment::class);
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->has('twig')->shouldBeCalled()->willReturn(true);
+        $container->get('twig')->shouldBeCalled()->willReturn($twig->reveal());
+        $gameController->setContainer($container->reveal());
+        $twig->render(Argument::cetera())->shouldBeCalled()->willReturn($content);
+
+        self::assertSame($content, $gameController->index($game->reveal())->getContent());
     }
 }

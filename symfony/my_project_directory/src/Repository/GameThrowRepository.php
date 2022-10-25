@@ -39,28 +39,22 @@ class GameThrowRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return GameThrow[] Returns an array of GameThrow objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('g.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findPlayerDataForThrow($gameId, $playerId): array
+    {
+        $entityManager = $this->getEntityManager();
 
-//    public function findOneBySomeField($value): ?GameThrow
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $sql = 'SELECT coalesce(sum(GameThrow.points), 0) AS pointsTotal,
+                        coalesce(avg(GameThrow.points), 0) AS pointsAverage,
+                        3-mod(count(GameThrow.points), 3) AS legThrows,
+                        count(GameThrow.points) AS totalThrows
+                FROM App\Entity\GameThrow GameThrow
+                WHERE GameThrow.game = ' . $gameId . '
+                    AND GameThrow.player = ' . $playerId;
+        $query = $entityManager->createQuery($sql)->getResult();
+
+        if ($query) {
+            return $query[0];
+        }
+        return [];
+    }
 }
