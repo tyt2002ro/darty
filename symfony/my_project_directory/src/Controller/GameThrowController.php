@@ -4,8 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\Player;
-use App\Factory\GameThrowFactory;
-use App\Repository\GameThrowRepository;
+use App\Service\GameThrowService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverte;
 
 class GameThrowController extends AbstractController
 {
-    public function __construct(private readonly GameThrowFactory $gameThrowFactory, private readonly GameThrowRepository $gameThrowRepository)
+    public function __construct(private readonly GameThrowService $gameThrowService)
     {
     }
 
@@ -25,9 +24,7 @@ class GameThrowController extends AbstractController
         $double = $request->get('double');
         $triple = $request->get('triple');
 
-        $gameThrow = $this->gameThrowFactory->createFromValues($points, $double, $triple, $player, $game);
-
-        $this->gameThrowRepository->save($gameThrow, true);
+        $this->gameThrowService->addGameThrow($points, $double, $triple, $player, $game);
 
         return $this->redirect('/game/' . $game->getId(), 301);
     }
