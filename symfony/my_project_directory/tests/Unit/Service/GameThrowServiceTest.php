@@ -4,7 +4,9 @@
 use App\Entity\Game;
 use App\Entity\GameThrow;
 use App\Entity\Player;
+use App\Exceptions\GameThrowInvalidException;
 use App\Factory\GameThrowFactory;
+use App\GameThrowValidator;
 use App\Repository\GameThrowRepository;
 use PHPUnit\Framework\TestCase;
 use App\Service\GameThrowService;
@@ -29,10 +31,15 @@ class GameThrowServiceTest extends TestCase
 
         $gameThrowFactory = $this->prophesize(GameThrowFactory::class);
         $gameThrowRepository = $this->prophesize(GameThrowRepository::class);
+        $gameThrowValidator = $this->prophesize(GameThrowValidator::class);
+
         $player = $this->prophesize(Player::class);
         $game = $this->prophesize(Game::class);
 
-        $gameThrowService = new GameThrowService($gameThrowFactory->reveal(), $gameThrowRepository->reveal());
+        $gameThrowService = new GameThrowService(
+            $gameThrowFactory->reveal(),
+            $gameThrowRepository->reveal(),
+            $gameThrowValidator->reveal());
 
         $gameThrow = new GameThrow();
         $gameThrow->setPoints($points);
@@ -41,8 +48,10 @@ class GameThrowServiceTest extends TestCase
         $gameThrow->setPlayer(new Player());
 
         $gameThrowFactory->createFromValues(Argument::cetera())->shouldBeCalled()->willReturn($gameThrow);
+        $gameThrowValidator->validatePoints($points)->shouldBeCalled()->willReturn(true);
         $createdGameThrow = $gameThrowService->addGameThrow($points, true, false, $player->reveal(), $game->reveal());
 
         self::assertEquals($expectedGameThrow, $createdGameThrow);
     }
+
 }
