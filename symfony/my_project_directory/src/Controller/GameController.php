@@ -33,11 +33,9 @@ class GameController extends AbstractController
     #[Route('/game/{id}', name: 'app_game')]
     public function index(Game $game): Response
     {
-        $players = $game->getSortedById();
-
         $playersData = [];
         $mainPlayerData = $this->nextPlayerToThrowService
-            ->returnNextPlayerToThrow($game->getId(), $players, $playersData);
+            ->returnNextPlayerToThrow($game, $playersData);
 
         $otherPlayersData = $this->nextPlayerToThrowService
             ->returnOtherPlayerData($playersData, $mainPlayerData->getOrder());

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\DataObjects\PlayerThrowData;
+use App\Entity\Game;
 use App\Repository\GameThrowRepository;
 use ArrayObject;
 
@@ -12,11 +13,12 @@ class NextPlayerToThrowService
     {
     }
 
-    public function returnNextPlayerToThrow(int $game_id, array $players, array &$playersData): PlayerThrowData
+    public function returnNextPlayerToThrow(Game $game, array &$playersData): PlayerThrowData
     {
-        $this->updatePlayersData($game_id, $players, $playersData);
+        $players = $game->getSortedById();
 
-        $mainPlayerData = null;
+        $this->updatePlayersData($game->getId(), $players, $playersData);
+
         foreach ($playersData as $playerData) {
             //if not all 3 throws, from leg, were thrown, player still has throws
             if ($playerData->getLegThrows() !== 3) {
@@ -24,12 +26,11 @@ class NextPlayerToThrowService
             }
         }
 
-        if (!$mainPlayerData) {
-            //if no player has throws let, we select the first player for given order, with the lowest throws.
-            usort($playersData, fn($a, $b) => strcmp($a->getOrder(), $b->getOrder()));
-            usort($playersData, fn($a, $b) => strcmp($a->getTotalThrows(), $b->getTotalThrows()));
-            return $playersData[0];
-        }
+        //if no player has throws let, we select the first player for given order, with the lowest throws.
+        usort($playersData, fn($a, $b) => strcmp($a->getOrder(), $b->getOrder()));
+        usort($playersData, fn($a, $b) => strcmp($a->getTotalThrows(), $b->getTotalThrows()));
+        return $playersData[0];
+
     }
 
     private function updatePlayersData(int $gameId, array $players, array &$playersData): void
@@ -48,7 +49,7 @@ class NextPlayerToThrowService
         }
     }
 
-    public function returnOtherPlayerData(array $playersData, mixed $order): array
+    public function returnOtherPlayerData(array $playersData, int $order): array
     {
         foreach ($playersData as $newOrder => $subArray) {
             if ($order === $subArray->getOrder()) {

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\DataObjects;
 
-final class PlayerThrowData
+class PlayerThrowData
 {
 
     public function __construct(private readonly int $player_id,
