@@ -21,4 +21,22 @@ class GameThrowService
         $this->gameThrowRepository->save($gameThrow, true);
         return $gameThrow;
     }
+
+    public function undo($player, $game):void
+    {
+        $gameThrow = $this->gameThrowRepository->findOneBy(
+            [
+                'player' => $player->getId(),
+                'game' => $game->getId(),
+            ],
+            [
+                'id' => 'DESC'
+            ]
+        );
+
+        if($gameThrow !== null)
+        {
+            $this->gameThrowRepository->remove($gameThrow, true);
+        }
+    }
 }
