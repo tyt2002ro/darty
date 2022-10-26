@@ -4,9 +4,8 @@
 use App\Entity\Game;
 use App\Entity\GameThrow;
 use App\Entity\Player;
-use App\Exceptions\GameThrowInvalidException;
 use App\Factory\GameThrowFactory;
-use App\GameThrowValidator;
+use App\Validator\GameThrowValidator;
 use App\Repository\GameThrowRepository;
 use PHPUnit\Framework\TestCase;
 use App\Service\GameThrowService;

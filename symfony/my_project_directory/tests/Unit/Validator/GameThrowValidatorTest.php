@@ -2,7 +2,7 @@
 
 namespace App\tests\Unit;
 
-use App\GameThrowValidator;
+use App\Validator\GameThrowValidator;
 use PHPUnit\Framework\TestCase;
 use App\Exceptions\GameThrowInvalidException;
 
