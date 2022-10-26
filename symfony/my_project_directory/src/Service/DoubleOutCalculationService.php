@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\DataObjects\DoubleOutSuggestion;
 
-class DoubleOutCalculation
+class DoubleOutCalculationService
 {
     /**
      * @var array
