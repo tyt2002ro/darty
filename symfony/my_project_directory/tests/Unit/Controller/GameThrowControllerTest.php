@@ -31,11 +31,9 @@ class GameThrowControllerTest extends TestCase
         $request->request->set('triple', false);
 
         $gameThrowService = $this->prophesize(GameThrowService::class);
-        $gameThrow = $this->prophesize(GameThrow::class);
         $container = $this->prophesize(ContainerInterface::class);
         $lastThrowValidationService = $this->prophesize(LastThrowValidationService::class);
         $requestStack = $this->prophesize(RequestStack::class);
-        $sessionInterface = $this->prophesize(SessionInterface::class);
         $flashBagInterface = $this->prophesize(FlashBagInterface::class);
         $session = $this->prophesize(Session::class);
 

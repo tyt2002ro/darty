@@ -82,4 +82,9 @@ class DoubleOutCalculationService
         }
         return '';
     }
+
+    public function getDoubleOutNumbers(): array
+    {
+        return $this->doubleNumbers;
+    }
 }

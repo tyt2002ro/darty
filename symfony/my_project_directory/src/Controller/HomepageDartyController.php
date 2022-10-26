@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Game;
 use App\Repository\PlayerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +26,8 @@ class HomepageDartyController extends AbstractController
         ];
 
         $gameEnds = [
-            ['type' => 'Single-Out', 'checked' => false],
-            ['type' => 'Double-Out', 'checked' => true]
+            ['type' => GAME::SINGLE_OUT, 'checked' => false],
+            ['type' => GAME::DOUBLE_OUT, 'checked' => true]
         ];
 
         return $this->render('darty/startPage.html.twig', [
