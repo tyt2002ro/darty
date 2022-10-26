@@ -25,7 +25,7 @@ class GameThrowController extends AbstractController
         $double = $request->get('double');
         $triple = $request->get('triple');
 
-        $message = $this->lastThrowValidation->validateThrow($game, $player, $points, $double, $triple);
+        $message = $this->lastThrowValidationService->validateThrow($game, $player, $points, $double, $triple);
         $this->addFlash('notice', $message);
 
         if(!$message) {

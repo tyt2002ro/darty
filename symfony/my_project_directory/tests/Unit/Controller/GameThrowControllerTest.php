@@ -5,10 +5,16 @@ use App\Entity\Game;
 use App\Entity\GameThrow;
 use App\Entity\Player;
 use App\Service\GameThrowService;
+use App\Service\LastThrowValidationService;
 use Prophecy\Argument;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class GameThrowControllerTest extends TestCase
 {
@@ -26,9 +32,20 @@ class GameThrowControllerTest extends TestCase
 
         $gameThrowService = $this->prophesize(GameThrowService::class);
         $gameThrow = $this->prophesize(GameThrow::class);
-        $gameThrowController = new GameThrowController($gameThrowService->reveal());
+        $container = $this->prophesize(ContainerInterface::class);
+        $lastThrowValidationService = $this->prophesize(LastThrowValidationService::class);
+        $requestStack = $this->prophesize(RequestStack::class);
+        $sessionInterface = $this->prophesize(SessionInterface::class);
+        $flashBagInterface = $this->prophesize(FlashBagInterface::class);
+        $session = $this->prophesize(Session::class);
 
-        $gameThrowService->addGameThrow(Argument::cetera())->shouldBeCalled()->willReturn($gameThrow->reveal());
+        $gameThrowController = new GameThrowController($gameThrowService->reveal(),$lastThrowValidationService->reveal());
+
+        $lastThrowValidationService->validateThrow(Argument::cetera())->shouldBeCalled()->willReturn(1);
+        $gameThrowController->setContainer($container->reveal());
+        $container->get('request_stack')->shouldBeCalled()->willReturn($requestStack->reveal());
+        $requestStack->getSession()->shouldBeCalled()->willReturn($session->reveal());
+        $session->getFlashBag()->shouldBeCalled()->willReturn($flashBagInterface->reveal());
 
         $result = $gameThrowController->addThrow($request, new Game(), new Player());
 
