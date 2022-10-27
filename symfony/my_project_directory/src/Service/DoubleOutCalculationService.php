@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\DataObjects\DoubleOutSuggestion;
 
-class DoubleOutCalculation
+class DoubleOutCalculationService
 {
     /**
      * @var array
@@ -81,5 +81,10 @@ class DoubleOutCalculation
             }
         }
         return '';
+    }
+
+    public function getDoubleOutNumbers(): array
+    {
+        return $this->doubleNumbers;
     }
 }

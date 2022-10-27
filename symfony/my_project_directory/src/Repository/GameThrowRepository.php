@@ -57,4 +57,22 @@ class GameThrowRepository extends ServiceEntityRepository
         }
         return [];
     }
+
+    public function getRecorderPoints($gameId, $playerId): mixed
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT (game.type - coalesce(sum(game_throw.points), 0)) AS pointsLeft
+                FROM game_throw
+                RIGHT JOIN game on game_throw.game_id = game.id
+            where game_throw.game_id = :game_id and game_throw.player_id = :player_id
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['game_id' => $gameId, 'player_id' => $playerId]);
+
+        $result = $resultSet->fetchAllAssociative();
+
+        return $result[0]['pointsLeft'];
+    }
 }

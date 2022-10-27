@@ -112,6 +112,11 @@
     </style>
 
     <div class="wrapper">
+
+        {% for notice in app.flashes('notice') %}
+            {{ notice }}
+        {% endfor %}
+
         <div class="row">
             <div class="left-container">
                 <div class="row">

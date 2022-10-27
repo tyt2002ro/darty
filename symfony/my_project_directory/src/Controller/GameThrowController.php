@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\Player;
+use App\Service\LastThrowValidationService;
 use App\Service\GameThrowService;
+use PHPUnit\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverte;
 
 class GameThrowController extends AbstractController
 {
-    public function __construct(private readonly GameThrowService $gameThrowService)
+    public function __construct(private readonly GameThrowService $gameThrowService, private readonly LastThrowValidationService $lastThrowValidationService)
     {
     }
 
@@ -24,7 +26,14 @@ class GameThrowController extends AbstractController
         $double = $request->get('double');
         $triple = $request->get('triple');
 
-        $this->gameThrowService->addGameThrow($points, $double, $triple, $player, $game);
+        try{
+            $this->lastThrowValidationService->validateThrow($game, $player, $points, $double, $triple);
+            $this->gameThrowService->addGameThrow($points, $double, $triple, $player, $game);
+        }
+        catch(InvalidThrowException $e)
+        {
+            $this->addFlash('notice', $e->getMessage());
+        }
 
         return $this->redirect('/game/' . $game->getId(), 301);
     }

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\DoubleOutCalculation;
+use App\Service\DoubleOutCalculationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +15,7 @@ final class DoubleOutSuggestionController extends AbstractController
     {
         $points = $request->request->get('points');
 
-        $options = new DoubleOutCalculation();
+        $options = new DoubleOutCalculationService();
         $endOption = $options->calculate((int)$points);
 
         return $this->render('darty/doubleEndOptions.html.twig',
