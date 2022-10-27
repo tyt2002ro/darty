@@ -19,13 +19,6 @@
             margin-bottom: 20px;
         }
 
-        .left-container .title {
-            width: 50%;
-            text-align: center;
-            margin-bottom: 10px;
-            float: left;
-        }
-
         .right-container {
             width: 25%;
             float: left;
@@ -94,16 +87,8 @@
             font-size: 21px;
         }
 
-        .cell-text-green {
-            color: green;
-        }
-
         .cell-fixed-height {
             height: 35px;
-        }
-
-        .cell-big-font {
-            font-size: 30px;
         }
 
         .cell-padding-top {
@@ -113,12 +98,25 @@
         .image {
             width: 16px;
         }
+
+        .notice-container {
+            text-align: center;
+            border-color: red;
+            border-width: 1px;
+            border-style: solid;
+            padding: 10px;
+            margin: 25px;
+            color: red;
+            border-radius: 10px;
+        }
     </style>
 
     <div class="wrapper">
 
         {% for notice in app.flashes('notice') %}
-            {{ notice }}
+            <div class="notice-container">
+                {{ notice }}
+            </div>
         {% endfor %}
 
         <div class="row">
@@ -359,6 +357,7 @@
                     <input type="hidden" name="game_id" value="{{ game_id }}">
                     <input type="hidden" name="points" value="25">
                     <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
                     <button type="submit" class="button  button-small" id="25">25</button>
                 </form>
             </div>
@@ -402,7 +401,15 @@
     {
         var list = document.getElementsByClassName(className);
         var n;
-        for (n = 0; n < list.length; ++n) {
+        var listLength = list.length;
+
+        //no 75 points available
+        if(param === 1 && className === 'tripleOption')
+        {
+            listLength = listLength - 1;
+        }
+
+        for (n = 0; n < listLength; ++n) {
             list[n].value=param;
         }
     }

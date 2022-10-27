@@ -34,6 +34,12 @@ class GameThrowValidator
      */
     private function validateThrow(Game $game, Player $player, int $points, bool $double, bool $triple): void
     {
+        if($double === true) {
+            $points *= 2;
+        } elseif ($triple === true) {
+            $points *=3;
+        }
+
         //check if throw ends game
         $recorderPoints = $this->gameThrowRepository->getRecorderPoints($game->getId(), $player->getId());
 

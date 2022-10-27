@@ -37,6 +37,8 @@ class PlayerThrowData
         if (!empty($this->pointsTotal)) {
             return $this->pointsTotal;
         }
+
+        return 0;
     }
 
     public function getLegThrows(): int

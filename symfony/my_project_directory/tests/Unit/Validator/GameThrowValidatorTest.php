@@ -135,7 +135,7 @@ class GameThrowValidatorTest extends TestCase
         $double = true;
         $triple = false;
 
-        $scoredPoints = 2 * 5;
+        $scoredPoints = 5;
         $remainingPoints = 10;
 
         $game = new Game();
@@ -157,7 +157,7 @@ class GameThrowValidatorTest extends TestCase
         $double = false;
         $triple = true;
 
-        $scoredPoints = 3 * 5;
+        $scoredPoints = 5;
         $remainingPoints = 15;
 
         $game = new Game();
@@ -179,7 +179,7 @@ class GameThrowValidatorTest extends TestCase
         $double = true;
         $triple = false;
 
-        $scoredPoints = 2 * 3;
+        $scoredPoints = 3;
         $remainingPoints = 6;
 
         $game = new Game();
@@ -224,7 +224,7 @@ class GameThrowValidatorTest extends TestCase
         $double = false;
         $triple = true;
 
-        $scoredPoints = 3 * 4;
+        $scoredPoints = 4;
         $remainingPoints = 12;
 
         $game = new Game();
@@ -246,7 +246,7 @@ class GameThrowValidatorTest extends TestCase
         $double = true;
         $triple = false;
 
-        $scoredPoints = 2 * 6;
+        $scoredPoints = 6;
         $remainingPoints = 13;
 
         $game = new Game();
