@@ -78,6 +78,10 @@
             width: 25%;
         }
 
+        .cell-3 {
+            width: 33%;
+        }
+
         .cell-2 {
             width: 50%;
         }
@@ -120,30 +124,31 @@
         <div class="row">
             <div class="left-container">
                 <div class="row">
-                    <div class="title">Set 1/1</div>
-                    <div class="title">Leg {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}
+                    <div class="cell cell-3">Game Type: {% if gameType|length > 0 %}{{ gameType }}{% endif %}</div>
+                    <div class="cell cell-3">Finish: {% if gameEndType|length > 0 %}{{ gameEndType }}{% endif %}</div>
+                    <div class="cell cell-3">Leg {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}
                         /3
                     </div>
                 </div>
                 <div class="row">
-                    <div class="cell cell-4">{% if mainPlayerData.name|length > 0 %}{{ mainPlayerData.name }}{% endif %}</div>
+                    <div class="cell cell-4">Name: {% if mainPlayerData.name|length > 0 %}{{ mainPlayerData.name }}{% endif %}</div>
                     <div class="cell cell-4">Bull</div>
                     <div class="cell cell-4">20</div>
-                    <div class="cell cell-4">-</div>
+                    <div class="cell cell-4">{% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}</div>
                 </div>
                 <div class="row">
-                    <div class="cell cell-4 cell-text-green cell-fixed-height cell-big-font">{% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</div>
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">Points: {% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</div>
                     <div class="cell cell-4 cell-fixed-height cell-padding-top">0 S
                     </div>
-                    <div class="cell cell-4 cell-fixed-height cell-padding-top">{% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">Throws left: {% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
                         <img src="{{ asset('images/darts_arrow.png') }}" alt="darts arrow" class="image"/>
                     </div>
                     <div class="cell cell-4 cell-fixed-height cell-padding-top">5
                     </div>
                 </div>
                 <div class="row">
-                    <div class="cell cell-4">{% if mainPlayerData.pointsAverage|length > 0 %}{{ mainPlayerData.pointsAverage }}{% endif %}</div>
-                    <div class="cell cell-4">-</div>
+                    <div class="cell cell-4">Average: {% if mainPlayerData.pointsAverage|length > 0 %}{{ mainPlayerData.pointsAverage }}{% endif %}</div>
+                    <div class="cell cell-4">Left: {% if (endGamePointsRequired|length > 0) %}{{ endGamePointsRequired }}{% endif %}</div>
                     <div class="cell cell-4">-</div>
                     <div class="cell cell-4">-</div>
                 </div>
@@ -374,7 +379,6 @@
 
 
 <script>
-
     function setMultipleValue(value)
     {
         switch (value) {

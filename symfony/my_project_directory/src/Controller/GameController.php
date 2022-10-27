@@ -45,6 +45,9 @@ class GameController extends AbstractController
             'mainPlayerData' => $mainPlayerData,
             'otherPlayersData' => $otherPlayersData,
             'game_id' => $game->getId(),
+            'gameType' => $game->getType(),
+            'gameEndType' => $game->getGameOption(),
+            'endGamePointsRequired' => $game->getType() - $mainPlayerData->getPointsTotal(),
             'controller_name' => 'GameController'
         ]);
     }
