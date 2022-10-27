@@ -6,7 +6,6 @@ use App\Entity\Game;
 use App\Entity\Player;
 use App\Exceptions\GameThrowInvalidException;
 use App\Repository\GameThrowRepository;
-use App\Service\DoubleOutCalculationService;
 
 class GameThrowValidator
 {
@@ -39,40 +38,30 @@ class GameThrowValidator
         $recorderPoints = $this->gameThrowRepository->getRecorderPoints($game->getId(), $player->getId());
 
         if ($recorderPoints) {
-            $doubleOutCalculationService = new DoubleOutCalculationService();
+            if ($recorderPoints - $points < 0) {
+                throw new GameThrowInvalidException('Last throw is not be greater than remaining points.');
+            }
+
             //validate ending game throw
             if ($recorderPoints - $points === 0) {
-                //validate single
-                if (($double || $triple)
-                    && ($game->getType() === GAME::SINGLE_OUT)
-                    && in_array($points, $doubleOutCalculationService->getDoubleOutNumbers(), true)) {
+                if (($double || $triple) && ($game->getGameOption() === GAME::SINGLE_OUT)) {
                     throw new GameThrowInvalidException('Last throw is not single.');
                 }
-
-                //validate double
-                if (($game->getType() === GAME::DOUBLE_OUT) &&
-                    ($double || in_array($points, $doubleOutCalculationService->getDoubleOutNumbers(), true))) {
+                if (((!$double && !$triple) || $triple) && ($game->getGameOption() === GAME::DOUBLE_OUT)) {
                     throw new GameThrowInvalidException('Last throw is not double.');
                 }
             }
 
-            //if double game is set and remaining points, after current throw is 1, throw is invalid
-            //we need a double number to end the game and 1 can't be obtained with a double point throw
-            if ($recorderPoints - $points === 0 && ($game->getType() === GAME::DOUBLE_OUT)) {
-                throw new GameThrowInvalidException(
-                    'Invalid throw for "Double Out" because remaining points "1", can not be obtained with double throw.');
+            if ($recorderPoints - $points === 1 && ($game->getGameOption() === GAME::DOUBLE_OUT)) {
+                throw new GameThrowInvalidException('Invalid throw for "Double Out" because remaining points "1", can not be obtained with double throw.');
             }
+
         }
     }
-
-
-
-
 
     private function getAllAvailablePoints(): array
     {
         $availablePoints = array_merge($this->getSinglePoints(), $this->getDoublePoints(), $this->getTriplePoints());
-
         return array_unique($availablePoints);
     }
 
