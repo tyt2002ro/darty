@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Entity\Player;
 use App\Service\LastThrowValidationService;
 use App\Service\GameThrowService;
+use PHPUnit\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,11 +26,13 @@ class GameThrowController extends AbstractController
         $double = $request->get('double');
         $triple = $request->get('triple');
 
-        $message = $this->lastThrowValidationService->validateThrow($game, $player, $points, $double, $triple);
-        $this->addFlash('notice', $message);
-
-        if(!$message) {
+        try{
+            $this->lastThrowValidationService->validateThrow($game, $player, $points, $double, $triple);
             $this->gameThrowService->addGameThrow($points, $double, $triple, $player, $game);
+        }
+        catch(InvalidThrowException $e)
+        {
+            $this->addFlash('notice', $e->getMessage());
         }
 
         return $this->redirect('/game/' . $game->getId(), 301);
