@@ -6,15 +6,11 @@ use App\Entity\GameThrow;
 use App\Entity\Player;
 use App\Service\GameThrowService;
 use App\Service\LastThrowValidationService;
+use App\Validator\GameThrowValidator;
 use Prophecy\Argument;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class GameThrowControllerTest extends TestCase
 {
@@ -31,20 +27,11 @@ class GameThrowControllerTest extends TestCase
         $request->request->set('triple', false);
 
         $gameThrowService = $this->prophesize(GameThrowService::class);
-        $container = $this->prophesize(ContainerInterface::class);
-        $lastThrowValidationService = $this->prophesize(LastThrowValidationService::class);
-        $requestStack = $this->prophesize(RequestStack::class);
-        $flashBagInterface = $this->prophesize(FlashBagInterface::class);
-        $session = $this->prophesize(Session::class);
+        $gameThrowValidator = $this->prophesize(GameThrowValidator::class);
+        $gameThrowController = new GameThrowController($gameThrowService->reveal(),$gameThrowValidator->reveal());
+        $gameThrowValidator->validatePoints(Argument::cetera())->shouldBeCalled()->willReturn(1);
 
-        $gameThrowController = new GameThrowController($gameThrowService->reveal(),$lastThrowValidationService->reveal());
-
-        $lastThrowValidationService->validateThrow(Argument::cetera())->shouldBeCalled()->willReturn(1);
-        $gameThrowController->setContainer($container->reveal());
-        $container->get('request_stack')->shouldBeCalled()->willReturn($requestStack->reveal());
-        $requestStack->getSession()->shouldBeCalled()->willReturn($session->reveal());
-        $session->getFlashBag()->shouldBeCalled()->willReturn($flashBagInterface->reveal());
-
+        $gameThrowService->addGameThrow(Argument::cetera())->shouldBeCalled()->willReturn(new GameThrow());
         $result = $gameThrowController->addThrow($request, new Game(), new Player());
 
         self::assertSame('/game/', $result->getTargetUrl());

@@ -2,19 +2,31 @@
 
 namespace App\tests\Unit;
 
+use App\Entity\Game;
+use App\Entity\Player;
+use App\Repository\GameThrowRepository;
 use App\Validator\GameThrowValidator;
 use PHPUnit\Framework\TestCase;
 use App\Exceptions\GameThrowInvalidException;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class GameThrowValidatorTest extends TestCase
 {
+    use ProphecyTrait;
+    private GameThrowValidator $gameThrowValidator;
+
+    public function setUp(): void
+    {
+        $gameThrow = $this->prophesize(GameThrowRepository::class);
+        $this->gameThrowValidator = new GameThrowValidator($gameThrow->reveal());
+    }
+
     /**
      * @test
      */
     public function checkSinglePoints(): void
     {
-        $gameThrowValidator = new GameThrowValidator();
-        self::assertTrue($gameThrowValidator->validatePoints(5));
+        self::assertTrue($this->gameThrowValidator->validatePoints(new Game(), new Player(), 5, false, false));
     }
 
     /**
@@ -22,8 +34,7 @@ class GameThrowValidatorTest extends TestCase
      */
     public function checkDoublePoints(): void
     {
-        $gameThrowValidator = new GameThrowValidator();
-        self::assertTrue($gameThrowValidator->validatePoints(26));
+        self::assertTrue($this->gameThrowValidator->validatePoints(new Game(), new Player(), 20, true, false));
     }
 
     /**
@@ -31,8 +42,7 @@ class GameThrowValidatorTest extends TestCase
      */
     public function checkTriplePoints(): void
     {
-        $gameThrowValidator = new GameThrowValidator();
-        self::assertTrue($gameThrowValidator->validatePoints(21));
+        self::assertTrue($this->gameThrowValidator->validatePoints(new Game(), new Player(), 21, false, true));
     }
 
     /**
@@ -41,9 +51,8 @@ class GameThrowValidatorTest extends TestCase
     public function checkNegativePoints(): void
     {
         $this->expectException(GameThrowInvalidException::class);
-        $gameThrowValidator = new GameThrowValidator();
 
-        $gameThrowValidator->validatePoints(-16);
+        $this->gameThrowValidator->validatePoints(new Game(), new Player(), -21, false, true);
     }
 
     /**
@@ -51,10 +60,9 @@ class GameThrowValidatorTest extends TestCase
      */
     public function checkInvalidPoints(): void
     {
-        $gameThrowValidator = new GameThrowValidator();
 
         $this->expectException(GameThrowInvalidException::class);
-        $gameThrowValidator->validatePoints(80);
+        $this->gameThrowValidator->validatePoints(new Game(), new Player(), 201, false, true);
     }
 
 

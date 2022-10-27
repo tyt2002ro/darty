@@ -37,17 +37,16 @@ class GameThrowServiceTest extends TestCase
 
         $gameThrowService = new GameThrowService(
             $gameThrowFactory->reveal(),
-            $gameThrowRepository->reveal(),
-            $gameThrowValidator->reveal());
+            $gameThrowRepository->reveal());
 
         $gameThrow = new GameThrow();
         $gameThrow->setPoints($points);
         $gameThrow->setThrowOrder(1);
         $gameThrow->setGame(new Game());
         $gameThrow->setPlayer(new Player());
-
+//        $gameThrowValidator->validatePoints(new Game(), new Player(), 10,  false, false)->shouldBeCalled()->willReturn(true);
         $gameThrowFactory->createFromValues(Argument::cetera())->shouldBeCalled()->willReturn($gameThrow);
-        $gameThrowValidator->validatePoints($points)->shouldBeCalled()->willReturn(true);
+
         $createdGameThrow = $gameThrowService->addGameThrow($points, true, false, $player->reveal(), $game->reveal());
 
         self::assertEquals($expectedGameThrow, $createdGameThrow);
