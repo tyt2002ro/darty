@@ -6,11 +6,15 @@ use App\Entity\Game;
 use App\Entity\GameThrow;
 use App\Entity\Player;
 use App\Factory\GameThrowFactory;
+use App\Validator\GameThrowValidator;
 use App\Repository\GameThrowRepository;
 
 class GameThrowService
 {
-    public function __construct(private readonly GameThrowFactory $gameThrowFactory, private readonly GameThrowRepository $gameThrowRepository)
+    public function __construct(
+        private readonly GameThrowFactory $gameThrowFactory,
+        private readonly GameThrowRepository $gameThrowRepository
+    )
     {
     }
 
