@@ -127,7 +127,7 @@
                     <div class="cell cell-4">-</div>
                 </div>
                 <div class="row">
-                    <div class="cell cell-4 cell-text-green cell-fixed-height cell-big-font">{% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</div>
+                    <div id="points" class="cell cell-4 cell-text-green cell-fixed-height cell-big-font">{% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</div>
                     <div class="cell cell-4 cell-fixed-height cell-padding-top">0 S
                     </div>
                     <div class="cell cell-4 cell-fixed-height cell-padding-top">{% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
@@ -359,9 +359,11 @@
                     <input type="hidden" name="points" value="0">
                     <button type="submit" class="button  button-large" id="0">Daneben</button>
                 </form>
-                <div class="button button-large">
-                    Undo
-                </div>
+                <form method="POST" action="/undo/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <button type="submit" class="button  button-large" id="undoButton" onclick="return confirm('Are you sure you want to undo last throw ?');">Undo</button>
+                </form>
             </div>
         </div>
     </div>
@@ -369,6 +371,16 @@
 
 
 <script>
+    let points = document.getElementById("points");
+    let undoButton = document.getElementById("undoButton");
+    if(points.innerHTML === 0)
+    {
+        undoButton.setAttribute('disabled', '');
+    }
+    else
+    {
+        button.removeAttribute('disabled');
+    }
 
     function setMultipleValue(value)
     {
