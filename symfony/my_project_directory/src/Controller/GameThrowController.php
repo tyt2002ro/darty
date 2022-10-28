@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverte;
 
 class GameThrowController extends AbstractController
 {
@@ -35,6 +34,14 @@ class GameThrowController extends AbstractController
         {
             $this->addFlash('notice', $e->getMessage());
         }
+
+        return $this->redirect('/game/' . $game->getId(), 301);
+    }
+
+    #[Route('/undo/throw/{game}/{player}', name: 'undo_game_throw', methods: ['POST'])]
+    public function undo(Game $game, Player $player): Response
+    {
+        $this->gameThrowService->undo($player, $game);
 
         return $this->redirect('/game/' . $game->getId(), 301);
     }

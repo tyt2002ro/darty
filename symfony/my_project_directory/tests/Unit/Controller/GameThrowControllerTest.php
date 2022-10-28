@@ -36,4 +36,17 @@ class GameThrowControllerTest extends TestCase
 
         self::assertSame('/game/', $result->getTargetUrl());
     }
+
+    /**
+     * @test
+     */
+    public function checkUndoGameThrow(): void
+    {
+        $gameThrowService = $this->prophesize(GameThrowService::class);
+
+        $gameThrowController = new GameThrowController($gameThrowService->reveal());
+        $result = $gameThrowController->undo(new Game(), new Player());
+
+        self::assertSame('/game/', $result->getTargetUrl());
+    }
 }

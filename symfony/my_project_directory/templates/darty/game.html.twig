@@ -368,9 +368,11 @@
                     <input type="hidden" name="points" value="0">
                     <button type="submit" class="button  button-large" id="0">Daneben</button>
                 </form>
-                <div class="button button-large">
-                    Undo
-                </div>
+                <form method="POST" action="/undo/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <button type="submit" class="button  button-large" id="undoButton" onclick="return confirm('Are you sure you want to undo last throw ?');">Undo</button>
+                </form>
             </div>
         </div>
     </div>
@@ -378,6 +380,17 @@
 
 
 <script>
+    let points = document.getElementById("points");
+    let undoButton = document.getElementById("undoButton");
+    if(points.innerHTML === 0)
+    {
+        undoButton.setAttribute('disabled', '');
+    }
+    else
+    {
+        button.removeAttribute('disabled');
+    }
+
     function setMultipleValue(value)
     {
         switch (value) {
