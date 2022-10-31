@@ -4,16 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\Player;
+use App\Exceptions\GameThrowInvalidException;
 use App\Service\GameThrowService;
+use App\Validator\GameThrowValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverte;
 
 class GameThrowController extends AbstractController
 {
-    public function __construct(private readonly GameThrowService $gameThrowService)
+    public function __construct(private readonly GameThrowService $gameThrowService,
+                                private readonly GameThrowValidator $gameThrowValidator)
     {
     }
 
@@ -24,7 +26,22 @@ class GameThrowController extends AbstractController
         $double = $request->get('double');
         $triple = $request->get('triple');
 
-        $this->gameThrowService->addGameThrow($points, $double, $triple, $player, $game);
+        try{
+            $this->gameThrowValidator->validatePoints($game, $player, $points, $double, $triple);
+            $this->gameThrowService->addGameThrow($points, $double, $triple, $player, $game);
+        }
+        catch(GameThrowInvalidException $e)
+        {
+            $this->addFlash('notice', $e->getMessage());
+        }
+
+        return $this->redirect('/game/' . $game->getId(), 301);
+    }
+
+    #[Route('/undo/throw/{game}/{player}', name: 'undo_game_throw', methods: ['POST'])]
+    public function undo(Game $game, Player $player): Response
+    {
+        $this->gameThrowService->undo($player, $game);
 
         return $this->redirect('/game/' . $game->getId(), 301);
     }

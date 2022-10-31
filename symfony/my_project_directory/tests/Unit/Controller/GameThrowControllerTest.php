@@ -5,6 +5,8 @@ use App\Entity\Game;
 use App\Entity\GameThrow;
 use App\Entity\Player;
 use App\Service\GameThrowService;
+use App\Service\LastThrowValidationService;
+use App\Validator\GameThrowValidator;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\Request;
 use PHPUnit\Framework\TestCase;
@@ -25,12 +27,27 @@ class GameThrowControllerTest extends TestCase
         $request->request->set('triple', false);
 
         $gameThrowService = $this->prophesize(GameThrowService::class);
-        $gameThrow = $this->prophesize(GameThrow::class);
-        $gameThrowController = new GameThrowController($gameThrowService->reveal());
+        $gameThrowValidator = $this->prophesize(GameThrowValidator::class);
+        $gameThrowController = new GameThrowController($gameThrowService->reveal(),$gameThrowValidator->reveal());
+        $gameThrowValidator->validatePoints(Argument::cetera())->shouldBeCalled()->willReturn(1);
 
-        $gameThrowService->addGameThrow(Argument::cetera())->shouldBeCalled()->willReturn($gameThrow->reveal());
-
+        $gameThrowService->addGameThrow(Argument::cetera())->shouldBeCalled()->willReturn(new GameThrow());
         $result = $gameThrowController->addThrow($request, new Game(), new Player());
+
+        self::assertSame('/game/', $result->getTargetUrl());
+    }
+
+    /**
+     * @test
+     */
+    public function checkUndoGameThrow(): void
+    {
+        $gameThrowService = $this->prophesize(GameThrowService::class);
+        $gameThrowValidator = $this->prophesize(GameThrowValidator::class);
+
+
+        $gameThrowController = new GameThrowController($gameThrowService->reveal(), $gameThrowValidator->reveal());
+        $result = $gameThrowController->undo(new Game(), new Player());
 
         self::assertSame('/game/', $result->getTargetUrl());
     }

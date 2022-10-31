@@ -56,7 +56,9 @@ final class GameControllerTest extends TestCase
         $playerThrowData = $this->prophesize(PlayerThrowData::class);
         $playerThrowData->getOrder()->shouldBeCalled()->willReturn(1);
         $playerThrowData->getPlayerId()->shouldBeCalled()->willReturn(1);
-
+        $playerThrowData->getPointsTotal()->shouldBeCalled()->willReturn(1);
+        $game->getType()->shouldBeCalled()->willReturn(1);
+        $game->getGameOption()->shouldBeCalled()->willReturn(1);
 
         $playerData = [];
         $nextPlayerToThrowService
@@ -65,7 +67,6 @@ final class GameControllerTest extends TestCase
             ->willReturn($playerThrowData->reveal());
 
         $nextPlayerToThrowService->returnOtherPlayerData([], 1)->shouldBeCalled()->willReturn([]);
-
         $twig = $this->prophesize(Environment::class);
         $container = $this->prophesize(ContainerInterface::class);
         $container->has('twig')->shouldBeCalled()->willReturn(true);

@@ -13,6 +13,9 @@ use JsonException;
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
 {
+    public const SINGLE_OUT = 'Single-Out';
+    public const DOUBLE_OUT = 'Double-Out';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

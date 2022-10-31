@@ -19,13 +19,6 @@
             margin-bottom: 20px;
         }
 
-        .left-container .title {
-            width: 50%;
-            text-align: center;
-            margin-bottom: 10px;
-            float: left;
-        }
-
         .right-container {
             width: 25%;
             float: left;
@@ -78,6 +71,10 @@
             width: 25%;
         }
 
+        .cell-3 {
+            width: 33%;
+        }
+
         .cell-2 {
             width: 50%;
         }
@@ -90,16 +87,8 @@
             font-size: 21px;
         }
 
-        .cell-text-green {
-            color: green;
-        }
-
         .cell-fixed-height {
             height: 35px;
-        }
-
-        .cell-big-font {
-            font-size: 30px;
         }
 
         .cell-padding-top {
@@ -109,36 +98,55 @@
         .image {
             width: 16px;
         }
+
+        .notice-container {
+            text-align: center;
+            border-color: red;
+            border-width: 1px;
+            border-style: solid;
+            padding: 10px;
+            margin: 25px;
+            color: red;
+            border-radius: 10px;
+        }
     </style>
 
     <div class="wrapper">
+
+        {% for notice in app.flashes('notice') %}
+            <div class="notice-container">
+                {{ notice }}
+            </div>
+        {% endfor %}
+
         <div class="row">
             <div class="left-container">
                 <div class="row">
-                    <div class="title">Set 1/1</div>
-                    <div class="title">Leg {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}
+                    <div class="cell cell-3">Game Type: {% if gameType|length > 0 %}{{ gameType }}{% endif %}</div>
+                    <div class="cell cell-3">Finish: {% if gameEndType|length > 0 %}{{ gameEndType }}{% endif %}</div>
+                    <div class="cell cell-3">Leg {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}
                         /3
                     </div>
                 </div>
                 <div class="row">
-                    <div class="cell cell-4">{% if mainPlayerData.name|length > 0 %}{{ mainPlayerData.name }}{% endif %}</div>
+                    <div class="cell cell-4">Name: {% if mainPlayerData.name|length > 0 %}{{ mainPlayerData.name }}{% endif %}</div>
                     <div class="cell cell-4">Bull</div>
                     <div class="cell cell-4">20</div>
-                    <div class="cell cell-4">-</div>
+                    <div class="cell cell-4">{% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}</div>
                 </div>
                 <div class="row">
-                    <div class="cell cell-4 cell-text-green cell-fixed-height cell-big-font">{% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</div>
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">Points: {% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</div>
                     <div class="cell cell-4 cell-fixed-height cell-padding-top">0 S
                     </div>
-                    <div class="cell cell-4 cell-fixed-height cell-padding-top">{% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
+                    <div class="cell cell-4 cell-fixed-height cell-padding-top">Throws left: {% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
                         <img src="{{ asset('images/darts_arrow.png') }}" alt="darts arrow" class="image"/>
                     </div>
                     <div class="cell cell-4 cell-fixed-height cell-padding-top">5
                     </div>
                 </div>
                 <div class="row">
-                    <div class="cell cell-4">{% if mainPlayerData.pointsAverage|length > 0 %}{{ mainPlayerData.pointsAverage }}{% endif %}</div>
-                    <div class="cell cell-4">-</div>
+                    <div class="cell cell-4">Average: {% if mainPlayerData.pointsAverage|length > 0 %}{{ mainPlayerData.pointsAverage }}{% endif %}</div>
+                    <div class="cell cell-4">Left: {% if (endGamePointsRequired|length > 0) %}{{ endGamePointsRequired }}{% endif %}</div>
                     <div class="cell cell-4">-</div>
                     <div class="cell cell-4">-</div>
                 </div>
@@ -349,6 +357,7 @@
                     <input type="hidden" name="game_id" value="{{ game_id }}">
                     <input type="hidden" name="points" value="25">
                     <input type="hidden" name="double" class="doubleOption" value="">
+                    <input type="hidden" name="triple" class="tripleOption" value="">
                     <button type="submit" class="button  button-small" id="25">25</button>
                 </form>
             </div>
@@ -359,9 +368,11 @@
                     <input type="hidden" name="points" value="0">
                     <button type="submit" class="button  button-large" id="0">Daneben</button>
                 </form>
-                <div class="button button-large">
-                    Undo
-                </div>
+                <form method="POST" action="/undo/throw/{{ game_id }}/{{ player_id }}">
+                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                    <button type="submit" class="button  button-large" id="undoButton" onclick="return confirm('Are you sure you want to undo last throw ?');">Undo</button>
+                </form>
             </div>
         </div>
     </div>
@@ -369,6 +380,16 @@
 
 
 <script>
+    let points = document.getElementById("points");
+    let undoButton = document.getElementById("undoButton");
+    if(points.innerHTML === 0)
+    {
+        undoButton.setAttribute('disabled', '');
+    }
+    else
+    {
+        button.removeAttribute('disabled');
+    }
 
     function setMultipleValue(value)
     {
@@ -393,7 +414,15 @@
     {
         var list = document.getElementsByClassName(className);
         var n;
-        for (n = 0; n < list.length; ++n) {
+        var listLength = list.length;
+
+        //no 75 points available
+        if(param === 1 && className === 'tripleOption')
+        {
+            listLength = listLength - 1;
+        }
+
+        for (n = 0; n < listLength; ++n) {
             list[n].value=param;
         }
     }

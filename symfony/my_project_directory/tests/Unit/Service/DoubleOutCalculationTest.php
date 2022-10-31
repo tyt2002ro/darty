@@ -3,7 +3,7 @@
 namespace App\tests\Unit;
 
 use App\DataObjects\DoubleOutSuggestion;
-use App\Service\DoubleOutCalculation;
+use App\Service\DoubleOutCalculationService;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
@@ -16,7 +16,7 @@ final class DoubleOutCalculationTest extends TestCase
      */
     public function checkSuggestions(DoubleOutSuggestion $outSuggestion, int $score): void
     {
-        $doubleOutCalculation = new DoubleOutCalculation();
+        $doubleOutCalculation = new DoubleOutCalculationService();
 
         $expected = $outSuggestion;
 

@@ -6,11 +6,15 @@ use App\Entity\Game;
 use App\Entity\GameThrow;
 use App\Entity\Player;
 use App\Factory\GameThrowFactory;
+use App\Validator\GameThrowValidator;
 use App\Repository\GameThrowRepository;
 
 class GameThrowService
 {
-    public function __construct(private readonly GameThrowFactory $gameThrowFactory, private readonly GameThrowRepository $gameThrowRepository)
+    public function __construct(
+        private readonly GameThrowFactory $gameThrowFactory,
+        private readonly GameThrowRepository $gameThrowRepository
+    )
     {
     }
 
@@ -20,5 +24,23 @@ class GameThrowService
 
         $this->gameThrowRepository->save($gameThrow, true);
         return $gameThrow;
+    }
+
+    public function undo($player, $game):void
+    {
+        $gameThrow = $this->gameThrowRepository->findOneBy(
+            [
+                'player' => $player->getId(),
+                'game' => $game->getId(),
+            ],
+            [
+                'id' => 'DESC'
+            ]
+        );
+
+        if($gameThrow !== null)
+        {
+            $this->gameThrowRepository->remove($gameThrow, true);
+        }
     }
 }
