@@ -5,12 +5,15 @@ use App\Entity\Game;
 use App\Entity\GameThrow;
 use App\Entity\Player;
 use App\Service\GameThrowService;
-use App\Service\LastThrowValidationService;
 use App\Validator\GameThrowValidator;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\Request;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class GameThrowControllerTest extends TestCase
 {
@@ -28,10 +31,23 @@ class GameThrowControllerTest extends TestCase
 
         $gameThrowService = $this->prophesize(GameThrowService::class);
         $gameThrowValidator = $this->prophesize(GameThrowValidator::class);
+        $container = $this->prophesize(ContainerInterface::class);
+        $requestStack = $this->prophesize(RequestStack::class);
+        $session = $this->prophesize(Session::class);
+        $flashBagInterface = $this->prophesize(FlashBagInterface::class);
+
         $gameThrowController = new GameThrowController($gameThrowService->reveal(),$gameThrowValidator->reveal());
+        $gameThrowController->setContainer($container->reveal());
         $gameThrowValidator->validatePoints(Argument::cetera())->shouldBeCalled()->willReturn(1);
 
         $gameThrowService->addGameThrow(Argument::cetera())->shouldBeCalled()->willReturn(new GameThrow());
+        $gameThrowValidator->checkifPlayerWon(Argument::cetera())->shouldBeCalled()->willReturn(true);
+
+        $container->get('request_stack')->shouldBeCalled()->willReturn($requestStack->reveal());
+        $requestStack->getSession()->shouldBeCalled()->willReturn($session->reveal());
+        $session->getFlashBag()->shouldBeCalled()->willReturn($flashBagInterface->reveal());
+        $flashBagInterface->add(Argument::cetera())->shouldBeCalled();
+
         $result = $gameThrowController->addThrow($request, new Game(), new Player());
 
         self::assertSame('/game/', $result->getTargetUrl());

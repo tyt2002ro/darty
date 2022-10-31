@@ -24,7 +24,7 @@ class Player
     #[ORM\Column(length: 255)]
     private ?string $nickname = null;
 
-    #[ORM\OneToMany(mappedBy: 'player_id', targetEntity: GameThrow::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'player', targetEntity: GameThrow::class, orphanRemoval: true)]
     private Collection $gameThrows;
 
     public function __construct()

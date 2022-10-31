@@ -40,6 +40,7 @@ class GameController extends AbstractController
         $otherPlayersData = $this->nextPlayerToThrowService
             ->returnOtherPlayerData($playersData, $mainPlayerData->getOrder());
 
+
         return $this->render('darty/game.html.twig', [
             'player_id' => $mainPlayerData->getPlayerId(),
             'mainPlayerData' => $mainPlayerData,
@@ -47,8 +48,7 @@ class GameController extends AbstractController
             'game_id' => $game->getId(),
             'gameType' => $game->getType(),
             'gameEndType' => $game->getGameOption(),
-            'endGamePointsRequired' => $game->getType() - $mainPlayerData->getPointsTotal(),
-            'controller_name' => 'GameController'
+            'endGamePointsRequired' => $game->getType() - $mainPlayerData->getPointsTotal()
         ]);
     }
 

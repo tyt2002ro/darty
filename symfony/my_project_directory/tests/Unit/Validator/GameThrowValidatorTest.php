@@ -257,4 +257,38 @@ class GameThrowValidatorTest extends TestCase
         $this->expectException(GameThrowInvalidException::class);
         $this->gameThrowValidator->validatePoints($game, new Player(), $scoredPoints, $double, $triple);
     }
+
+    /**
+     * @test
+     */
+    public function checkIfPlayerWon(): void
+    {
+        $double = true;
+        $triple = false;
+
+        $scoredPoints = 7;
+        $remainingPoints = 14;
+
+        $this->gameThrowRepository->getRecorderPoints(Argument::cetera())->shouldBeCalled()->willReturn($remainingPoints);
+        $playerWon = $this->gameThrowValidator->checkifPlayerWon(new Game(), new Player(), $scoredPoints, $double, $triple);
+
+        self::assertTrue($playerWon);
+    }
+
+    /**
+     * @test
+     */
+    public function checkIfPlayerDidNotWon(): void
+    {
+        $double = false;
+        $triple = false;
+
+        $scoredPoints = 12;
+        $remainingPoints = 14;
+
+        $this->gameThrowRepository->getRecorderPoints(Argument::cetera())->shouldBeCalled()->willReturn($remainingPoints);
+        $playerWon = $this->gameThrowValidator->checkifPlayerWon(new Game(), new Player(), $scoredPoints, $double, $triple);
+
+        self::assertFalse($playerWon);
+    }
 }

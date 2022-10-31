@@ -29,6 +29,10 @@ class GameThrowController extends AbstractController
         try{
             $this->gameThrowValidator->validatePoints($game, $player, $points, $double, $triple);
             $this->gameThrowService->addGameThrow($points, $double, $triple, $player, $game);
+
+            $playerWon = $this->gameThrowValidator->checkifPlayerWon($game, $player, $points,$double,$triple);
+            $playerWon = true;
+            $this->addFlash('notice', $playerWon);
         }
         catch(GameThrowInvalidException $e)
         {
