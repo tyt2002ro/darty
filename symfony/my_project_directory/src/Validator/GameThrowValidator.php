@@ -31,14 +31,8 @@ class GameThrowValidator
 
     public function checkifPlayerWon(Game $game, Player $player, int $points, bool $double, bool $triple): bool
     {
-        if($double === true) {
-            $points *= 2;
-        } elseif ($triple === true) {
-            $points *=3;
-        }
-
         $recorderPoints = $this->gameThrowRepository->getRecorderPoints($game->getId(), $player->getId());
-        if($recorderPoints === $points)
+        if($recorderPoints === "0")
         {
             return true;
         }

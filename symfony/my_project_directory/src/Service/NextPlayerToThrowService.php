@@ -21,7 +21,7 @@ class NextPlayerToThrowService
 
         foreach ($playersData as $playerData) {
             //if not all 3 throws, from leg, were thrown, player still has throws
-            if ($playerData->getLegThrows() !== 3 && ($game->getType() - $playerData->getPointsTotal() !== 0)) {
+            if ($playerData->getLegThrows() !== 3 && ($game->getType() !== $playerData->getPointsTotal())) {
                 return $playerData;
             }
         }
