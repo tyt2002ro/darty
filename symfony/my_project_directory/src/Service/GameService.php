@@ -14,9 +14,9 @@ class GameService
     {
     }
 
-    public function createGame($type, $playerIds, $endOptions): Game
+    public function createGame($type, $playerIds, $endOptions, $order = null): Game
     {
-        $game = $this->gameFactory->createGame($type, $playerIds, $endOptions);
+        $game = $this->gameFactory->createGame($type, $playerIds, $endOptions, $order);
         $this->gameRepository->save($game, true);
 
         return $game;

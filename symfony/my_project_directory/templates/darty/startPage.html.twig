@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<link href="{{ asset('css/game.css') }}" rel="stylesheet">
+<style>
+    .order {
+        max-width: 15px;
+    }
+
+    tr {
+        vertical-align: top
+    }
+</style>
+
 <head>
     <title>Welcome</title>
 </head>
@@ -8,53 +20,78 @@
     <table>
         <caption></caption>
         <tr>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th>Game Type</th>
+            <th>Players/Order</th>
+            <th>Game-End-Option</th>
         </tr>
         <tr>
             <td>
-                <h1>Game Type</h1>
-                {% if games|length > 0 %}
-                    <ul>
+                {#                <h1>Game Type</h1> #}
+                <ul>
+                    {% if games|length > 0 %}
                         {% for game in games %}
-                            <label for="{{ game.type|e }}"> <input type="radio" id="{{ game.type|e }}" name="games" value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}>{{ game.type|e }}</label><br>
+                            <label for="{{ game.type|e }}">
+                                <input type="radio" id="{{ game.type|e }}" name="games"
+                                       value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}>
+                                {{ game.type|e }}
+                            </label><br>
                         {% endfor %}
-                    </ul>
-                {% endif %}
+                    {% endif %}
+                </ul>
             </td>
             <td>
-                <h1>Players</h1>
-                {% if players|length > 0 %}
-                    <ul>
-                        {% for player in players %}
-                            <input type="checkbox" id="{{ player.firstname|e }} {{ player.lastname|e }}" name="player[]"
-                                   value="{{ player.id|e }}">
-                            <label for="{{ player.firstname|e }} {{ player.lastname|e }}">{{ player.firstname|e }} {{ player.lastname|e }}</label><br>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                {#                <h1>Players</h1> #}
+                <ul>
+                    <table>
+                        {% if players|length > 0 %}
+                            {% for player in players %}
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="{{ player.firstname|e }} {{ player.lastname|e }}"
+                                               name="player[]"
+                                               value="{{ player.id|e }}">
+                                        <label for="{{ player.firstname|e }} {{ player.lastname|e }}">
+                                            {{ player.firstname|e }} {{ player.lastname|e }}</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="{{ player.id }}" name="order[{{ player.id }}]" class="order">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </ul>
             </td>
             <td>
-                <h1>Game-End-Option</h1>
-                {% if gameEnds|length > 0 %}
-                    <ul>
+                {#                <h1>Game-End-Option</h1> #}
+                <ul>
+                    {% if gameEnds|length > 0 %}
                         {% for game in gameEnds %}
-                            <label for="{{ game.type|e }}"><input type="radio" id="{{ game.type|e }}" name="gameEnds" value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}> {{ game.type|e }}</label><br>
+                            <label for="{{ game.type|e }}">
+                                <input type="radio" id="{{ game.type|e }}" name="gameEnds"
+                                       value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}>
+                                {{ game.type|e }}
+                            </label><br>
                         {% endfor %}
-                    </ul>
-                {% endif %}
+                    {% endif %}
+                </ul>
             </td>
         </tr>
         <tr>
             <td>
-                <button type="submit" form="form1" value="Submit" onclick="return areSelectedPlayers();">Start new game</button>
+                <button type="submit" form="form1" value="Submit" onclick="return areSelectedPlayers();">
+                    Start new game
+                </button>
             </td>
             <td>
-                <button type="button" id="new_player" onclick="location.href='/addPlayerForm'">Add player to database</button>
+                <button type="button" id="new_player" onclick="location.href='/addPlayerForm'">
+                    Add player to database
+                </button>
             </td>
             <td>
-                <button type="button" id="edit_players" onclick="location.href ='/player-management'">Edit Players</button>
+                <button type="button" id="edit_players" onclick="location.href ='/player-management'">
+                    Edit Players
+                </button>
             </td>
         </tr>
     </table>
@@ -65,12 +102,11 @@
         var cbs = document.getElementsByTagName('input');
         for (var i = 0; i < cbs.length; i++) {
             if (cbs[i].type === 'checkbox' && cbs[i].name === 'player[]' && cbs[i].checked) {
-               checkboxes++;
+                checkboxes++;
             }
         }
 
-        if(checkboxes < 2)
-        {
+        if (checkboxes < 2) {
             alert('Please select at least 2 players before you start the game');
             return false;
         }
