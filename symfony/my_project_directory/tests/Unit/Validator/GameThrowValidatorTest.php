@@ -267,7 +267,7 @@ class GameThrowValidatorTest extends TestCase
         $triple = false;
 
         $scoredPoints = 7;
-        $remainingPoints = 14;
+        $remainingPoints = '0';
 
         $this->gameThrowRepository->getRecorderPoints(Argument::cetera())->shouldBeCalled()->willReturn($remainingPoints);
         $playerWon = $this->gameThrowValidator->checkifPlayerWon(new Game(), new Player(), $scoredPoints, $double, $triple);

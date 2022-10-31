@@ -4,6 +4,7 @@ use App\Controller\GameThrowController;
 use App\Entity\Game;
 use App\Entity\GameThrow;
 use App\Entity\Player;
+use App\Service\GameService;
 use App\Service\GameThrowService;
 use App\Validator\GameThrowValidator;
 use Prophecy\Argument;
@@ -31,12 +32,13 @@ class GameThrowControllerTest extends TestCase
 
         $gameThrowService = $this->prophesize(GameThrowService::class);
         $gameThrowValidator = $this->prophesize(GameThrowValidator::class);
+        $gameService = $this->prophesize(GameService::class);
         $container = $this->prophesize(ContainerInterface::class);
         $requestStack = $this->prophesize(RequestStack::class);
         $session = $this->prophesize(Session::class);
         $flashBagInterface = $this->prophesize(FlashBagInterface::class);
 
-        $gameThrowController = new GameThrowController($gameThrowService->reveal(),$gameThrowValidator->reveal());
+        $gameThrowController = new GameThrowController($gameThrowService->reveal(),$gameThrowValidator->reveal(), $gameService->reveal());
         $gameThrowController->setContainer($container->reveal());
         $gameThrowValidator->validatePoints(Argument::cetera())->shouldBeCalled()->willReturn(1);
 
@@ -48,7 +50,11 @@ class GameThrowControllerTest extends TestCase
         $session->getFlashBag()->shouldBeCalled()->willReturn($flashBagInterface->reveal());
         $flashBagInterface->add(Argument::cetera())->shouldBeCalled();
 
-        $result = $gameThrowController->addThrow($request, new Game(), new Player());
+        $gameService->getPlayerPlace(Argument::any(),1)->shouldBeCalled()->willReturn(1);
+        $player = $this->prophesize(Player::class);
+        $player->getId()->shouldBeCalled()->willReturn(1);
+
+        $result = $gameThrowController->addThrow($request, new Game(), $player->reveal());
 
         self::assertSame('/game/', $result->getTargetUrl());
     }
@@ -60,9 +66,9 @@ class GameThrowControllerTest extends TestCase
     {
         $gameThrowService = $this->prophesize(GameThrowService::class);
         $gameThrowValidator = $this->prophesize(GameThrowValidator::class);
+        $gameService = $this->prophesize(GameService::class);
 
-
-        $gameThrowController = new GameThrowController($gameThrowService->reveal(), $gameThrowValidator->reveal());
+        $gameThrowController = new GameThrowController($gameThrowService->reveal(), $gameThrowValidator->reveal(), $gameService->reveal());
         $result = $gameThrowController->undo(new Game(), new Player());
 
         self::assertSame('/game/', $result->getTargetUrl());

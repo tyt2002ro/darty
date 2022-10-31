@@ -10,7 +10,7 @@ class GameService
 {
 
     public function __construct(private readonly GameRepository $gameRepository,
-                                private readonly  GameFactory $gameFactory)
+                                private readonly GameFactory    $gameFactory)
     {
     }
 
@@ -20,6 +20,18 @@ class GameService
         $this->gameRepository->save($game, true);
 
         return $game;
+    }
+
+    public function getPlayerPlace(Game $game, int $playerId): int
+    {
+        $playersPlace = $game->getPlayersPlace();
+        $place = max($playersPlace) + 1;
+        $playersPlace[$playerId] = $place;
+        $game->setPlayersPlace($playersPlace);
+
+        $this->gameRepository->save($game,true);
+
+        return $place;
     }
 
 }
