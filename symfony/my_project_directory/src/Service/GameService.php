@@ -34,4 +34,15 @@ class GameService
         return $place;
     }
 
+    public function getCongratsMessage(int $playerPlace): string
+    {
+        $message = match ($playerPlace) {
+            1 => "You won!",
+            2 => "Congrats! You reached 2nd place",
+            3 => "Congrats! You reached 3rd place",
+            default => "Congrats! You reached " . $playerPlace . "th place",
+        };
+        return $message;
+    }
+
 }

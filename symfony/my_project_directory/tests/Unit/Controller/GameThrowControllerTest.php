@@ -54,6 +54,8 @@ class GameThrowControllerTest extends TestCase
         $player = $this->prophesize(Player::class);
         $player->getId()->shouldBeCalled()->willReturn(1);
 
+        $gameService->getCongratsMessage(1)->shouldBeCalled()->willReturn('You won!');
+
         $result = $gameThrowController->addThrow($request, new Game(), $player->reveal());
 
         self::assertSame('/game/', $result->getTargetUrl());

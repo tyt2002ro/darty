@@ -3,6 +3,7 @@
 <title>Hello GameController!</title>
 
 <link href="{{ asset('css/game.css') }}" rel="stylesheet">
+<link href="{{ asset('css/popup.css') }}" rel="stylesheet">
 
 {% block body %}
 
@@ -13,6 +14,8 @@
                 {{ notice }}
             </div>
         {% endfor %}
+
+
 
         <div class="row">
             <div class="left-container">
@@ -123,6 +126,14 @@
             </div>
         </div>
     </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p class="success-message"></p>
+            <button type="button" id="finish_game" onclick="location.href ='/'">Finish Game</button>
+            <button type="button" id="continue_game">Continue Game</button>
+        </div>
+    </div>
 {% endblock %}
 
 
@@ -137,12 +148,6 @@
     {
         undoButton.removeAttribute('disabled');
     }
-
-    {% for player_won in app.flashes('notice') %}
-        {% if player_won == true %}
-                alert('ok');
-        {% endif %}
-    {% endfor %}
 
     function setMultipleValue(value)
     {
@@ -176,4 +181,19 @@
             list[n].value = param;
         }
     }
+
+    //pop-up
+    let modal = document.getElementById("myModal");
+    let continueGameButton = document.getElementById("continue_game");
+    let successMessage = document.getElementsByClassName("success-message")[0];
+
+    {% for success in app.flashes('success') %}
+        modal.style.display = "block";
+        successMessage.innerHTML = '{{ success }}';
+    {% endfor %}
+
+    continueGameButton.onclick = function() {
+        modal.style.display = "none";
+    }
+
 </script>
