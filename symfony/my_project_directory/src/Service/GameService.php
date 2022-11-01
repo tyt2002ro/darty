@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Game;
+use App\Exceptions\PlayerNotExistException;
 use App\Factory\GameFactory;
 use App\Repository\GameRepository;
 
@@ -14,6 +15,9 @@ class GameService
     {
     }
 
+    /**
+     * @throws PlayerNotExistException
+     */
     public function createGame($type, $playerIds, $endOptions, $order = null): Game
     {
         $game = $this->gameFactory->createGame($type, $playerIds, $endOptions, $order);

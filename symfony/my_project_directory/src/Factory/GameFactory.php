@@ -23,9 +23,7 @@ class GameFactory
         $game->setType($type);
         $game->setGameOption($endOptions);
 
-        $sortPlayersThrowOrderService = new SortPlayersThrowOrderService();
-        $sortedOrder =$sortPlayersThrowOrderService->returnSortedPlayersThrowOrder($order);
-        $game->setThrowPlayersOrder($sortedOrder);
+        $game->setThrowPlayersOrder($order);
 
         foreach ($playerIds as $playerId) {
             $player = $this->playerRepository->find($playerId);

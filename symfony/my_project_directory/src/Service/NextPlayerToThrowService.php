@@ -30,7 +30,6 @@ class NextPlayerToThrowService
         usort($playersData, fn($a, $b) => strcmp($a->getOrder(), $b->getOrder()));
         usort($playersData, fn($a, $b) => strcmp($a->getTotalThrows(), $b->getTotalThrows()));
         return $playersData[0];
-
     }
 
     private function updatePlayersData(int $gameId, array $players, array &$playersData): void
@@ -39,7 +38,7 @@ class NextPlayerToThrowService
             $dbData = $this->gameThrowRepository->findPlayerDataForThrow(
                 $gameId, $player->getId());
             $playersData[] = new PlayerThrowData($player->getId(),
-                order: $order,
+                order: (int)$dbData['throwOrder'],
                 name: $player->getFirstname() . ' ' . $player->getLastname(),
                 pointsTotal: $dbData['pointsTotal'],
                 pointsAverage: $dbData['pointsAverage'],

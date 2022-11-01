@@ -38,7 +38,7 @@ class GameServiceTest extends TestCase
 
         $gameFactory->createGame(Argument::cetera())->shouldBeCalled()->willReturn($game);
 
-        $createdGame = $gameService->createGame($type, $playerIds, $endOptions);
+        $createdGame = $gameService->createGame($type, $playerIds, $endOptions, [1 => 98, 2 => null, 3 => 6]);
         
         self::assertEquals($expectedGame, $createdGame);
     }

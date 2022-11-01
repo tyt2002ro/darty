@@ -25,13 +25,14 @@ final class GameFactoryTest extends TestCase
         $expectedGame->setType(302);
         $expectedGame->addPlayerId(new Player());
         $expectedGame->addPlayerId(new Player());
+        $expectedGame->setThrowPlayersOrder([1 => 98, 2 => null, 3 => 6]);
 
 
         $playerRepository = $this->prophesize(PlayerRepository::class);
         $gameFactory = new GameFactory($playerRepository->reveal());
         $playerRepository->find('3')->shouldBeCalled()->willReturn(new Player());
         $playerRepository->find('4')->shouldBeCalled()->willReturn(new Player());
-        $game = $gameFactory->createGame(302, [3,4], 'SingleOut');
+        $game = $gameFactory->createGame(302, [3,4], 'SingleOut', [1 => 98, 2 => null, 3 => 6]);
 
         self::assertEquals($expectedGame, $game);
     }
@@ -53,7 +54,7 @@ final class GameFactoryTest extends TestCase
         $playerRepository->find('3')->shouldBeCalled()->willReturn(null);
 
         $this->expectException(PlayerNotExistException::class);
-        $gameFactory->createGame(302, [3,4], 'SingleOut');
+        $gameFactory->createGame(302, [3,4], 'SingleOut', [1 => 98, 2 => null, 3 => 6]);
     }
 
 }
