@@ -9,7 +9,7 @@ use ArrayObject;
 
 class NextPlayerToThrowService
 {
-    public function __construct(public readonly GameThrowRepository $gameThrowRepository)
+    public function __construct(private readonly GameThrowRepository $gameThrowRepository)
     {
     }
 
@@ -36,7 +36,7 @@ class NextPlayerToThrowService
         return $playersData[0];
     }
 
-    public function updatePlayersData(int $gameId, array $players, array &$playersData): void
+    private function updatePlayersData(int $gameId, array $players, array &$playersData): void
     {
         foreach ($players as $order => $player) {
             $dbData = $this->gameThrowRepository->findPlayerDataForThrow(
