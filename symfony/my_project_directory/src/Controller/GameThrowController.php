@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Entity\Player;
 use App\Exceptions\GameThrowInvalidException;
 use App\Service\GameThrowService;
+use App\Service\GameService;
 use App\Validator\GameThrowValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class GameThrowController extends AbstractController
 {
     public function __construct(private readonly GameThrowService $gameThrowService,
-                                private readonly GameThrowValidator $gameThrowValidator)
+                                private readonly GameThrowValidator $gameThrowValidator,
+                                private readonly GameService $gameService)
     {
     }
 
@@ -29,6 +31,13 @@ class GameThrowController extends AbstractController
         try{
             $this->gameThrowValidator->validatePoints($game, $player, $points, $double, $triple);
             $this->gameThrowService->addGameThrow($points, $double, $triple, $player, $game);
+
+            $playerWon = $this->gameThrowValidator->checkifPlayerWon($game, $player, $points,$double,$triple);
+            if($playerWon)
+            {
+                $playerPlace = $this->gameService->getPlayerPlace($game, $player->getId());
+                $this->addFlash('success', $this->gameService->getCongratsMessage($playerPlace));
+            }
         }
         catch(GameThrowInvalidException $e)
         {

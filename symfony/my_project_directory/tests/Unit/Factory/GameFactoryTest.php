@@ -47,7 +47,7 @@ final class GameFactoryTest extends TestCase
         $expectedGame->setType(302);
         $expectedGame->addPlayerId(new Player());
         $expectedGame->addPlayerId(new Player());
-
+        $expectedGame->setPlayersPlace(['3' => '0', '4' => '0']);
 
         $playerRepository = $this->prophesize(PlayerRepository::class);
         $gameFactory = new GameFactory($playerRepository->reveal());

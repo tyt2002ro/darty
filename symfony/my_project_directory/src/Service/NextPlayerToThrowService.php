@@ -4,8 +4,8 @@ namespace App\Service;
 
 use App\DataObjects\PlayerThrowData;
 use App\Entity\Game;
+use App\Exceptions\PlayerNotExistException;
 use App\Repository\GameThrowRepository;
-use ArrayObject;
 
 class NextPlayerToThrowService
 {
@@ -13,6 +13,9 @@ class NextPlayerToThrowService
     {
     }
 
+    /**
+     * @throws PlayerNotExistException
+     */
     public function returnNextPlayerToThrow(Game $game, array &$playersData): PlayerThrowData
     {
         $players = $game->getSortedById();
@@ -25,7 +28,7 @@ class NextPlayerToThrowService
 
         foreach ($playersData as $playerData) {
             //if not all 3 throws, from leg, were thrown, player still has throws
-            if ($playerData->getLegThrows() !== 3) {
+            if ($playerData->getLegThrows() !== 3 && ($game->getType() !== $playerData->getPointsTotal())) {
                 return $playerData;
             }
         }
@@ -33,7 +36,8 @@ class NextPlayerToThrowService
         //if no player has throws let, we select the first player for given order, with the lowest throws.
         usort($playersData, fn($a, $b) => strcmp($a->getOrder(), $b->getOrder()));
         usort($playersData, fn($a, $b) => strcmp($a->getTotalThrows(), $b->getTotalThrows()));
-        return $playersData[0];
+
+        return $this->getNextPlayer($playersData, $game);
     }
 
     private function updatePlayersData(int $gameId, array $players, array &$playersData): void
@@ -60,6 +64,18 @@ class NextPlayerToThrowService
             }
         }
         return $playersData;
+    }
+
+    private function getNextPlayer(array $playersData, Game $game): PlayerThrowData
+    {
+        foreach($playersData as $playerData)
+        {
+            if($game->getType() !== $playerData->getPointsTotal())
+            {
+                return $playerData;
+            }
+        }
+
     }
 }
 

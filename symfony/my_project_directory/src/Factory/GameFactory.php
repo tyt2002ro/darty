@@ -22,6 +22,7 @@ class GameFactory
         $game = new Game();
         $game->setType($type);
         $game->setGameOption($endOptions);
+        $playersPlaces = [];
 
         $game->setThrowPlayersOrder($order);
 
@@ -32,8 +33,10 @@ class GameFactory
                 throw new PlayerNotExistException('player not exist with id: ' . $playerId);
             }
 
+            $playersPlaces[$playerId] = '0';
             $game->addPlayerId($player);
         }
+        $game->setPlayersPlace($playersPlaces);
 
         return $game;
     }

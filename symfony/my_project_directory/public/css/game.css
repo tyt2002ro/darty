@@ -71,6 +71,10 @@
     width: 25%;
 }
 
+.cell-3 {
+    width: 33%;
+}
+
 .cell-2 {
     width: 50%;
 }
@@ -103,4 +107,15 @@
 .image
 {
     width: 16px;
+}
+
+.notice-container {
+    text-align: center;
+    border-color: red;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;
+    margin: 25px;
+    color: red;
+    border-radius: 10px;
 }

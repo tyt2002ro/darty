@@ -13,7 +13,7 @@ class GameThrowValidator
 
     public function __construct(private readonly GameThrowRepository $gameThrowRepository)
     {
-        $this->singlePoints = array_merge(range(1, 20), [25]);
+        $this->singlePoints = array_merge(range(0, 20), [25]);
     }
 
     /**
@@ -27,6 +27,17 @@ class GameThrowValidator
             return true;
         }
         throw new GameThrowInvalidException();
+    }
+
+    public function checkifPlayerWon(Game $game, Player $player, int $points, bool $double, bool $triple): bool
+    {
+        $recorderPoints = $this->gameThrowRepository->getRecorderPoints($game->getId(), $player->getId());
+        if($recorderPoints === "0")
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /**
