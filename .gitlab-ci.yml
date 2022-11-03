@@ -88,7 +88,7 @@ pull-images:
   only:
     - develop
   needs:
-    - deploy-code
+    - copy-code
   before_script:
     - *snippet-configure-ssh
     - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
