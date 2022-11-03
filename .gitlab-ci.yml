@@ -38,6 +38,15 @@ build-php-image:
     - docker build -t docker-repository.intern.neusta.de/darty2/php:latest -t docker-repository.intern.neusta.de:18443/darty2/php:latest ./.docker/php
     - docker push docker-repository.intern.neusta.de:18443/darty2/php:latest
 
+build-web-image:
+  stage: preparation
+  dependencies: []
+  before_script:
+    - *docker-repo-login
+  script:
+    - docker build -t docker-repository.intern.neusta.de/darty2/web:latest -t docker-repository.intern.neusta.de:18443/darty2/web:latest ./.docker/web
+    - docker push docker-repository.intern.neusta.de:18443/darty2/web:latest
+
 php-unit:
  stage: unittests
  image: docker-repository.intern.neusta.de/darty2/php:latest
@@ -83,3 +92,14 @@ pull-images:
     - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
   script:
     - ssh $ITEST_USER@$ITEST_HOST_IP 'docker pull docker-repository.intern.neusta.de/darty2/php:latest'
+    - ssh $ITEST_USER@$ITEST_HOST_IP 'docker pull docker-repository.intern.neusta.de/darty2/web:latest'
+
+restart-docker:
+  stage: deploy
+  only:
+    - develop
+  before_script:
+    - *snippet-configure-ssh
+    - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
+  script:
+    - ssh $ITEST_USER@$ITEST_HOST_IP 'cd app && docker compose down && docker compose up -d'
