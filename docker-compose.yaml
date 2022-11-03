@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   php:
-    image: "darty2/php:latest"
+    image: docker-repository.intern.neusta.de/darty2/php:latest
     build:
       context: ./.docker/php
       args:
@@ -21,7 +21,7 @@ services:
   web:
     env_file:
       - .env
-    image: "darty2/web:latest"
+    image: docker-repository.intern.neusta.de/darty2/web:latest
     build:
       context: ./.docker/web
       args:
@@ -37,7 +37,7 @@ services:
       - darty2
 
   mariadb:
-    image: 'mariadb:10.9.3'
+    image: docker-repository.intern.neusta.de/mariadb:10.9.3
     environment:
       - MARIADB_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
       - MARIADB_DATABASE=${DATABASE_NAME}
