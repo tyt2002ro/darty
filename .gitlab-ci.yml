@@ -2,10 +2,19 @@ stages:
   - preparation
   - unittests
   - quality-check
+  - deploy
+
+variables:
+  ITEST_HOST_IP: 172.31.193.127
 
 .docker-repo-login: &docker-repo-login
   - echo $DOCKERREPOPASSWD | docker login -u docker-repo-user --password-stdin docker-repository.intern.neusta.de
   - echo $DOCKERREPOPASSWD | docker login -u docker-repo-user --password-stdin docker-repository.intern.neusta.de:18443
+
+.snippet-configure-ssh: &snippet-configure-ssh
+  - eval $(ssh-agent -s)
+  - echo "${ITEST_PRIVATE_KEY}" | ssh-add - > /dev/null
+  - mkdir -p ~/.ssh/
 
 composer:
   stage: preparation
@@ -49,3 +58,14 @@ sonar:
     - php-unit
   only:
     - develop
+
+copy-code:
+  stage: deploy
+  only:
+    - develop
+  image: docker-repository.intern.neusta.de/eeacms/rsync:2.3
+  before_script:
+    - *snippet-configure-ssh
+    - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
+  script:
+    - rsync $(pwd)/ darty@172.31.193.127:/home/darty/app/
