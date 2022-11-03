@@ -87,6 +87,8 @@ pull-images:
   stage: deploy
   only:
     - develop
+  needs:
+    - deploy-code
   before_script:
     - *snippet-configure-ssh
     - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
@@ -98,6 +100,8 @@ restart-docker:
   stage: deploy
   only:
     - develop
+  needs:
+    - pull-images
   before_script:
     - *snippet-configure-ssh
     - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
