@@ -6,6 +6,7 @@ stages:
 
 variables:
   ITEST_HOST_IP: 172.31.193.127
+  ITEST_USER: darty
 
 .docker-repo-login: &docker-repo-login
   - echo $DOCKERREPOPASSWD | docker login -u docker-repo-user --password-stdin docker-repository.intern.neusta.de
@@ -72,3 +73,13 @@ copy-code:
     - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
   script:
     - rsync -rltgoDH . darty@172.31.193.127:/home/darty/app/
+
+pull-images:
+  stage: deploy
+  only:
+    - develop
+  before_script:
+    - *snippet-configure-ssh
+    - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
+  script:
+    - ssh $ITEST_USER@$ITEST_HOST_IP 'docker pull docker-repository.intern.neusta.de/darty2/php:latest'
