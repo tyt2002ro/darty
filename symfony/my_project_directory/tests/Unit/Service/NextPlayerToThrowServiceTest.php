@@ -20,10 +20,31 @@ class NextPlayerToThrowServiceTest extends TestCase
      */
     public function checkReturnNextPlayerToThrow(): void
     {
+        $playersData = [];
+        $gameThrowRepository = $this->prophesize(GameThrowRepository::class);
+        $nextPlayerToThrowService = new NextPlayerToThrowService($gameThrowRepository->reveal());
+        $expectedReturn = $nextPlayerToThrowService->returnNextPlayerToThrow(new Game(),$playersData);
+
+        self::assertInstanceOf(PlayerThrowData::class, $expectedReturn);
+
+//        $game = $this->prophesize(Game::class);
+//
 //        $player = $this->prophesize(Player::class);
 //        $players = [$player->reveal(), $player->reveal()];
+//        $game->getSortedById()->shouldBeCalled()->willReturn($players);
+//
 //        $gameThrowRepository = $this->prophesize(GameThrowRepository::class);
+//        $gameThrowRepository->findPlayerDataForThrow(33,443)->shouldBeCalled()->willReturn([]);
+//
+//        $nextPlayerToThrowService->updatePlayersData(44, $players, $playersData)->shouldBeCalled()->willReturn($expectedReturn);
+//        $nextPlayerToThrowService->returnNextPlayerToThrow($game->reveal(), $playersData)->shouldBeCalled()->willReturn($expectedReturn);
+//
 //        $game = $this->prophesize(Game::class);
+//
+//        $gameThrowRepository = $this->prophesize(GameThrowRepository::class);
+//        $nextPlayerToThrowService = new NextPlayerToThrowService($gameThrowRepository->reveal());
+
+
 //        $game->getSortedById()->shouldBeCalled()->willReturn($players);
 //        $game->getId()->shouldBeCalled()->willReturn(1);
 //        $gameThrowRepository->findPlayerDataForThrow(1998898989,1312321321321321)->shouldBeCalled()->willReturn([1,2,3]);

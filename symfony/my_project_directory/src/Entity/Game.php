@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\GameRepository;
+use App\Service\SortPlayersThrowOrderService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JsonException;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
@@ -34,15 +36,13 @@ class Game
     #[ORM\OneToMany(mappedBy: 'game_id', targetEntity: GameThrow::class, orphanRemoval: true)]
     private Collection $gameThrows;
 
+    #[ORM\Column(length: 255)]
+    private ?string $throw_players_order = null;
+
     public function __construct()
     {
         $this->player_id = new ArrayCollection();
         $this->gameThrows = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getType(): ?int
@@ -138,14 +138,34 @@ class Game
     public function getSortedById(): array
     {
         $arr = $this->player_id->toArray();
-        usort($arr, function($a, $b) {
+        usort($arr, function ($a, $b) {
             if ($a->getId() > $b->getId()) {
                 return -1;
             }
         });
 
-
-
         return $arr;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getThrowPlayersOrder(): ?string
+    {
+        try {
+            return json_decode($this->throw_players_order, false, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+        }
+    }
+
+    public function setThrowPlayersOrder(array $sortedOrder): self
+    {
+        try {
+            $this->throw_players_order = json_encode($sortedOrder, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+        }
+        return $this;
     }
 }

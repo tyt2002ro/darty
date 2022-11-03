@@ -5,6 +5,7 @@ namespace App\Factory;
 use App\Entity\Game;
 use App\Exceptions\PlayerNotExistException;
 use App\Repository\PlayerRepository;
+use App\Service\SortPlayersThrowOrderService;
 
 class GameFactory
 {
@@ -13,12 +14,17 @@ class GameFactory
     {
     }
 
-    public function createGame(int $type, array $playerIds, string $endOptions): Game
+    /**
+     * @throws PlayerNotExistException
+     */
+    public function createGame(int $type, array $playerIds, string $endOptions, array $order): Game
     {
         $game = new Game();
         $game->setType($type);
         $game->setGameOption($endOptions);
         $playersPlaces = [];
+
+        $game->setThrowPlayersOrder($order);
 
         foreach ($playerIds as $playerId) {
             $player = $this->playerRepository->find($playerId);

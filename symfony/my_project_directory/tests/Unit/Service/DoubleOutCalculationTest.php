@@ -36,4 +36,12 @@ final class DoubleOutCalculationTest extends TestCase
         yield 'score 104' => [new DoubleOutSuggestion('T20', 'D2', 'D20'), 104];
     }
 
+    /**
+     * @test
+     */
+    public function checkDoubleOutNumbers(): void
+        {
+            $doubleOutCalculation = new DoubleOutCalculationService();
+            self::assertIsArray($doubleOutCalculation->getDoubleOutNumbers());
+        }
 }

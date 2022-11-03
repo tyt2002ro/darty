@@ -44,17 +44,21 @@ class GameThrowRepository extends ServiceEntityRepository
 
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = '
-            SELECT coalesce(sum(GameThrow.points), 0) AS pointsTotal,
-                        coalesce(avg(GameThrow.points), 0) AS pointsAverage,
-                        3-mod(count(GameThrow.points), 3) AS legThrows,
-                        count(GameThrow.points) AS totalThrows
-                FROM game_throw as GameThrow
-                WHERE GameThrow.game_id = :game_id
-                    AND GameThrow.player_id = :player_id
-            ';
+        $order = "'$.$playerId'";
+
+        $sql = "
+        SELECT coalesce(sum(GameThrow.points), 0) AS pointsTotal,
+                coalesce(avg(GameThrow.points), 0) AS pointsAverage,
+                3-mod(count(GameThrow.points), 3) AS legThrows,
+                count(GameThrow.points) AS totalThrows,
+                JSON_UNQUOTE(json_extract(Game.throw_players_order,  " . $order . ")) as throwOrder
+        FROM game_throw AS GameThrow
+        RIGHT JOIN game AS Game ON Game.id = GameThrow.game_id 
+        WHERE GameThrow.game_id = " . $gameId . "
+            AND GameThrow.player_id = " . $playerId . ";
+            ";
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['game_id' => $gameId, 'player_id' => $playerId]);
+        $resultSet = $stmt->executeQuery();
 
         $result = $resultSet->fetchAllAssociative();
 

@@ -26,6 +26,7 @@ final class GameControllerTest extends TestCase
         $request->request->set('games', '301');
         $request->request->set('gameEnds', 'test');
         $request->request->set('player', $players);
+        $request->request->set('order', [1 => 98, 2 => null, 3 => 6]);
 
         $nextPlayerToThrowService = $this->prophesize(NextPlayerToThrowService::class);
         $gameService = $this->prophesize(GameService::class);

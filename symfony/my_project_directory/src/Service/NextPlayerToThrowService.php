@@ -20,6 +20,10 @@ class NextPlayerToThrowService
     {
         $players = $game->getSortedById();
 
+        if(!$players){
+            return new PlayerThrowData(0,0,'',0,0,0,0);
+        }
+
         $this->updatePlayersData($game->getId(), $players, $playersData);
 
         foreach ($playersData as $playerData) {
@@ -42,7 +46,7 @@ class NextPlayerToThrowService
             $dbData = $this->gameThrowRepository->findPlayerDataForThrow(
                 $gameId, $player->getId());
             $playersData[] = new PlayerThrowData($player->getId(),
-                order: $order,
+                order: (int)$dbData['throwOrder'],
                 name: $player->getFirstname() . ' ' . $player->getLastname(),
                 pointsTotal: $dbData['pointsTotal'],
                 pointsAverage: $dbData['pointsAverage'],
