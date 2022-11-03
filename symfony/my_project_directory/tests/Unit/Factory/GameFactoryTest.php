@@ -25,6 +25,7 @@ final class GameFactoryTest extends TestCase
         $expectedGame->setType(302);
         $expectedGame->addPlayerId(new Player());
         $expectedGame->addPlayerId(new Player());
+        $expectedGame->setPlayersPlace([3=>"0", 4=>"0"]);
         $expectedGame->setThrowPlayersOrder([1 => 98, 2 => null, 3 => 6]);
 
 
