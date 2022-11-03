@@ -30,6 +30,7 @@ composer:
 
 build-php-image:
   stage: preparation
+  dependencies: []
   before_script:
     - *docker-repo-login
   script:
@@ -63,6 +64,8 @@ copy-code:
   stage: deploy
   only:
     - develop
+  needs:
+    - composer
   image: docker-repository.intern.neusta.de/eeacms/rsync:2.3
   before_script:
     - *snippet-configure-ssh
