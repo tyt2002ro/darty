@@ -82,6 +82,7 @@ copy-code:
     - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
   script:
     - rsync -rltgoDH . darty@172.31.193.127:/home/darty/app/
+    - ssh $ITEST_USER@$ITEST_HOST_IP 'cd app && mv .env.staging .env'
 
 pull-images:
   stage: deploy
