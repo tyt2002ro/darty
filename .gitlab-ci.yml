@@ -68,4 +68,4 @@ copy-code:
     - *snippet-configure-ssh
     - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
   script:
-    - rsync $(pwd)/ darty@172.31.193.127:/home/darty/app/
+    - rsync -rltgoDH . darty@172.31.193.127:/home/darty/app/
