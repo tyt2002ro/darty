@@ -25,6 +25,9 @@ class Game
     #[ORM\Column(length: 100)]
     private ?string $game_option = null;
 
+    #[ORM\Column(length: 255,nullable:true)]
+    private ?string $players_place = null;
+
     #[ORM\ManyToMany(targetEntity: Player::class)]
     private Collection $player_id;
 
@@ -116,6 +119,18 @@ class Game
                 $gameThrow->setGame(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPlayersPlace(): ?array
+    {
+        return json_decode($this->players_place, true);
+    }
+
+    public function setPlayersPlace(array $player_places): self
+    {
+        $this->players_place = json_encode($player_places);
 
         return $this;
     }

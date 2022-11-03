@@ -18,6 +18,7 @@ class GameFactory
         $game = new Game();
         $game->setType($type);
         $game->setGameOption($endOptions);
+        $playersPlaces = [];
 
         foreach ($playerIds as $playerId) {
             $player = $this->playerRepository->find($playerId);
@@ -26,8 +27,10 @@ class GameFactory
                 throw new PlayerNotExistException('player not exist with id: ' . $playerId);
             }
 
+            $playersPlaces[$playerId] = '0';
             $game->addPlayerId($player);
         }
+        $game->setPlayersPlace($playersPlaces);
 
         return $game;
     }
