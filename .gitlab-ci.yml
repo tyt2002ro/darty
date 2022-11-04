@@ -108,3 +108,15 @@ restart-docker:
     - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
   script:
     - ssh $ITEST_USER@$ITEST_HOST_IP 'cd app && docker compose down && docker compose up -d'
+
+run migrations:
+  stage: deploy
+  only:
+    - develop
+  needs:
+    - restart-docker
+  before_script:
+    - *snippet-configure-ssh
+    - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
+  script:
+    - ssh $ITEST_USER@$ITEST_HOST_IP 'cd app && docker compose exec php bash && php bin/console doctrine:migrations:migrate'
