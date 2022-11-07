@@ -17,7 +17,11 @@ class PlayerType extends AbstractType
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
             ->add('nickname', TextType::class)
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class,[
+                'attr' => [
+                    'class' => 'btn-success'
+                ]
+            ])
         ;
     }
 
