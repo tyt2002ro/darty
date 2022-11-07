@@ -38,6 +38,9 @@ class GameController extends AbstractController
         $mainPlayerData = $this->nextPlayerToThrowService
             ->returnNextPlayerToThrow($game, $playersData);
 
+        if(!$mainPlayerData){
+            return $this->redirect('/player-management/');
+        }
         $endGamePointsRequired = $game->getType() - $mainPlayerData->getPointsTotal();
 
         if($endGamePointsRequired < 170 && $game->getGameOption() === Game::DOUBLE_OUT){
