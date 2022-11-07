@@ -1,59 +1,78 @@
 <!DOCTYPE html>
-
-<title>Hello GameController!</title>
-
-<link href="{{ asset('css/game.css') }}" rel="stylesheet">
-<link href="{{ asset('css/popup.css') }}" rel="stylesheet">
-
+<head>
+    <title>Hello GameController!</title>
+    <link href="{{ asset('css/game.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/popup.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
 {% block body %}
 
-    <div class="wrapper">
-
-        {% for notice in app.flashes('notice') %}
-            <div class="notice-container">
-                {{ notice }}
-            </div>
-        {% endfor %}
-
-
-
+    <div class="container">
         <div class="row">
-            <div class="left-container">
-                <div class="row">
-                    <div class="cell cell-3">Game Type: {% if gameType|length > 0 %}{{ gameType }}{% endif %}</div>
-                    <div class="cell cell-3">Finish: {% if gameEndType|length > 0 %}{{ gameEndType }}{% endif %}</div>
-                    <div class="cell cell-3">Leg {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}
-                        /3
+            {% for notice in app.flashes('notice') %}
+                <div class="notice-container col-md-12">
+                    {{ notice }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row text-center">
+            <div class="col-md-8">
+                <div class="row mt-3">
+                    <div class="col-md-3 text-primary">
+                        Game Type: {% if gameType|length > 0 %}{{ gameType }}{% endif %}
+                    </div>
+                    <div class="col-md-6 text-primary">
+                        Finish: {% if gameEndType|length > 0 %}{{ gameEndType }}{% endif %}
+                    </div>
+                    <div class="col-md-3 text-primary">
+                         Leg {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}/3
                     </div>
                 </div>
-                <div class="row">
-                    <div class="cell cell-4">Name: {% if mainPlayerData.name|length > 0 %}{{ mainPlayerData.name }}{% endif %}</div>
-                    <div class="cell cell-4">Bull</div>
-                    <div class="cell cell-4">20</div>
-                    <div class="cell cell-4">{% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}</div>
-                </div>
-                <div class="row">
-                    <div class="cell cell-4 cell-fixed-height cell-padding-top">Points: <span id="points">{% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</span></div>
-                    <div class="cell cell-4 cell-fixed-height cell-padding-top">0 S
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        Name: {% if mainPlayerData.name|length > 0 %}{{ mainPlayerData.name }}{% endif %}
                     </div>
-                    <div class="cell cell-4 cell-fixed-height cell-padding-top">Throws
-                        left: {% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
+                    <div class="col-md-3">
+                        Bull
+                    </div>
+                    <div class="col-md-3">
+                        20
+                    </div>
+                    <div class="col-md-3">
+                        {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        Points: <span id="points">{% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</span>
+                    </div>
+                    <div class="col-md-3">
+                        0 S
+                    </div>
+                    <div class="col-md-3">
+                        Throws left: {% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
                         <img src="{{ asset('images/darts_arrow.png') }}" alt="darts arrow" class="image"/>
                     </div>
-                    <div class="cell cell-4 cell-fixed-height cell-padding-top">5
+                    <div class="col-md-3">
+                        5
                     </div>
                 </div>
-                <div class="row">
-                    <div class="cell cell-4">
-                        Average: {% if mainPlayerData.pointsAverage|length > 0 %}{{ mainPlayerData.pointsAverage }}{% endif %}</div>
-                    <div class="cell cell-4">Left: <span
-                                id="pointsleft">{% if (endGamePointsRequired|length > 0) %}{{ endGamePointsRequired }}{% endif %}</span>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        Average: {% if mainPlayerData.pointsAverage|length > 0 %}{{ mainPlayerData.pointsAverage }}{% endif %}
                     </div>
-                    <div class="cell cell-4">-</div>
-                    <div class="cell cell-4">-</div>
+                    <div class="col-md-3">
+                        Left: <span id="pointsleft">{% if (endGamePointsRequired|length > 0) %}{{ endGamePointsRequired }}{% endif %}</span>
+                    </div>
+                    <div class="col-md-3">
+                        -
+                    </div>
+                    <div class="col-md-3">
+                        -
+                    </div>
                 </div>
             </div>
-            <div class="right-container">
+            <div class="col-md-4 mt-3">
                 {% if otherPlayersData|length > 0 %}
                     {% for otherPlayerData in otherPlayersData %}
                         <div class="cell cell-1 cell-title">{{ otherPlayerData.name }}</div>
@@ -63,70 +82,72 @@
                 {% endif %}
             </div>
         </div>
-        <div class="buttons-container">
-            <div class="row">
-
+        <div class="row text-center">
+            <div class="col-md-12 mt-3  mb-3">
                 <label for="single">
                     <input type="radio" id="single" name="optionPoints"
                            value="single" checked="checked" onclick="setMultipleValue(1);">Single
-                </label><br>
+                </label>
                 <label for="double">
                     <input type="radio" id="double" name="optionPoints"
                            value="double" onclick="setMultipleValue(2);">Double
-                </label><br>
+                </label>
                 <label for="triple">
                     <input type="radio" id="triple" name="optionPoints"
                            value="triple" onclick="setMultipleValue(3);">Triple
-                </label><br>
-            </div>
-
-            {% for i in 0..6 %}
-                <div class="row">
-                    {% for j in 1..3 %}
-                        {% if (3 * i + j) != 21 %}
-                            <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
-                                <input type="hidden" name="player_id" value="{{ player_id }}">
-                                <input type="hidden" name="game_id" value="{{ game_id }}">
-                                <input type="hidden" name="points" value="{{ 3 * i + j }}">
-                                <input type="hidden" name="double" class="doubleOption" value="">
-                                <input type="hidden" name="triple" class="tripleOption" value="">
-                                <button type="submit" class="button  button-small"
-                                        id="{{ 3 * i + j }}">{{ 3 * i + j }}</button>
-                            </form>
-                        {% else %}
-                            <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
-                                <input type="hidden" name="player_id" value="{{ player_id }}">
-                                <input type="hidden" name="game_id" value="{{ game_id }}">
-                                <input type="hidden" name="points" value="25">
-                                <input type="hidden" name="double" class="doubleOption" value="">
-                                <input type="hidden" name="triple" class="tripleOption" value="">
-                                <button type="submit" class="button  button-small"
-                                        id="25">25
-                                </button>
-                            </form>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            {% endfor %}
-
-            <div class="row">
-                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
-                    <input type="hidden" name="player_id" value="{{ player_id }}">
-                    <input type="hidden" name="game_id" value="{{ game_id }}">
-                    <input type="hidden" name="points" value="0">
-                    <input type="hidden" name="double" class="doubleOption" value="">
-                    <input type="hidden" name="triple" class="tripleOption" value="">
-                    <button type="submit" class="button  button-large" id="0">Daneben</button>
-                </form>
-                <form method="POST" action="/undo/throw/{{ game_id }}/{{ player_id }}">
-                    <input type="hidden" name="player_id" value="{{ player_id }}">
-                    <input type="hidden" name="game_id" value="{{ game_id }}">
-                    <button type="submit" class="button  button-large" id="undoButton" onclick="return confirm('Are you sure you want to undo last throw ?');">Undo</button>
-                </form>
+                </label>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {% for i in 0..6 %}
+                    {% for j in 1..3 %}
+                        <div class="col-md-12">
+                            {% if (3 * i + j) != 21 %}
+                                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                                    <input type="hidden" name="points" value="{{ 3 * i + j }}">
+                                    <input type="hidden" name="double" class="doubleOption" value="">
+                                    <input type="hidden" name="triple" class="tripleOption" value="">
+                                    <button type="submit" class="button  button-small"
+                                            id="{{ 3 * i + j }}">{{ 3 * i + j }}</button>
+                                </form>
+                            {% else %}
+                                <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                                    <input type="hidden" name="player_id" value="{{ player_id }}">
+                                    <input type="hidden" name="game_id" value="{{ game_id }}">
+                                    <input type="hidden" name="points" value="25">
+                                    <input type="hidden" name="double" class="doubleOption" value="">
+                                    <input type="hidden" name="triple" class="tripleOption" value="">
+                                    <button type="submit" class="button  button-small"
+                                            id="25">25
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                <div class="col-md-12">
+                    <form method="POST" action="/add/throw/{{ game_id }}/{{ player_id }}">
+                        <input type="hidden" name="player_id" value="{{ player_id }}">
+                        <input type="hidden" name="game_id" value="{{ game_id }}">
+                        <input type="hidden" name="points" value="0">
+                        <input type="hidden" name="double" class="doubleOption" value="">
+                        <input type="hidden" name="triple" class="tripleOption" value="">
+                        <button type="submit" class="button  button-large" id="0">Daneben</button>
+                    </form>
+                    <form method="POST" action="/undo/throw/{{ game_id }}/{{ player_id }}">
+                        <input type="hidden" name="player_id" value="{{ player_id }}">
+                        <input type="hidden" name="game_id" value="{{ game_id }}">
+                        <button type="submit" class="button  button-large" id="undoButton" onclick="return confirm('Are you sure you want to undo last throw ?');">Undo</button>
+                    </form>
+                </div>
+            </div>
 
+
+        </div>
+    </div>
     <div id="myModal" class="modal">
         <div class="modal-content">
             <p class="success-message"></p>

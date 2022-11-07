@@ -33,7 +33,7 @@
     background: gray;
     color: white;
     border-radius: 5px;
-    padding: 7px 0px;
+    padding: 7px 0;
     margin-right: 1%;
     cursor: pointer;
 }
@@ -54,11 +54,6 @@
 .buttons-container {
     width: 50%;
     margin: auto;
-}
-
-.row {
-    width: 100%;
-    clear: both;
 }
 
 .cell {
@@ -118,4 +113,12 @@
     margin: 25px;
     color: red;
     border-radius: 10px;
+}
+
+.order {
+    max-width: 15px;
+}
+
+tr {
+    vertical-align: top
 }

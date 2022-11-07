@@ -1,101 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<link href="{{ asset('css/game.css') }}" rel="stylesheet">
-<style>
-    .order {
-        max-width: 15px;
-    }
-
-    tr {
-        vertical-align: top
-    }
-</style>
-
 <head>
     <title>Welcome</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="{{ asset('css/game.css') }}" rel="stylesheet">
 </head>
 <body>
-<form method="POST" action="/createGame" id="form1">
-    <table>
-        <caption></caption>
-        <tr>
-            <th>Game Type</th>
-            <th>Players/Order</th>
-            <th>Game-End-Option</th>
-        </tr>
-        <tr>
-            <td>
-                {#                <h1>Game Type</h1> #}
-                <ul>
+    <div class="container">
+        <form method="POST" action="/createGame" id="form1">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Darty Game</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+                    <h5 class="text-info">Game Type</h5>
                     {% if games|length > 0 %}
                         {% for game in games %}
-                            <label for="{{ game.type|e }}">
-                                <input type="radio" id="{{ game.type|e }}" name="games"
-                                       value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}>
-                                {{ game.type|e }}
-                            </label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="games" id="{{ game.type|e }}" value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}>
+                                <label class="form-check-label" for="{{ game.type|e }}">
+                                    {{ game.type|e }}
+                                </label>
+                            </div>
                         {% endfor %}
                     {% endif %}
-                </ul>
-            </td>
-            <td>
-                {#                <h1>Players</h1> #}
-                <ul>
-                    <table>
-                        {% if players|length > 0 %}
-                            {% for player in players %}
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" id="{{ player.firstname|e }} {{ player.lastname|e }}"
-                                               name="player[]"
-                                               value="{{ player.id|e }}">
-                                        <label for="{{ player.firstname|e }} {{ player.lastname|e }}">
-                                            {{ player.firstname|e }} {{ player.lastname|e }}</label>
-                                    </td>
-                                    <td>
-                                        <input type="text" id="{{ player.id }}" name="order[{{ player.id }}]" class="order">
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        {% endif %}
-                    </table>
-                </ul>
-            </td>
-            <td>
-                {#                <h1>Game-End-Option</h1> #}
-                <ul>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <h5 class="text-info">Players/Order</h5>
+                    {% if players|length > 0 %}
+                        {% for player in players %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="{{ player.firstname|e }} {{ player.lastname|e }}"
+                                       name="player[]"
+                                       value="{{ player.id|e }}">
+                                <label class="form-check-label" for="{{ player.firstname|e }} {{ player.lastname|e }}">
+                                    {{ player.firstname|e }} {{ player.lastname|e }}
+                                </label>
+                                <input type="text" id="{{ player.id }}" name="order[{{ player.id }}]" class="order">
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <h5 class="text-info">Game-End-Option</h5>
                     {% if gameEnds|length > 0 %}
                         {% for game in gameEnds %}
-                            <label for="{{ game.type|e }}">
-                                <input type="radio" id="{{ game.type|e }}" name="gameEnds"
-                                       value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}>
-                                {{ game.type|e }}
-                            </label><br>
+                            <div class="form-check">
+                                <label class="form-check-label" for="{{ game.type|e }}">
+                                    <input class="form-check-input" type="radio" id="{{ game.type|e }}" name="gameEnds"
+                                           value="{{ game.type|e }}" {% if game.checked %} checked="checked"{% endif %}>
+                                    {{ game.type|e }}
+                                </label><br>
+                            </div>
                         {% endfor %}
                     {% endif %}
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <button type="submit" form="form1" value="Submit" onclick="return areSelectedPlayers();">
-                    Start new game
-                </button>
-            </td>
-            <td>
-                <button type="button" id="new_player" onclick="location.href='/addPlayerForm'">
-                    Add player to database
-                </button>
-            </td>
-            <td>
-                <button type="button" id="edit_players" onclick="location.href ='/player-management'">
-                    Edit Players
-                </button>
-            </td>
-        </tr>
-    </table>
-</form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <button type="submit" form="form1" value="Submit" onclick="return areSelectedPlayers();" class="btn btn-success">
+                        Start new game
+                    </button>&nbsp;
+                    <button type="button" id="new_player" onclick="location.href='/addPlayerForm'" class="btn btn-primary">
+                        Add player to database
+                    </button>&nbsp;
+                    <button type="button" id="edit_players" onclick="location.href ='/player-management'" class="btn btn-info">
+                        Player Management
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
 <script>
     function areSelectedPlayers() {
         var checkboxes = 0;
