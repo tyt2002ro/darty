@@ -120,4 +120,4 @@ run migrations:
     - *snippet-configure-ssh
     - ssh-keyscan -t rsa $ITEST_HOST_IP > ~/.ssh/known_hosts
   script:
-    - ssh $ITEST_USER@$ITEST_HOST_IP 'cd app && docker compose exec php bash && php bin/console doctrine:migrations:migrate'
+    - ssh $ITEST_USER@$ITEST_HOST_IP 'cd app && docker compose exec php bash -c "php bin/console doctrine:migrations:migrate -n"'
