@@ -83,6 +83,7 @@ copy-code:
   script:
     - rsync -rltgoDH . darty@172.31.193.127:/home/darty/app/
     - ssh $ITEST_USER@$ITEST_HOST_IP 'cd app && mv .env.staging .env'
+    - ssh $ITEST_USER@$ITEST_HOST_IP 'cd app/symfony/my_project_directory/ && mv .env.staging .env'
 
 pull-images:
   stage: deploy
