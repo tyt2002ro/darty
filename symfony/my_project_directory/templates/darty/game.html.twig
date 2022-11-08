@@ -148,13 +148,21 @@
 
         </div>
     </div>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <p class="success-message"></p>
-            <button type="button" id="finish_game" onclick="location.href ='/'">Finish Game</button>
-            <button type="button" id="continue_game">Continue Game</button>
+
+    <div class="modal" tabindex="-1" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="success-message"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="finish_game" onclick="location.href ='/'" class="btn btn-primary">Finish Game</button>
+                    <button type="button" id="continue_game" class="btn btn-secondary">Continue Game</button>
+                </div>
+            </div>
         </div>
     </div>
+
 {% endblock %}
 
 
