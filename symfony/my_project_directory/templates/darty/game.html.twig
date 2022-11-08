@@ -3,7 +3,8 @@
     <title>Hello GameController!</title>
     <link href="{{ asset('css/game.css') }}" rel="stylesheet">
     <link href="{{ asset('css/popup.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 {% block body %}
 
@@ -25,7 +26,7 @@
                         Finish: {% if gameEndType|length > 0 %}{{ gameEndType }}{% endif %}
                     </div>
                     <div class="col-md-3 text-primary">
-                         Leg {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}/3
+                        Leg {% if mainPlayerData.legThrows|length > 0 %}{{ 3-mainPlayerData.legThrows }}{% endif %}/3
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -44,13 +45,15 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-3">
-                        Points: <span id="points">{% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</span>
+                        Points: <span
+                                id="points">{% if mainPlayerData.pointsTotal|length > 0 %}{{ mainPlayerData.pointsTotal }}{% endif %}</span>
                     </div>
                     <div class="col-md-3">
                         0 S
                     </div>
                     <div class="col-md-3">
-                        Throws left: {% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
+                        Throws
+                        left: {% if mainPlayerData.legThrows|length > 0 %}{{ mainPlayerData.legThrows }}{% endif %}
                         <img src="{{ asset('images/darts_arrow.png') }}" alt="darts arrow" class="image"/>
                     </div>
                     <div class="col-md-3">
@@ -62,7 +65,8 @@
                         Average: {% if mainPlayerData.pointsAverage|length > 0 %}{{ mainPlayerData.pointsAverage }}{% endif %}
                     </div>
                     <div class="col-md-3">
-                        Left: <span id="pointsleft">{% if (endGamePointsRequired|length > 0) %}{{ endGamePointsRequired }}{% endif %}</span>
+                        Left: <span
+                                id="pointsleft">{% if (endGamePointsRequired|length > 0) %}{{ endGamePointsRequired }}{% endif %}</span>
                     </div>
                     <div class="col-md-3">
                         -
@@ -71,11 +75,14 @@
                         -
                     </div>
 
-                    <div class="cell cell-4">{% if (mainPlayerData.endGameThrowDoubleSuggestion|length > 0) %} End combination: <span
-                                id="pointsleft">{{ mainPlayerData.endGameThrowDoubleSuggestion }}</span>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3">{% if (mainPlayerData.endGameThrowDoubleSuggestion|length > 0) %} End combination:
+                            <span
+                                    id="pointsleft">{{ mainPlayerData.endGameThrowDoubleSuggestion }}</span>
                         {% endif %}
                     </div>
-                    <div class="cell cell-4">-</div>
+                    <div class="col-md-3">-</div>
                 </div>
             </div>
             <div class="col-md-4 mt-3">
@@ -146,7 +153,9 @@
                     <form method="POST" action="/undo/throw/{{ game_id }}/{{ player_id }}">
                         <input type="hidden" name="player_id" value="{{ player_id }}">
                         <input type="hidden" name="game_id" value="{{ game_id }}">
-                        <button type="submit" class="button  button-large" id="undoButton" onclick="return confirm('Are you sure you want to undo last throw ?');">Undo</button>
+                        <button type="submit" class="button  button-large" id="undoButton"
+                                onclick="return confirm('Are you sure you want to undo last throw ?');">Undo
+                        </button>
                     </form>
                 </div>
             </div>
@@ -162,7 +171,9 @@
                     <p class="success-message"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="finish_game" onclick="location.href ='/'" class="btn btn-primary">Finish Game</button>
+                    <button type="button" id="finish_game" onclick="location.href ='/'" class="btn btn-primary">Finish
+                        Game
+                    </button>
                     <button type="button" id="continue_game" class="btn btn-secondary">Continue Game</button>
                 </div>
             </div>
@@ -175,29 +186,25 @@
 <script>
     let points = document.getElementById("points");
     let undoButton = document.getElementById("undoButton");
-    if(points.innerHTML === 0)
-    {
+    if (points.innerHTML === 0) {
         undoButton.setAttribute('disabled', '');
-    }
-    else
-    {
+    } else {
         undoButton.removeAttribute('disabled');
     }
 
-    function setMultipleValue(value)
-    {
+    function setMultipleValue(value) {
         switch (value) {
             case 1:
-                setMultiplierOfThrow(0,'doubleOption');
-                setMultiplierOfThrow(0,'tripleOption');
+                setMultiplierOfThrow(0, 'doubleOption');
+                setMultiplierOfThrow(0, 'tripleOption');
                 break;
             case 2:
-                setMultiplierOfThrow(1,'doubleOption');
-                setMultiplierOfThrow(0,'tripleOption');
+                setMultiplierOfThrow(1, 'doubleOption');
+                setMultiplierOfThrow(0, 'tripleOption');
                 break;
             case 3:
-                setMultiplierOfThrow(0,'doubleOption');
-                setMultiplierOfThrow(1,'tripleOption');
+                setMultiplierOfThrow(0, 'doubleOption');
+                setMultiplierOfThrow(1, 'tripleOption');
                 break;
         }
     }
@@ -223,11 +230,11 @@
     let successMessage = document.getElementsByClassName("success-message")[0];
 
     {% for success in app.flashes('success') %}
-        modal.style.display = "block";
-        successMessage.innerHTML = '{{ success }}';
+    modal.style.display = "block";
+    successMessage.innerHTML = '{{ success }}';
     {% endfor %}
 
-    continueGameButton.onclick = function() {
+    continueGameButton.onclick = function () {
         modal.style.display = "none";
     }
 
