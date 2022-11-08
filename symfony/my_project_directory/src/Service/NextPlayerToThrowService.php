@@ -75,7 +75,7 @@ class NextPlayerToThrowService
                 return $playerData;
             }
         }
-        return $playersData[0];
+        return '';
 
     }
 }

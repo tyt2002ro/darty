@@ -38,6 +38,15 @@ class GameController extends AbstractController
         $mainPlayerData = $this->nextPlayerToThrowService
             ->returnNextPlayerToThrow($game, $playersData);
 
+        if(!$mainPlayerData){
+            return $this->redirect('/player-management/');
+        }
+        $endGamePointsRequired = $game->getType() - $mainPlayerData->getPointsTotal();
+
+        if($endGamePointsRequired < 170 && $game->getGameOption() === Game::DOUBLE_OUT){
+            $mainPlayerData->setEndGameThrowDoubleSuggestion($endGamePointsRequired);
+        }
+
         $otherPlayersData = $this->nextPlayerToThrowService
             ->returnOtherPlayerData($playersData, $mainPlayerData->getOrder());
 
@@ -49,7 +58,8 @@ class GameController extends AbstractController
             'game_id' => $game->getId(),
             'gameType' => $game->getType(),
             'gameEndType' => $game->getGameOption(),
-            'endGamePointsRequired' => $game->getType() - $mainPlayerData->getPointsTotal()
+            'endGamePointsRequired' => $endGamePointsRequired,
+            'endGameThrowDoubleSuggestion' => $mainPlayerData->getEndGameThrowDoubleSuggestion()
         ]);
     }
 

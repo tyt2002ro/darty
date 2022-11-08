@@ -11,6 +11,8 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Nick-Name</th>
+        <th>Games Played</th>
+        <th>Average Throws</th>
         <th>Edit a player</th>
         <th>Delete a player</th>
     </tr>
@@ -22,6 +24,8 @@
                 <td>{{ player.firstname }}</td>
                 <td>{{ player.lastname }}</td>
                 <td>{{ player.nickname }}</td>
+                <td>{{ player.totalGamesPlayed }}</td>
+                <td>{{ player.agerageThrows }}</td>
                 <td>
                     <a href="/edit/player/{{ player.id }}">Edit</a>
                 </td>
