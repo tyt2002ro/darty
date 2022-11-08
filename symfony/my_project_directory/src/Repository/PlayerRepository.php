@@ -73,11 +73,11 @@ class PlayerRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = "
-            SELECT player_id as id,
+            SELECT player.id as id,
                 count(distinct game_id) as totalGamesPlayed,
                 count(points) AS totalThrows,
                 sum(points) AS sumThrows,
-                round(count(points)/count(distinct game_id)) AS agerageThrows,     
+                IFNULL(round(count(points)/count(distinct game_id)), 0) AS agerageThrows,     
                 player.firstname,
                 player.lastname,
                 player.nickname

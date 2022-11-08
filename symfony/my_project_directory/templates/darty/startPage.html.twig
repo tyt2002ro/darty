@@ -38,7 +38,7 @@
                                 <label class="form-check-label" for="{{ player.firstname|e }} {{ player.lastname|e }}">
                                     {{ player.firstname|e }} {{ player.lastname|e }}
                                 </label>
-                                <input type="text" id="{{ player.id }}" name="order[{{ player.id }}]" class="order">
+                                <input type="text" id="{{ player.id }}" name="order[{{ player.id }}]" class="order" value="{{ player.id }}">
                             </div>
                         {% endfor %}
                     {% endif %}
