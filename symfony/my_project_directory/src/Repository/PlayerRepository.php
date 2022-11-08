@@ -67,4 +67,32 @@ class PlayerRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findAllWithStatistics()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "
+            SELECT player_id as id,
+                count(distinct game_id) as totalGamesPlayed,
+                count(points) AS totalThrows,
+                sum(points) AS sumThrows,
+                round(count(points)/count(distinct game_id)) AS agerageThrows,     
+                player.firstname,
+                player.lastname,
+                player.nickname
+            FROM game_throw
+            RIGHT JOIN player ON game_throw.player_id = player.id
+            GROUP BY player_id;
+            ";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        $result = $resultSet->fetchAllAssociative();
+
+        if ($result) {
+            return $result;
+        }
+        return [];
+    }
 }

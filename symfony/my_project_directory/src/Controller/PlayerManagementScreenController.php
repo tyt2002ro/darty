@@ -12,7 +12,7 @@ class PlayerManagementScreenController extends AbstractController
     #[Route('/player-management', name: 'playerManagement')]
     public function playerManagementScreenAction(PlayerRepository $playerRepository): Response
     {
-        $players = $playerRepository->findAll();
+        $players = $playerRepository->findAllWithStatistics();
 
         return $this->render('darty/playerManagementScreen.html.twig', [
             'players' => $players

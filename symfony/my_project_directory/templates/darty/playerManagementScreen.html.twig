@@ -5,51 +5,50 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <table class="table"> <!-- Player Management Screen -->
-        <h2 class="text-center">Player Management Screen</h2>
-        <thead class="table-dark">
-        <tr>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Nick-Name</th>
-            <th scope="col">Edit a player</th>
-            <th scope="col">Delete a player</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% if players|length > 0 %}
-            {% for player in players %}
-                <tr scope="row" class="table-info">
-                    <td>{{ player.firstname }}</td>
-                    <td>{{ player.lastname }}</td>
-                    <td>{{ player.nickname }}</td>
-                    <td>
-                        <a href="/edit/player/{{ player.id }}" class="text-primary">Edit</a>
-                    </td>
-                    <td>
-                        <a href="/player/delete/{{ player.id }}" onclick="return confirm('Are you sure you want to delete this player?');" class="text-danger">Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        {% endif %}
-        <tr scope="row">
-            <td>
-                <form>
-                    <button type="submit" id="new_player" formaction="/addPlayerForm" class="btn btn-primary">Add new player</button>
-                </form>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <form>
-                    <button type="submit" id="new_game" formaction="/" class="btn btn-primary float-right">New game</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<table> <!-- Player Management Screen -->
+    <h1>Player Management Screen</h1>
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Nick-Name</th>
+        <th>Games Played</th>
+        <th>Average Throws</th>
+        <th>Edit a player</th>
+        <th>Delete a player</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if players|length > 0 %}
+        {% for player in players %}
+            <tr>
+                <td>{{ player.firstname }}</td>
+                <td>{{ player.lastname }}</td>
+                <td>{{ player.nickname }}</td>
+                <td>{{ player.totalGamesPlayed }}</td>
+                <td>{{ player.agerageThrows }}</td>
+                <td>
+                    <a href="/edit/player/{{ player.id }}">Edit</a>
+                </td>
+                <td>
+                    <a href="/player/delete/{{ player.id }}" onclick="return confirm('Are you sure you want to delete this player?');">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    <tr>
+        <td>
+            <form>
+                <button type="submit" id="new_player" formaction="/addPlayerForm">Add new player</button>
+            </form>
+        </td>
+        <td>
+            <form>
+                <button type="submit" id="new_game" formaction="/">New game</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

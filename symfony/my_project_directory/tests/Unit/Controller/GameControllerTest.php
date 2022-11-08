@@ -58,6 +58,7 @@ final class GameControllerTest extends TestCase
         $playerThrowData->getOrder()->shouldBeCalled()->willReturn(1);
         $playerThrowData->getPlayerId()->shouldBeCalled()->willReturn(1);
         $playerThrowData->getPointsTotal()->shouldBeCalled()->willReturn(1);
+        $playerThrowData->getEndGameThrowDoubleSuggestion()->shouldBeCalled()->willReturn(1);
         $game->getType()->shouldBeCalled()->willReturn(1);
         $game->getGameOption()->shouldBeCalled()->willReturn(1);
 

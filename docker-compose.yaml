@@ -1,6 +1,9 @@
 version: '3.4'
 services:
   php:
+    env_file:
+      - .env
+    user: "${USER_ID:?}"
     image: docker-repository.intern.neusta.de/darty2/php:latest
     build:
       context: ./.docker/php
@@ -15,6 +18,7 @@ services:
       - darty2
     environment:
       XDEBUG_MODE: debug,trace,coverage
+      USER_ID: "${USER_ID}"
     expose:
       - 9003 # xdebug 3 port!
 
