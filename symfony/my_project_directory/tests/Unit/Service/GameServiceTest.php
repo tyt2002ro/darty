@@ -13,6 +13,15 @@ class GameServiceTest extends TestCase
 {
     use ProphecyTrait;
 
+    private $gameRepositoryMock;
+    private $gameFactoryMock;
+
+    public function setUp(): void
+    {
+        $this->gameRepositoryMock = $this->prophesize(GameRepository::class);
+        $this->gameFactoryMock = $this->prophesize(GameFactory::class);
+        $this->gameService = new GameService($this->gameRepositoryMock->reveal(), $this->gameFactoryMock->reveal());
+    }
     /**
      * @test
      */
@@ -22,37 +31,37 @@ class GameServiceTest extends TestCase
         $playerIds = [5, 6];
         $endOptions = 'Single';
 
-        $game = new Game();
-        $game->setType($type);
-        $game->setGameOption($endOptions);
-        $game->addPlayerId(new Player());
-
-        $expectedGame = new Game();
-        $expectedGame->setType($type);
-        $expectedGame->setGameOption($endOptions);
-        $expectedGame->addPlayerId(new Player());
-
-        $gameRepository = $this->prophesize(GameRepository::class);
-        $gameFactory = $this->prophesize(GameFactory::class);
-        $gameService = new GameService($gameRepository->reveal(), $gameFactory->reveal());
-
-        $gameFactory->createGame(Argument::cetera())->shouldBeCalled()->willReturn($game);
-
-        $createdGame = $gameService->createGame($type, $playerIds, $endOptions, [1 => 98, 2 => null, 3 => 6]);
+        $gameMock = $this->prophesize(Game::class);
+        $this->gameRepositoryMock->save($gameMock->reveal(), true)->shouldBeCalled();
+        $this->gameFactoryMock->createGame($type, $playerIds, $endOptions, [1 => 98, 2 => null, 3 => 6])
+            ->shouldBeCalled()
+            ->willReturn($gameMock->reveal());
+        $createdGame = $this->gameService->createGame($type, $playerIds, $endOptions, [1 => 98, 2 => null, 3 => 6]);
         
-        self::assertEquals($expectedGame, $createdGame);
+        self::assertEquals($gameMock->reveal(), $createdGame);
     }
+
+    /**
+     * @test
+     */
+    public function getPlayersPlaceTest(): void
+        {
+            $gameMock = $this->prophesize(Game::class);
+            $gameMock->getPlayersPlace()->shouldBeCalled()->willReturn([1=>2, 2=>1]);
+            $gameMock->setPlayersPlace([1=>3, 2=>1])->shouldBeCalled()->willReturn($gameMock->reveal());
+
+            $result = $this->gameService->getPlayerPlace($gameMock->reveal(), 1);
+
+            self::assertSame(3, $result);
+        }
 
     /**
      * @test
      */
     public function checkFor2ndPlaceCongratsMessage(): void
     {
-        $gameRepository = $this->prophesize(GameRepository::class);
-        $gameFactory = $this->prophesize(GameFactory::class);
-        $gameService = new GameService($gameRepository->reveal(),$gameFactory->reveal());
         $playerPlace = 2;
-        $message = $gameService->getCongratsMessage($playerPlace);
+        $message = $this->gameService->getCongratsMessage($playerPlace);
         $expectedMessage ='Congrats! You reached 2nd place';
         self::assertSame($expectedMessage, $message);
     }
@@ -62,11 +71,8 @@ class GameServiceTest extends TestCase
      */
     public function checkFor1stPlaceCongratsMessage(): void
     {
-        $gameRepository = $this->prophesize(GameRepository::class);
-        $gameFactory = $this->prophesize(GameFactory::class);
-        $gameService = new GameService($gameRepository->reveal(),$gameFactory->reveal());
         $playerPlace = 1;
-        $message = $gameService->getCongratsMessage($playerPlace);
+        $message = $this->gameService->getCongratsMessage($playerPlace);
         $expectedMessage ='You won!';
         self::assertSame($expectedMessage, $message);
     }
@@ -76,11 +82,8 @@ class GameServiceTest extends TestCase
      */
     public function checkFor3rdPlaceCongratsMessage(): void
     {
-        $gameRepository = $this->prophesize(GameRepository::class);
-        $gameFactory = $this->prophesize(GameFactory::class);
-        $gameService = new GameService($gameRepository->reveal(),$gameFactory->reveal());
         $playerPlace = 3;
-        $message = $gameService->getCongratsMessage($playerPlace);
+        $message = $this->gameService->getCongratsMessage($playerPlace);
         $expectedMessage ='Congrats! You reached 3rd place';
         self::assertSame($expectedMessage, $message);
     }
@@ -90,11 +93,8 @@ class GameServiceTest extends TestCase
      */
     public function checkFor4thPlaceCongratsMessage(): void
     {
-        $gameRepository = $this->prophesize(GameRepository::class);
-        $gameFactory = $this->prophesize(GameFactory::class);
-        $gameService = new GameService($gameRepository->reveal(),$gameFactory->reveal());
         $playerPlace = 4;
-        $message = $gameService->getCongratsMessage($playerPlace);
+        $message = $this->gameService->getCongratsMessage($playerPlace);
         $expectedMessage ='Congrats! You reached 4th place';
         self::assertSame($expectedMessage, $message);
     }
